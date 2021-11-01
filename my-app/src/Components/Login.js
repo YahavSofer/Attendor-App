@@ -1,7 +1,8 @@
 import React, {useRef, useState} from 'react'
-import {Alert, Button, Card,Form,Container,Row,Col} from 'react-bootstrap'
+import {Alert,Card,Form,Container,Row,Col,FloatingLabel} from 'react-bootstrap'
 import { useAuth } from '../context/AuthContext'
 import { Link , useHistory } from 'react-router-dom'
+import {Button} from '@mui/material'
 
 export default function Login() {
     const emailRef = useRef()
@@ -27,39 +28,45 @@ export default function Login() {
     }
     return (
         <>
-    <Container> 
+    <Container className='flex-warp'> 
         <Row>
             <Col style={{minWidth:'350px',maxWidth:'400px'}}>
-                    <Card>
+                    <Card className='shadow rounded' style={{background:'#83c5be'}}>
                     <Card.Body>
                         <h2 className="text-center mb-4">Log In</h2>
                         {error && <Alert variant="danger">{error}</Alert>}
                         <Form onSubmit = {handleSubmit}>
                             <Form.Group id="email">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" ref={emailRef} required/> 
+                                <FloatingLabel label="Email"  className="mb-3">
+                                <Form.Control type="email"  placeholder="name@example.com"  ref={emailRef} required/>
+                                </FloatingLabel>
+                                 
                             </Form.Group>    
                             <Form.Group id="password">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type='password' ref={passwordRef} required/> 
+                                <FloatingLabel label="Password"  className="mb-3">                             
+                                <Form.Control type='password' placeholder="Password" ref={passwordRef} required/> 
+                                </FloatingLabel>
                             </Form.Group>
                             
-                            <Button disabled={loading} type='submit' className='w-100'>
+                            <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='success'>
                                 Log In
                             </Button>
-                            <div className="w-100 text-center mt-2">
+                            <div className="w-100 text-center mt-2" >
                                 <Link to='/forgot-password'>Forgot password ?</Link>
                             </div>
                         </Form>               
                     </Card.Body>
                 </Card>
-                    <div className="w-100 text-center mt-2"> 
+                    <div className="w-100 text-center mt-2" style={{fontSize: '20px'}}> 
                         Don't have account ? <Link to='/signup'>Sign Up</Link>    
                     </div>
+
         </Col>
-        <Col className='m-sm-4 bg-info text-sm-center'>
-            sdfkhlksdj
-            sadslkk
+        <Col md={{ span: 3,offset: 2 }} className='mb-md-4 text-left'  style={{minWidth:'350px',minHeight:'25vh'}}>
+            <h1 style={{color: '#00afb9'}}>Attendor</h1>
+           <p style={{fontSize: '18px'}}> Find your event,<br/>
+            and be part of a <strong>bigger</strong> comunity
+            </p>
         </Col>
         </Row>
     </Container>
