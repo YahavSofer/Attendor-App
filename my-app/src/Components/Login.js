@@ -62,9 +62,9 @@ export default function Login() {
                     </div>
 
         </Col>
-        <Col md={{ span: 3,offset: 2 }} className='mb-md-4 text-left'  style={{minWidth:'350px',minHeight:'25vh'}}>
-            <h1 style={{color: '#00afb9'}}>Attendor</h1>
-           <p style={{fontSize: '18px'}}> Find your event,<br/>
+        <Col md={{ span: 3,offset: 2 }} className='mb-md-4 text-left'  style={{minWidth:'400px',minHeight:'25vh'}}>
+            <h1 style={{fontSize:'500%', color: '#00afb9'}}>Attendor</h1>
+           <p style={{fontSize: '180%'}}> Find your event,<br/>
             and be part of a <strong>bigger</strong> comunity
             </p>
         </Col>
