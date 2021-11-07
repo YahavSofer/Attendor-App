@@ -13,8 +13,16 @@ export function AuthProvider({ children }) {
   const [loading , setLoading] = useState(true)
   
   function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
+    return auth.createUserWithEmailAndPassword(email, password).then((userCredential)=>{
+      // send verification mail.
+    userCredential.user.sendEmailVerification();
+    auth.signOut();
+    alert("Email sent");
+  })
+  .catch(alert);
   }
+
+
 
   function login(email , password){
     return auth.signInWithEmailAndPassword(email ,password)
@@ -52,6 +60,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword
+    
 
   }
 
