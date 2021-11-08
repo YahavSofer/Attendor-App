@@ -8,6 +8,8 @@ import Login from './Login'
 import PrivateRoute from './PrivateRoute'
 import ForgotPassword from './ForgotPassword'
 import UpdateProfile from './UpdateProfile'
+import UserForm from './UserForm'
+import MessageSignUp from './MessageSignUp'
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
                             <PrivateRoute  path="/update-profile" component={UpdateProfile} />
 
                             <Route path="/signup" component={Signup} />
+                            <Route path="/messagesignup" component={MessageSignUp} />
+                            <Route path="/userform" component={UserForm} />
                             <Route path="/login" component={Login} />
                             <Route path="/forgot-password" component={ForgotPassword} />
 
