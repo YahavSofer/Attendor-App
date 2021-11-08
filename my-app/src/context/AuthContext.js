@@ -17,7 +17,6 @@ export function AuthProvider({ children }) {
       // send verification mail.
     userCredential.user.sendEmailVerification();
     auth.signOut();
-    alert("Email sent");
   })
   .catch(alert);
   }
