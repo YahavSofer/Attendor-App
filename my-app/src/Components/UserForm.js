@@ -14,6 +14,7 @@ export default function UserForm() {
     const lastNameRef = useRef()
     const birthdayRef = useRef()
     const genderRef = useRef()
+    const profilePictuureRef = useRef()
     const [loading, setLoading] = useState(false)
 
 
@@ -30,8 +31,11 @@ const handleChange = (newValue) => {
             setLoading(true)
             const docRef = await addDoc(collection(db, "users"), {
                 first: firstNameRef.current.value,
-                last: "Lovelace",
-                born: 1815
+                last: lastNameRef.current.value,
+                birthday: birthdayRef.current.value,
+                gender: genderRef.current.value, 
+
+
               });
               console.log("Document written with ID: ", docRef.id);
 
@@ -61,35 +65,32 @@ const handleChange = (newValue) => {
 
                     <Form.Group id="gender" >
                         <Form.Label>Gender</Form.Label>
-                        {['radio'].map((type) => (
-                        <div key={`inline-${type}`} className="mb-3" >
-                        <Form.Check
-                            
-                            inline
-                            label="Male"
-                            name="group1"
-                            type={type}
-                            id={`inline-${type}-1`}
-                        />
+                        <div >
                         <Form.Check
                             inline
-                            label="Female"
-                            name="group1"
-                            type={type}
-                            id={`inline-${type}-2`}
-                        />
-                        <Form.Check
                             defaultChecked
+                            label="Male"
+                            name="genderGroup"
+                            type="radio"
+                            id="male"
+                        />
+                        <Form.Check
+                            inline  
+                            label="Female"
+                            name="genderGroup"
+                            type="radio"
+                        />
+                        <Form.Check
                             inline
                             label="Other"
-                            name="group1"
-                            type={type}
-                            id={`inline-${type}-3`}
-                        />
-                        </div>
-                    ))}                 
+                            name="genderGroup"
+                            type="radio"
+                        />         
+                        </div>               
                         </Form.Group>      
                 <Form.Group id="birthday">
+                <Form.Label>Birthday</Form.Label>
+                <div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
 
                     <DesktopDatePicker
@@ -102,11 +103,17 @@ const handleChange = (newValue) => {
                         renderInput={(params) => <TextField {...params} />}
                     />
                 </LocalizationProvider>
+                </div>
+                </Form.Group>
+
+                <Form.Group  id="profilePicture" className="mb-3">
+                    <Form.Label>Upload profile pricture</Form.Label>
+                    <Form.Control type="file" />
                 </Form.Group>
 
 
 
-                        <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
+                    <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
                         Send Data
                     </Button>
 
