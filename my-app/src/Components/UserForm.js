@@ -1,43 +1,75 @@
 import React, {useRef, useState} from 'react'
-import {Card, Form,Container} from 'react-bootstrap'
+import {Card, Form,Container, Image} from 'react-bootstrap'
 import {Button} from '@mui/material'
-import {db} from '../firebaseConfig'
-import { collection, addDoc } from "firebase/firestore"
+import {auth, db,storage} from '../firebaseConfig'
+import { setDoc,doc} from "firebase/firestore"
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import {  useAuth } from '../context/AuthContext'
 
 
 export default function UserForm() {
+    
+
     const firstNameRef = useRef()
     const lastNameRef = useRef()
     const birthdayRef = useRef()
     const genderRef = useRef()
-    const profilePictuureRef = useRef()
     const [loading, setLoading] = useState(false)
+    const [image, setImage] = useState(null)
+    const [imageUrl, setImageURL] = useState("")
+    const [tempImgUrl, setTempImgUrl] =useState("")
+    const {currentUser} = useAuth()
+    const [dateValue, setValue] = useState(Date.now())
+
+    storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
+    // console.log(tempImgUrl)
 
 
-const [value, setValue] = React.useState(Date.now());
-const handleChange = (newValue) => {
+
+const handleChangeDate = (newValue) => {
           setValue(newValue);
         };
+        
+function handleChangePicture(e) {
+        setImage(e.target.files[0]);
+        setTempImgUrl(URL.createObjectURL(e.target.files[0]))
+          }
+
 
     async function handleSubmit(e){
         e.preventDefault()
 
         try{
-
             setLoading(true)
-            const docRef = await addDoc(collection(db, "users"), {
+
+            if(image !== null){
+                        const ref = storage.ref(`/images/profile_pictures/${currentUser.uid}_Profile`);
+                        const uploadTask = ref.put(image);
+                        uploadTask.on("state_changed", console.log, console.error, () => {
+                        ref
+                            .getDownloadURL()
+                            .then((imageUrl) => {
+                                setImage(null);
+                                setImageURL(imageUrl);
+                            });
+                        });
+                }
+
+
+
+
+            await setDoc(doc(db, "users",currentUser.uid),{
                 first: firstNameRef.current.value,
                 last: lastNameRef.current.value,
-                birthday: birthdayRef.current.value,
-                gender: genderRef.current.value, 
+                birthday: {dateValue},
+                // gender: genderRef.current.value, 
+               profileImage: imageUrl
 
 
               });
-              console.log("Document written with ID: ", docRef.id);
 
 
         }catch(e){
@@ -48,7 +80,9 @@ const handleChange = (newValue) => {
     }
 
     return (
+        
         <>
+        
         <Container style={{minWidth:'350px',maxWidth:'400px'}}>
         <Card className='shadow rounded' style={{background:'#83c5be'}}>
             <Card.Body>
@@ -95,10 +129,9 @@ const handleChange = (newValue) => {
 
                     <DesktopDatePicker
                         required
-                        label="Date desktop"
                         inputFormat="dd/MM/yyyy"
-                        value={value}
-                        onChange={handleChange}
+                        value={dateValue}
+                        onChange={handleChangeDate}
                         ref={birthdayRef}
                         renderInput={(params) => <TextField {...params} />}
                     />
@@ -106,11 +139,15 @@ const handleChange = (newValue) => {
                 </div>
                 </Form.Group>
 
-                <Form.Group  id="profilePicture" className="mb-3">
+                <Form.Group  id="profilePicture" className="mb-3 ">
                     <Form.Label>Upload profile pricture</Form.Label>
-                    <Form.Control type="file" />
+                    <Form.Control type="file" onChange={handleChangePicture} />
+
+                    <Image src={tempImgUrl} alt="" fluid className="w-50 h-50 mt-3 mx-auto d-block" rounded />
+
                 </Form.Group>
 
+                    
 
 
                     <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
