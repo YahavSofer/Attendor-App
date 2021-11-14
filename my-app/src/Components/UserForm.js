@@ -1,18 +1,18 @@
 import React, {useRef, useState} from 'react'
-import {Card, Form,Container, Image} from 'react-bootstrap'
+import {Card, Form,Container, Image, ThemeProvider} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {auth, db,storage} from '../firebaseConfig'
 import { setDoc,doc} from "firebase/firestore"
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import TextField from '@mui/material/TextField'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import {  useAuth } from '../context/AuthContext'
-
-
+import no_Img from '../images/no-image-available.jpeg'
+import CloseIcon from '@mui/icons-material/Close'
 
 export default function UserForm() {
-    
+
 
     const firstNameRef = useRef()
     const lastNameRef = useRef()
@@ -21,9 +21,10 @@ export default function UserForm() {
     const [loading, setLoading] = useState(false)
     const [image, setImage] = useState(null)
     const [imageUrl, setImageURL] = useState("")
-    const [tempImgUrl, setTempImgUrl] =useState("")
+    const [tempImgUrl, setTempImgUrl] =useState(no_Img)
     const {currentUser} = useAuth()
     const [dateValue, setValue] = useState(Date.now())
+    let close_icon
 
     // storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
     // console.log(tempImgUrl)
@@ -37,8 +38,9 @@ const handleChangeDate = (newValue) => {
 function handleChangePicture(e) {
         setImage(e.target.files[0]);
         setTempImgUrl(URL.createObjectURL(e.target.files[0]))
+        
           }
-
+      
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -127,16 +129,15 @@ function handleChangePicture(e) {
                 <Form.Label>Birthday</Form.Label>
                 <div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-
                     <DesktopDatePicker
+                        
                         required
                         inputFormat="dd/MM/yyyy"
                         value={dateValue}
                         onChange={handleChangeDate}
                         ref={birthdayRef}
-                        renderInput={(params) => <TextField {...params} />}
-                    />
-                    
+                        renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px'}} />}
+                                            />
                 </LocalizationProvider>
                 </div>
                 </Form.Group>
@@ -144,13 +145,10 @@ function handleChangePicture(e) {
                 <Form.Group  id="profilePicture" className="mb-3 ">
                     <Form.Label>Upload profile pricture</Form.Label>
                     <Form.Control type="file" onChange={handleChangePicture} />
+                    {tempImgUrl !== no_Img} ? <CloseIcon/> : 
 
                     <Image src={tempImgUrl} alt="" fluid className="w-50 h-50 mt-3 mx-auto d-block" rounded />
-
                 </Form.Group>
-
-                    
-
 
                     <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
                         Send Data
