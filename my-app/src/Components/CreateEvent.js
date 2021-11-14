@@ -10,14 +10,13 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import {  useAuth } from '../context/AuthContext'
 
 
-
 export default function UserForm() {
     
 
-    const firstNameRef = useRef()
-    const lastNameRef = useRef()
-    const birthdayRef = useRef()
-    const genderRef = useRef()
+    const EventNameRef = useRef()
+    const EventLocationRef = useRef()
+    const EventDateRef = useRef()
+    const DiscriptionRef = useRef()
     const [loading, setLoading] = useState(false)
     const [image, setImage] = useState(null)
     const [imageUrl, setImageURL] = useState("")
@@ -27,7 +26,6 @@ export default function UserForm() {
 
     // storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
     // console.log(tempImgUrl)
-
 
 
 const handleChangeDate = (newValue) => {
@@ -62,12 +60,12 @@ function handleChangePicture(e) {
 
 
 
-            await setDoc(doc(db, "users",currentUser.uid),{
-                first: firstNameRef.current.value,
-                last: lastNameRef.current.value,
-                birthday: {dateValue},
-                // gender: genderRef.current.value, 
-               profileImage: imageUrl
+            await setDoc(doc(db, "Events",currentUser.uid),{
+                name: EventNameRef.current.value,
+                location: EventLocationRef.current.value,
+                eventDate: {dateValue},
+               eventImage: imageUrl,
+               discription: DiscriptionRef.current.value
 
 
               });
@@ -87,72 +85,50 @@ function handleChangePicture(e) {
         <Container style={{minWidth:'350px',maxWidth:'400px'}}>
         <Card className='shadow rounded' style={{background:'#83c5be'}}>
             <Card.Body>
-                <h2 className="text-center mb-4">Create Profile</h2>
+                <h2 className="text-center mb-4">Create Event</h2>
                 <Form onSubmit = {handleSubmit}>
-                    <Form.Group id="firstName" style={{background:'black'}}>
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" ref={firstNameRef} required/> 
+                    <Form.Group id="Event Name" >
+                        <Form.Label>Event Name</Form.Label>
+                        <Form.Control type="text" ref={EventNameRef} required/> 
                     </Form.Group>
-                    <Form.Group id="lastName">
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="text" ref={lastNameRef} required/> 
+                    <Form.Group id="EventLocation">
+                        <Form.Label>Event Location</Form.Label>
+                        <Form.Control type="text" ref={EventLocationRef} required/> 
                     </Form.Group>
 
-                    <Form.Group id="gender" >
-                        <Form.Label>Gender</Form.Label>
-                        <div >
-                        <Form.Check
-                            inline
-                            defaultChecked
-                            label="Male"
-                            name="genderGroup"
-                            type="radio"
-                            id="male"
-                        />
-                        <Form.Check
-                            inline  
-                            label="Female"
-                            name="genderGroup"
-                            type="radio"
-                        />
-                        <Form.Check
-                            inline
-                            label="Other"
-                            name="genderGroup"
-                            type="radio"
-                        />         
-                        </div>               
-                        </Form.Group>      
-                <Form.Group id="birthday">
-                <Form.Label>Birthday</Form.Label>
+                   
+                <Form.Group id="EventDate" >
+                <Form.Label>Event Date</Form.Label>
                 <div>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <LocalizationProvider dateAdapter={AdapterDateFns} >
 
-                    <DesktopDatePicker
+                    <DesktopDatePicker 
                         required
-                        inputFormat="dd/MM/yyyy"
+                        inputFormat="dd/MM/yyyy" 
                         value={dateValue}
                         onChange={handleChangeDate}
-                        ref={birthdayRef}
-                        renderInput={(params) => <TextField {...params} />}
+                        ref={EventDateRef}
+                        renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px'}} />}
                     />
                 </LocalizationProvider>
                 </div>
                 </Form.Group>
 
-                <Form.Group  id="profilePicture" className="mb-3 ">
-                    <Form.Label>Upload profile pricture</Form.Label>
+                <Form.Group  id="EventPicture" className="mb-3 ">
+                    <Form.Label>Upload Event Picture</Form.Label>
                     <Form.Control type="file" onChange={handleChangePicture} />
 
                     <Image src={tempImgUrl} alt="" fluid className="w-50 h-50 mt-3 mx-auto d-block" rounded />
 
                 </Form.Group>
 
-                    
-
+                <Form.Group id="Discription" >
+                        <Form.Label>Discription</Form.Label>
+                        <Form.Control type="text" ref={DiscriptionRef} required/> 
+                    </Form.Group>
 
                     <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
-                        Send Data
+                        Create event
                     </Button>
 
                 </Form>               

@@ -10,6 +10,7 @@ import ForgotPassword from './ForgotPassword'
 import UpdateProfile from './UpdateProfile'
 import UserForm from './UserForm'
 import MessageSignUp from './MessageSignUp'
+import CreatEvent from './CreateEvent'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                         <Switch>
                             <PrivateRoute exact path="/" component={Dashboard} />
                             <PrivateRoute  path="/update-profile" component={UpdateProfile} />
+                            <PrivateRoute  path="/creat-event" component={CreatEvent} />
 
                             <Route path="/signup" component={Signup} />
                             <Route path="/messagesignup" component={MessageSignUp} />
