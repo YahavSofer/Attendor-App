@@ -10,6 +10,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import {  useAuth } from '../context/AuthContext'
 
 
+
 export default function UserForm() {
     
 
@@ -24,7 +25,7 @@ export default function UserForm() {
     const {currentUser} = useAuth()
     const [dateValue, setValue] = useState(Date.now())
 
-    storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
+    // storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
     // console.log(tempImgUrl)
 
 
@@ -88,7 +89,7 @@ function handleChangePicture(e) {
             <Card.Body>
                 <h2 className="text-center mb-4">Create Profile</h2>
                 <Form onSubmit = {handleSubmit}>
-                    <Form.Group id="firstName">
+                    <Form.Group id="firstName" >
                         <Form.Label>First Name</Form.Label>
                         <Form.Control type="text" ref={firstNameRef} required/> 
                     </Form.Group>
@@ -135,6 +136,7 @@ function handleChangePicture(e) {
                         ref={birthdayRef}
                         renderInput={(params) => <TextField {...params} />}
                     />
+                    
                 </LocalizationProvider>
                 </div>
                 </Form.Group>
