@@ -24,8 +24,8 @@ export default function UserForm() {
     const [tempImgUrl, setTempImgUrl] =useState(no_Img)
     const {currentUser} = useAuth()
     const [dateValue, setValue] = useState(Date.now())
-    let close_icon
-
+    const [closeIconShow, setCloseIconShow] = useState(false)
+    const fileRef = useRef()
     // storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
     // console.log(tempImgUrl)
 
@@ -38,10 +38,14 @@ const handleChangeDate = (newValue) => {
 function handleChangePicture(e) {
         setImage(e.target.files[0]);
         setTempImgUrl(URL.createObjectURL(e.target.files[0]))
-        
+        setCloseIconShow(true)
           }
       
-
+function OnClickCloseIcon(){
+    setCloseIconShow(false)
+    setTempImgUrl(no_Img)
+    fileRef.current.value = ''
+}
     async function handleSubmit(e){
         e.preventDefault()
 
@@ -144,10 +148,12 @@ function handleChangePicture(e) {
 
                 <Form.Group  id="profilePicture" className="mb-3 ">
                     <Form.Label>Upload profile pricture</Form.Label>
-                    <Form.Control type="file" onChange={handleChangePicture} />
-                    {tempImgUrl !== no_Img} ? <CloseIcon/> : 
+                    <Form.Control ref={fileRef} type="file" onChange={handleChangePicture} />
+                    <Container style={{  display: 'inline-block',position: 'relative'}}>
+                        {closeIconShow ? <CloseIcon  style={{ cursor:'pointer', position: 'absolute',right: '70px',top: '10px',lineHeight :'0'}} onClick={OnClickCloseIcon}/> : null}
+                        <Image src={tempImgUrl} alt="" fluid className="w-50 h-50 mt-3 mx-auto d-block" rounded />
+                    </Container>
 
-                    <Image src={tempImgUrl} alt="" fluid className="w-50 h-50 mt-3 mx-auto d-block" rounded />
                 </Form.Group>
 
                     <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
