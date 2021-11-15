@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react'
-import {Card, Form,Container, Image, ThemeProvider} from 'react-bootstrap'
+import {Card, Form,Container, Image} from 'react-bootstrap'
 import {Button} from '@mui/material'
-import {auth, db,storage} from '../firebaseConfig'
+import {db,storage} from '../firebaseConfig'
 import { setDoc,doc} from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
@@ -17,7 +17,7 @@ export default function UserForm() {
     const firstNameRef = useRef()
     const lastNameRef = useRef()
     const birthdayRef = useRef()
-    const genderRef = useRef()
+    const [gender,setGender] = useState("Other")
     const [loading, setLoading] = useState(false)
     const [image, setImage] = useState(null)
     const [imageUrl, setImageURL] = useState("")
@@ -26,6 +26,7 @@ export default function UserForm() {
     const [dateValue, setValue] = useState(Date.now())
     const [closeIconShow, setCloseIconShow] = useState(false)
     const fileRef = useRef()
+    
     // storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
     // console.log(tempImgUrl)
 
@@ -40,7 +41,11 @@ function handleChangePicture(e) {
         setTempImgUrl(URL.createObjectURL(e.target.files[0]))
         setCloseIconShow(true)
           }
-      
+function handleGenderChange(e){
+    setGender(e.target.id)
+    // console.log(e.target.id)
+}  
+
 function OnClickCloseIcon(){
     setCloseIconShow(false)
     setTempImgUrl(no_Img)
@@ -71,9 +76,9 @@ function OnClickCloseIcon(){
             await setDoc(doc(db, "users",currentUser.uid),{
                 first: firstNameRef.current.value,
                 last: lastNameRef.current.value,
-                birthday: {dateValue},
-                // gender: genderRef.current.value, 
-               profileImage: imageUrl
+                birthday: dateValue,
+                gender: gender, 
+                profileImage: imageUrl
 
 
               });
@@ -106,28 +111,31 @@ function OnClickCloseIcon(){
 
                     <Form.Group id="gender" >
                         <Form.Label>Gender</Form.Label>
-                        <div >
-                        <Form.Check
-                            inline
-                            defaultChecked
-                            label="Male"
-                            name="genderGroup"
-                            type="radio"
-                            id="male"
-                        />
-                        <Form.Check
-                            inline  
-                            label="Female"
-                            name="genderGroup"
-                            type="radio"
-                        />
-                        <Form.Check
-                            inline
-                            label="Other"
-                            name="genderGroup"
-                            type="radio"
-                        />         
-                        </div>               
+                        
+                        <fieldset value={gender} onChange={(event) => handleGenderChange(event)}>
+                                <Form.Check
+                                    inline
+                                    label="Male"
+                                    name="genderGroup"
+                                    type="radio"
+                                    id="male"
+                                />
+                                <Form.Check
+                                    inline  
+                                    label="Female"
+                                    name="genderGroup"
+                                    type="radio"
+                                    id="Female"
+                                />
+                                <Form.Check
+                                    defaultChecked
+                                    inline
+                                    label="Other"
+                                    name="genderGroup"
+                                    type="radio"
+                                    id="Other"
+                                />         
+                        </fieldset>               
                         </Form.Group>      
                 <Form.Group id="birthday">
                 <Form.Label>Birthday</Form.Label>
