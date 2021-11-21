@@ -41,6 +41,10 @@ function handleChangePicture(e) {
         setTempImgUrl(URL.createObjectURL(e.target.files[0]))
         setCloseIconShow(true)
           }
+
+
+
+
 function handleGenderChange(e){
     setGender(e.target.id)
     // console.log(e.target.id)

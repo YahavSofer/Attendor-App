@@ -3,14 +3,33 @@ import {Alert,Card,Form,Container,Row,Col,FloatingLabel} from 'react-bootstrap'
 import { useAuth } from '../context/AuthContext'
 import { Link , useHistory } from 'react-router-dom'
 import {Button} from '@mui/material'
+import { db ,auth} from '../firebaseConfig'
+import {doc , getDoc } from 'firebase/firestore'
 
 export default function Login() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const { login } = useAuth()
+    const {currentUser}= useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useHistory()
+
+async function IsUserAddedDetails(user){
+    try{
+        const userID = user.uid
+        console.log(userID)
+        const docSnap = await getDoc(doc(db, 'users',userID))
+
+        if (docSnap.exists()) {
+            history.push('/')
+          } else {
+            history.push('/userform')
+          }
+    }catch(error){
+            console.log(error)
+        }
+}
 
  async function handleSubmit(e){
         e.preventDefault()
@@ -19,7 +38,15 @@ export default function Login() {
             setError("")
             setLoading(true)
             await login(emailRef.current.value , passwordRef.current.value)
-            history.push("/")
+            auth.onAuthStateChanged(function(user) {
+                if (user) {
+                    console.log(user)
+                    IsUserAddedDetails(user)
+                }
+              });
+           
+            // history.push("/")
+            
         }catch{
             setError('Email or Password are incorect')
         }

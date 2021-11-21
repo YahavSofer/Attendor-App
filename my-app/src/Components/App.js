@@ -18,23 +18,27 @@ function App() {
         
         <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}} >   {/**/}
           <div className='w-100'>
-          
+              
                   <Router>
                       <AuthProvider>
+                      
                         <Switch>
                             <PrivateRoute exact path="/" component={Dashboard} />
                             <PrivateRoute  path="/update-profile" component={UpdateProfile} />
                             <PrivateRoute  path="/creat-event" component={CreatEvent} />
-
+                            
                             <Route path="/signup" component={Signup} />
                             <Route path="/messagesignup" component={MessageSignUp} />
-                            <Route path="/userform" component={UserForm} />
+                            <PrivateRoute path="/userform" component={UserForm} />
+                            
                             <Route path="/login" component={Login} />
                             <Route path="/forgot-password" component={ForgotPassword} />
 
                         </Switch>
+                        
                       </AuthProvider>
                   </Router>
+             
           </div>
           
         </Container>
