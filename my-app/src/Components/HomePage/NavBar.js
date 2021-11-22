@@ -16,6 +16,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Attendor_img from '../../images/logo12.png'
+import { useHistory } from 'react-router-dom'
+import {  useAuth } from '../../context/AuthContext'
+
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -58,12 +61,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const history = useHistory()
+  const {currentUser , logout} = useAuth()
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  async function handleLogout(){
+    try{
+        await logout()
+        history.push('/login')
+    }catch{
+        console.log('Failed to log out');
+    }
+  
+  } 
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -73,14 +91,27 @@ export default function NavBar() {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (e) => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    if(e.target.textContent== 'Profile'){
+      history.push('/profile')
+    }
+    else{
+      handleLogout()
+    }
+    
+    
   };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+
+
+
+
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -100,7 +131,7 @@ export default function NavBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -157,7 +188,7 @@ export default function NavBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+  <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
           <IconButton
@@ -188,7 +219,7 @@ export default function NavBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="error">
                 <MailIcon />
               </Badge>
@@ -201,7 +232,7 @@ export default function NavBar() {
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"
@@ -231,5 +262,5 @@ export default function NavBar() {
       {renderMobileMenu}
       {renderMenu}
     </Box>
-  );
+  )
 }

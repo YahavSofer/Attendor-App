@@ -22,7 +22,7 @@ async function IsUserAddedDetails(user){
         const docSnap = await getDoc(doc(db, 'users',userID))
 
         if (docSnap.exists()) {
-            history.push('/')
+            history.push('/home')
           } else {
             history.push('/userform')
           }
