@@ -94,12 +94,13 @@ export default function NavBar() {
   const handleMenuClose = (e) => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    if(e.target.textContent== 'Profile'){
+    if(e.target.textContent=== 'Profile'){
       history.push('/profile')
     }
-    else{
+    else if (e.target.textContent=== 'Log Out'){
       handleLogout()
     }
+
     
     
   };

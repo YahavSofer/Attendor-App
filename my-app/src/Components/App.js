@@ -20,8 +20,8 @@ function App() {
             <AuthProvider>
                      
                 <Switch>
-                <NavBar/>
-                    <PrivateRoute  exact path="/home" component={HomePage} />
+                {/* <NavBar/> */}
+                    <PrivateRoute  exact path="/" component={HomePage} />
                     <PrivateRoute  path="/update-profile" component={UpdateProfile} />
                     <PrivateRoute  path="/profile" component={UserProfile} />
                     <PrivateRoute  path="/create-event" component={CreateEvent} />                     
