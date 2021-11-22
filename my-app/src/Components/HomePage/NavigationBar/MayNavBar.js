@@ -1,4 +1,4 @@
-import React, { useState,useEffect, Children } from 'react'
+import React, { useState,useEffect} from 'react'
 import NavBar from './NavBar'
 import { useLocation } from 'react-router';
 
@@ -20,12 +20,12 @@ export default function MayNavBar() {
             setIsNavbarHidden(false) 
             console.log("IsNavbarHidden is falase" )
         }
-    },[location])
+    })
 
     return (
             <>
             {isNavbarHidden ? <NavBar /> :  null }
-            
+
             </>
     )
 }

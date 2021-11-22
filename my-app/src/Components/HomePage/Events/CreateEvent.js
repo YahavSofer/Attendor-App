@@ -1,14 +1,14 @@
 import React, {useRef, useState} from 'react'
 import {Card, Form,Container, Image} from 'react-bootstrap'
 import {Button} from '@mui/material'
-import {db,storage} from '../firebaseConfig'
+import {db,storage} from '../../../firebaseConfig'
 import { setDoc,doc} from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import {  useAuth } from '../context/AuthContext'
-import no_Img from '../images/no-image-available.jpeg'
+import {  useAuth } from '../../../context/AuthContext'
+import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
 
 export default function UserForm() {

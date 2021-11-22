@@ -15,9 +15,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Attendor_img from '../../images/logo12.png'
+import Attendor_img from '../../../images/logo12.png'
 import { useHistory } from 'react-router-dom'
-import {  useAuth } from '../../context/AuthContext'
+import {  useAuth } from '../../../context/AuthContext'
 
 
 

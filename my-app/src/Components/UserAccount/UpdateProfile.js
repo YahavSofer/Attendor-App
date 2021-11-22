@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react'
 import {Alert, Button, Card, Form} from 'react-bootstrap'
-import { useAuth } from '../context/AuthContext'
 import { Link ,useHistory } from 'react-router-dom'
+import {useAuth} from '../../context/AuthContext'
 
 
 export default function UpdateProfile() {

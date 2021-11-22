@@ -1,9 +1,9 @@
 import React, {useRef, useState} from 'react'
 import {Alert,Card,Form,Container,Row,Col,FloatingLabel} from 'react-bootstrap'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 import { Link , useHistory } from 'react-router-dom'
 import {Button} from '@mui/material'
-import { db ,auth} from '../firebaseConfig'
+import { db ,auth} from '../../firebaseConfig'
 import {doc , getDoc } from 'firebase/firestore'
 
 export default function Login() {
