@@ -1,16 +1,10 @@
-import React , {useRef, useState} from 'react'
+import React from 'react'
 import { Container } from 'react-bootstrap'
-import NavBar from './NavBar'
-
-
-
-
 
 export default function HomePage() {
     return (
         <>
     <div>
-      {/* <NavBar/> */}
         <Container>
         yahav yahav ayava
             

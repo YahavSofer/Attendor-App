@@ -26,7 +26,7 @@ export default function Signup() {
             setLoading(true)
             await signup(emailRef.current.value , passwordRef.current.value)
 
-            history.push("/messagesignup")
+            history.push("/landingPage/messagesignup")
 
         }catch{
             setError('Failed to create an account')
@@ -65,7 +65,7 @@ export default function Signup() {
             </Card.Body>
         </Card>
             <div className="w-100 text-center mt-2"> 
-                Already have an account ? <Link to='/login'>Log In</Link>    
+                Already have an account ? <Link to='/landingPage/login'>Log In</Link>    
             </div>
             </Container>
     </>

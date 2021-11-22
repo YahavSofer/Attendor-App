@@ -24,7 +24,7 @@ async function IsUserAddedDetails(user){
         if (docSnap.exists()) {
             history.push('/')
           } else {
-            history.push('/userform')
+            history.push('/landingPage/userform')
           }
     }catch(error){
             console.log(error)
@@ -85,7 +85,7 @@ async function IsUserAddedDetails(user){
                     </Card.Body>
                 </Card>
                     <div className="w-100 text-center mt-2" style={{fontSize: '20px'}}> 
-                        Don't have account ? <Link to='/signup'>Sign Up</Link>    
+                        Don't have account ? <Link to='/landingPage/signup'>Sign Up</Link>    
                     </div>
 
         </Col>

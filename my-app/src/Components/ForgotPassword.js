@@ -64,7 +64,7 @@ const theme = createTheme({
                         </Card.Body>
                     </Card>
             <div className="w-100 text-center mt-2"> 
-                Don't have account ? <Link to='/signup'>Sign Up</Link>    
+                Don't have account ? <Link to='/landingPage/signup'>Sign Up</Link>    
             </div>               
                 </Col>
 
