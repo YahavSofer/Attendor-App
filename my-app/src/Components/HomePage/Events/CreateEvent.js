@@ -91,7 +91,8 @@ function OnClickCloseIcon(){
     return (
         
         <>
-        
+        <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
+        <div className='w-100'> 
         <Container style={{minWidth:'350px',maxWidth:'400px'}}>
         <Card className='shadow rounded' style={{background:'#83c5be'}}>
             <Card.Body>
@@ -147,6 +148,8 @@ function OnClickCloseIcon(){
         </Card>
 
             </Container>
+            </div>
+</Container>   
     </>
     )
 }

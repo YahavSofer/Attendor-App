@@ -14,7 +14,7 @@ export default function UserProfile() {
 
         try{
             await logout()
-            history.push('/landingPage/login')
+            history.push('/')
         }catch{
             setError('Failed to log out')
         }

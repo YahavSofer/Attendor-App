@@ -22,9 +22,9 @@ async function IsUserAddedDetails(user){
         const docSnap = await getDoc(doc(db, 'users',userID))
 
         if (docSnap.exists()) {
-            history.push('/')
+            history.push('/user')
           } else {
-            history.push('/landingPage/userform')
+            history.push('/userform')
           }
     }catch(error){
             console.log(error)
@@ -55,6 +55,9 @@ async function IsUserAddedDetails(user){
     }
     return (
         <>
+
+<       Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
+        <div className='w-100'> 
     <Container className='flex-warp'> 
         <Row>
             <Col style={{minWidth:'350px',maxWidth:'400px'}}>
@@ -85,7 +88,7 @@ async function IsUserAddedDetails(user){
                     </Card.Body>
                 </Card>
                     <div className="w-100 text-center mt-2" style={{fontSize: '20px'}}> 
-                        Don't have account ? <Link to='/landingPage/signup'>Sign Up</Link>    
+                        Don't have account ? <Link to='/signup'>Sign Up</Link>    
                     </div>
 
         </Col>
@@ -97,7 +100,8 @@ async function IsUserAddedDetails(user){
         </Col>
         </Row>
     </Container>
-
+    </div>
+</Container>     
     </>
     )
 }

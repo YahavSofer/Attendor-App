@@ -1,30 +1,30 @@
 import React, { useState,useEffect} from 'react'
 import NavBar from './NavBar'
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 
 export default function MayNavBar() {
-    const [isNavbarHidden,setIsNavbarHidden] = useState(false)
+    const [isNavbarVisability,setIsNavbarVisability] = useState(false)
     const location = useLocation()
 
    useEffect(() =>{
         const currentRoute = location.pathname
         // console.log(currentRoute)
-        const containsLandingPage = currentRoute.includes("landingPage") //reaturn True if the route is before sign in 
+        const containsLandingPage = currentRoute.includes("user") //reaturn True if the user didnt sign in 
         // console.log(containsLandingPage);
-        if  (!containsLandingPage) {
-          setIsNavbarHidden(true) 
-          console.log("IsNavbarHidden is true" )
+        if  (containsLandingPage) {
+            setIsNavbarVisability(true) 
+        //   console.log("show NavBar" )
         }
         else{
-            setIsNavbarHidden(false) 
-            console.log("IsNavbarHidden is falase" )
+            setIsNavbarVisability(false) 
+            // console.log("hide NavBar" )
         }
-    })
+    },[])
 
     return (
             <>
-            {isNavbarHidden ? <NavBar /> :  null }
+            {isNavbarVisability ? <NavBar /> :  null }
 
             </>
     )

@@ -40,7 +40,10 @@ const theme = createTheme({
         
     }
     return (
-        <>
+        <>        
+        
+        <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
+        <div className='w-100'> 
         <Container  className='flex-warp'>
             <Row>
                 <Col style={{minWidth:'350px',maxWidth:'400px'}}>
@@ -64,14 +67,15 @@ const theme = createTheme({
                         </Card.Body>
                     </Card>
             <div className="w-100 text-center mt-2"> 
-                Don't have account ? <Link to='/landingPage/signup'>Sign Up</Link>    
+                Don't have account ? <Link to='/signup'>Sign Up</Link>    
             </div>               
                 </Col>
 
             </Row>
 
         </Container>
- 
+        </div>
+</Container>     
     </>
     )
 }

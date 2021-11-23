@@ -4,6 +4,8 @@ import {Card,Container} from 'react-bootstrap'
 export default function MessageSignUp() {
     return (
         <>
+        <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
+        <div className='w-100'> 
         <Container style={{minWidth:'350px',maxWidth:'400px'}}>
         <Card className='shadow rounded' style={{minHeight:'400px',background:'#83c5be'}}>
             <Card.Body>
@@ -15,6 +17,9 @@ export default function MessageSignUp() {
             </Card.Body>
         </Card>
             </Container>
+
+            </div>
+</Container>     
     </>
     )
 }

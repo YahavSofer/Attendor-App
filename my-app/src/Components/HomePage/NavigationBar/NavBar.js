@@ -75,7 +75,7 @@ export default function NavBar() {
   async function handleLogout(){
     try{
         await logout()
-        history.push('/landingPage/login')
+        history.push('/')
     }catch{
         console.log('Failed to log out');
     }

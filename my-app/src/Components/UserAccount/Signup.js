@@ -26,7 +26,7 @@ export default function Signup() {
             setLoading(true)
             await signup(emailRef.current.value , passwordRef.current.value)
 
-            history.push("/landingPage/messagesignup")
+            history.push("/messagesignup")
 
         }catch{
             setError('Failed to create an account')
@@ -36,6 +36,8 @@ export default function Signup() {
     }
     return (
         <>
+        <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
+        <div className='w-100'> 
         <Container style={{minWidth:'350px',maxWidth:'400px'}}>
         <Card className='shadow rounded' style={{background:'#83c5be'}}>
             <Card.Body>
@@ -65,9 +67,11 @@ export default function Signup() {
             </Card.Body>
         </Card>
             <div className="w-100 text-center mt-2"> 
-                Already have an account ? <Link to='/landingPage/login'>Log In</Link>    
+                Already have an account ? <Link to='/'>Log In</Link>    
             </div>
             </Container>
+            </div>
+</Container>    
     </>
     )
 }
