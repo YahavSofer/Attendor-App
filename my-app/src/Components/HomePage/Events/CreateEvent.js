@@ -12,7 +12,7 @@ import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
 import { format } from 'date-fns'
 
-export default function UserForm() {
+export default function CreateEvent() {
 
 
     const eventTitleRef = useRef()
