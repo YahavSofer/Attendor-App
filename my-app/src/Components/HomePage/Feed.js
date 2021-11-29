@@ -5,15 +5,12 @@ export default function Feed() {
     return (
         <>
     <div>
-        <Container>
-        
-            
+    {/* this is the way to render the posts */}
 
-        <div style={{height:'1000px'}}>
-            yahav yahav ayava
-        </div>
+    {/* {EventsData.map((p) => (
+          <Event key={p.id} post={p} />
+        ))} */}                             
 
-        </Container>
         
     </div>
     </>

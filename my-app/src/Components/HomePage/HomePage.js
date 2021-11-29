@@ -1,19 +1,24 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Container,Row,Col,Card} from 'react-bootstrap'
+import './Style/HomePage.css'
 
-export default function Feed() {
+export default function HomePage() {
     return (
         <>
-    <div>
-        <Container>
-        
-            
-
-        <div style={{height:'1000px'}}>
-            yahav yahav ayava
-        </div>
-
+    <div className='bodyDiv'>         
+        <Container className='flex-warp' fluid>
+            <Row>
+                <Col xl={8}>
+                    Events Feed
+                </Col>
+                <Col xs={2}>
+                    <div className='sticky' >
+                        Sticky sidebar
+                    </div>
+                </Col>
+            </Row>
         </Container>
+
         
     </div>
     </>

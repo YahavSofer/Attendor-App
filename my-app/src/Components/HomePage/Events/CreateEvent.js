@@ -1,8 +1,8 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef, useState,useEffect} from 'react'
 import {Card, Form,Container, Image} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../../firebaseConfig'
-import { setDoc,doc} from "firebase/firestore"
+import { addDoc,doc,getDocs,collection, query, where  } from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
@@ -10,11 +10,12 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import {  useAuth } from '../../../context/AuthContext'
 import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
+import { format } from 'date-fns'
 
 export default function UserForm() {
 
 
-    const eventNameRef = useRef()
+    const eventTitleRef = useRef()
     const eventLocationRef = useRef()
     const eventDateRef = useRef()
     const discriptionRef = useRef()
@@ -23,14 +24,9 @@ export default function UserForm() {
     const [imageUrl, setImageURL] = useState("")
     const [tempImgUrl, setTempImgUrl] =useState(no_Img)
     const {currentUser} = useAuth()
-    const [dateValue, setValue] = useState(Date.now())
+    const [dateValue, setValue] = useState(Date(Date.now()))
     const [closeIconShow, setCloseIconShow] = useState(false)
     const fileRef = useRef()
-    
-    // storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
-    // console.log(tempImgUrl)
-
-
 
 const handleChangeDate = (newValue) => {
           setValue(newValue);
@@ -48,37 +44,61 @@ function OnClickCloseIcon(){
     setTempImgUrl(no_Img)
     fileRef.current.value = ''
 }
+
+async function CountUserEvents(){
+    const eventsDB = collection(db, "Events")
+    const q = query(eventsDB, where("userid", "==", currentUser.uid)); 
+    const querySnapshot = await getDocs(q).then(res =>{
+            return res.size
+        })
+    return querySnapshot
+}  
+
+async function handleCreatePathName(){
+    const eventCounter = ((await CountUserEvents()))
+    const imgPath = currentUser.uid + '_' + eventCounter + '_event'
+    console.log(imgPath , eventCounter)
+    return imgPath
+}
+
     async function handleSubmit(e){
         e.preventDefault()
-
+        
         try{
             setLoading(true)
 
             if(image !== null){
-                        const ref = storage.ref(`/images/event_pictures/${currentUser.uid}_event`);
-                        const uploadTask = ref.put(image);
-                        uploadTask.on("state_changed", console.log, console.error, () => {
-                        ref
-                            .getDownloadURL()
-                            .then((imageUrl) => {
-                                setImage(null);
-                                setImageURL(imageUrl);
-                            });
+                const path = await handleCreatePathName()
+                const ref = storage.ref(`/images/event_pictures/${path}`);
+
+                const uploadTask = ref.put(image);
+                uploadTask.on("state_changed", console.log, console.error,() => {
+                    ref
+                        .getDownloadURL()
+                        .then(async (url)=>{
+                            await addDoc(collection(db, "Events"),{
+                                userid: currentUser.uid,
+                                title: eventTitleRef.current.value,
+                                location: eventLocationRef.current.value,
+                                eventDate: dateValue,
+                                eventImage: url, 
+                                discription: discriptionRef.current.value              
+                
+                              });
+                        
+                        
                         });
-                }
+                })}
 
+            // await addDoc(collection(db, "Events"),{
+            //     userid: currentUser.uid,
+            //     title: eventTitleRef.current.value,
+            //     location: eventLocationRef.current.value,
+            //     eventDate: dateValue,
+            //     eventImage: imageUrl, 
+            //     discription: discriptionRef.current.value              
 
-
-
-            await setDoc(doc(db, "Events",currentUser.uid),{
-                name: eventNameRef.current.value,
-                location: eventLocationRef.current.value,
-                eventDate: {dateValue},
-                eventImage: imageUrl, 
-                discription: discriptionRef.current.value
-
-
-              });
+            //   });
 
 
         }catch(e){
@@ -99,8 +119,8 @@ function OnClickCloseIcon(){
                 <h2 className="text-center mb-4">Create New Event</h2>
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="eventname" >
-                        <Form.Label>Event Name</Form.Label>
-                        <Form.Control type="text" ref={eventNameRef} required/> 
+                        <Form.Label>Event Title</Form.Label>
+                        <Form.Control type="text" ref={eventTitleRef} required/> 
                     </Form.Group>
                     <Form.Group id="eventlocation">
                         <Form.Label>Event Location</Form.Label>

@@ -23,7 +23,7 @@ export default function UserForm() {
     const [imageUrl, setImageURL] = useState("")
     const [tempImgUrl, setTempImgUrl] =useState(no_Img)
     const {currentUser} = useAuth()
-    const [dateValue, setValue] = useState(Date.now())
+    const [dateValue, setValue] = useState(Date(Date.now()))
     const [closeIconShow, setCloseIconShow] = useState(false)
     const fileRef = useRef()
     
