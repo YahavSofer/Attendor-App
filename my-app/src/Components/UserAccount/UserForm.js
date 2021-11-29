@@ -67,16 +67,20 @@ function OnClickCloseIcon(){
                         uploadTask.on("state_changed", console.log, console.error, () => {
                         ref
                             .getDownloadURL()
-                            .then((imageUrl) => {
+                            .then(async (url) => {
                                 setImage(null);
-                                setImageURL(imageUrl);
+                                await setDoc(doc(db, "users",currentUser.uid),{
+                                    first: firstNameRef.current.value,
+                                    last: lastNameRef.current.value,
+                                    birthday: dateValue,
+                                    gender: gender, 
+                                    profileImage: url
                             });
                         });
                 }
+                        )}
 
-
-
-
+            else{
             await setDoc(doc(db, "users",currentUser.uid),{
                 first: firstNameRef.current.value,
                 last: lastNameRef.current.value,
@@ -86,6 +90,7 @@ function OnClickCloseIcon(){
 
 
               });
+            }
 
 
         }catch(e){
