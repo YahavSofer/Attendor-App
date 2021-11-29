@@ -89,16 +89,16 @@ async function handleCreatePathName(){
                         
                         });
                 })}
+            else{        
+            await addDoc(collection(db, "Events"),{
+                userid: currentUser.uid,
+                title: eventTitleRef.current.value,
+                location: eventLocationRef.current.value,
+                eventDate: dateValue,
+                eventImage: imageUrl, 
+                discription: discriptionRef.current.value              
 
-            // await addDoc(collection(db, "Events"),{
-            //     userid: currentUser.uid,
-            //     title: eventTitleRef.current.value,
-            //     location: eventLocationRef.current.value,
-            //     eventDate: dateValue,
-            //     eventImage: imageUrl, 
-            //     discription: discriptionRef.current.value              
-
-            //   });
+              });}
 
 
         }catch(e){
