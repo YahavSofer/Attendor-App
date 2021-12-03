@@ -27,6 +27,9 @@ export default function CreateEvent() {
     const [dateValue, setValue] = useState(Date(Date.now()))
     const [closeIconShow, setCloseIconShow] = useState(false)
     const fileRef = useRef()
+    const costRef = useRef()
+    const minPartiRef = useRef()
+    const maxPartiRef = useRef()
 
 const handleChangeDate = (newValue) => {
           setValue(newValue);
@@ -82,6 +85,9 @@ async function handleCreatePathName(){
                                 location: eventLocationRef.current.value,
                                 eventDate: dateValue,
                                 eventImage: url, 
+                                eventCost: costRef.current.value,
+                                eventMinParti: minPartiRef.current.value,
+                                eventMaxParti: maxPartiRef.current.value,
                                 discription: discriptionRef.current.value              
                 
                               });
@@ -96,6 +102,9 @@ async function handleCreatePathName(){
                         location: eventLocationRef.current.value,
                         eventDate: dateValue,
                         eventImage: imageUrl, 
+                        eventCost: costRef.current.value,
+                        eventMinParti: minPartiRef.current.value,
+                        eventMaxParti: maxPartiRef.current.value,
                         discription: discriptionRef.current.value              
 
                     });
@@ -135,7 +144,7 @@ async function handleCreatePathName(){
                     <DesktopDatePicker
                         
                         required
-                        inputFormat="dd/MM/yyyy"
+                        inputFormat="hh:mm dd/MM/yyyy"
                         value={dateValue}
                         onChange={handleChangeDate}
                         ref={eventDateRef}
@@ -144,6 +153,7 @@ async function handleCreatePathName(){
                 </LocalizationProvider>
                 </div>
                 </Form.Group>
+                {/* https://mui.com/components/pickers/ */}
 
                 <Form.Group  id="eventPicture" className="mb-3 ">
                     <Form.Label>Upload Event pricture</Form.Label>
@@ -154,6 +164,24 @@ async function handleCreatePathName(){
                     </Container>
 
                 </Form.Group>
+
+                {/* <Form.Group id="cost" className="mb-3">
+                    <Form.Control aria-label="Amount (to the nearest shekel)" ref={costRef}/>
+                    <Form.Group.Text>₪</Form.Group.Text>
+                    <Form.Group.Text>.00</Form.Group.Text>
+                </Form.Group> */}
+                {/* https://react-bootstrap.github.io/components/input-group/ */}
+
+                <Form.Group id="Minimum Participants" >
+                        <Form.Label>Minimum Participants</Form.Label>
+                        <Form.Control type="number" ref={minPartiRef} required/> 
+                </Form.Group>
+
+                <Form.Group id="Maximum Participants" >
+                        <Form.Label>Maximum Participants</Form.Label>
+                        <Form.Control type="number" ref={maxPartiRef} required/> 
+                </Form.Group>
+
 
                 <Form.Group id="discription" >
                         <Form.Label>Discription</Form.Label>

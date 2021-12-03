@@ -13,7 +13,6 @@ import MessageSignUp from './UserAccount/MessageSignUp'
 import CreateEvent from './HomePage/Events/CreateEvent'
 import Feed from "./HomePage/Feed";
 import MayNavBar from "./HomePage/NavigationBar/MayNavBar";
-
 import AccountRoutes from "./AccountRoutes";
 import HomePageRoutes from "./HomePageRoutes"
 
