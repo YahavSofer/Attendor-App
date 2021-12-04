@@ -11,7 +11,7 @@ import UpdateProfile from './UserAccount/UpdateProfile'
 import UserForm from './UserAccount/UserForm'
 import MessageSignUp from './UserAccount/MessageSignUp'
 import CreateEvent from './HomePage/Events/CreateEvent'
-import Feed from "./HomePage/Feed";
+import Feed from "./HomePage/Feed/Feed";
 import MayNavBar from "./HomePage/NavigationBar/MayNavBar";
 
 import AccountRoutes from "./AccountRoutes";

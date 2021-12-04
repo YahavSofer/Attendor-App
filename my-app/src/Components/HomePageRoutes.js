@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container} from 'react-bootstrap'
 import {useRouteMatch, Switch} from 'react-router-dom'
-import Feed from './HomePage/Feed'
+import Feed from './HomePage/Feed/Feed'
 import UserProfile from './HomePage/UserProfile'
 import MayNavBar from './HomePage/NavigationBar/MayNavBar'
 import CreateEvent from './HomePage/Events/CreateEvent'
