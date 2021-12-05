@@ -11,9 +11,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import img from '../../../images/logo11.png'
 
 
-export default function Event() {
+export default function Event({event: { discription,title }}) {
 
-
+  function keepOnFormatStr(str)  {
+    return str.replaceAll("\\\\n", "\n").replaceAll("\\\\r", '\r').replaceAll('\\\\t', '\t');
+}  
+  const discriptionText = {discription}.discription
+  const discFormated = keepOnFormatStr(discriptionText) ;
+  // console.log(discriptionText);
+  // console.log(discFormated)
 
   const ReadMore = ({ children }) => {
     const text = children;
@@ -21,6 +27,7 @@ export default function Event() {
     const toggleReadMore = () => {
       setIsReadMore(!isReadMore);
     };
+
     return (
       <p className="text">
         {isReadMore ? text.slice(0, 150) : text}
@@ -35,7 +42,7 @@ export default function Event() {
 
   return (
 
-    <Card sx={{ maxWidth: '100%' }}>
+    <Card sx={{ maxWidth: '100%',marginBottom:'16px' }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">    {/*put aria-label=user name*/}
@@ -49,7 +56,7 @@ export default function Event() {
       </IconButton>  
         }
 
-        title="Shrimp and Chorizo Paella"    // event title
+        title={title}    // event title
         subheader="September 14, 2016"       // event Date&time
       />
 
@@ -65,18 +72,10 @@ export default function Event() {
 
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-        <ReadMore>
-          GeeksforGeeks: A Computer Science portal for geeks. 
-          It contains well written, well thought and well explained
-          computer science, programming articles and quizzes. 
-          It provides a variety of services for you to learn, so thrive
-          and also have fun! Free Tutorials, Millions of Articles, Live, 
-          Online and Classroom Courses ,Frequent Coding Competitions,
-          Webinars by Industry Experts, Internship opportunities, and Job
-          Opportunities. Knowledge is power!
-        </ReadMore>
+        <ReadMore children={discFormated}/>
         </Typography>
       </CardContent>
     </Card>
+
   );
 }

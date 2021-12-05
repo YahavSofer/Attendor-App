@@ -15,9 +15,11 @@ export default function HomePageRoutes(){
 
     return (
             <div>
-            {console.log({match})}
+            {/* {console.log({match})} */}
+            <div style={{marginBottom:'12%'}}>
             <MayNavBar/>
-            <Container style={{marginTop:'10%'}}>
+            </div>
+            <Container  >
                     <Switch>
                             <PrivateRoute  exact path={`${match.url}/`} component={HomePage} />
                             <PrivateRoute  exact path={`${match.url}/feed`} component={Feed} />

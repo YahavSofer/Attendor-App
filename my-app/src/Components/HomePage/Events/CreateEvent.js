@@ -31,6 +31,11 @@ export default function CreateEvent() {
     const minPartiRef = useRef()
     const maxPartiRef = useRef()
 
+
+function keepOnFormatStr(str)  {
+        return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
+    }    
+
 const handleChangeDate = (newValue) => {
           setValue(newValue);
         };
@@ -85,7 +90,7 @@ async function handleCreatePathName(){
                                 location: eventLocationRef.current.value,
                                 eventDate: dateValue,
                                 eventImage: url, 
-                                eventCost: costRef.current.value,
+                                // eventCost: costRef.current.value,
                                 eventMinParti: minPartiRef.current.value,
                                 eventMaxParti: maxPartiRef.current.value,
                                 discription: discriptionRef.current.value              
@@ -102,15 +107,15 @@ async function handleCreatePathName(){
                         location: eventLocationRef.current.value,
                         eventDate: dateValue,
                         eventImage: imageUrl, 
-                        eventCost: costRef.current.value,
+                        // eventCost: costRef.current.value,
                         eventMinParti: minPartiRef.current.value,
                         eventMaxParti: maxPartiRef.current.value,
-                        discription: discriptionRef.current.value              
+                        discription: keepOnFormatStr(discriptionRef.current.value)              
 
                     });
             }
 
-
+            console.log('event added!');
         }catch(e){
             console.error("Error adding document: ", e);
         }
@@ -185,7 +190,7 @@ async function handleCreatePathName(){
 
                 <Form.Group id="discription" >
                         <Form.Label>Discription</Form.Label>
-                        <Form.Control type="text" as="textarea" rows={5} ref={discriptionRef} required/> 
+                        <Form.Control type="text" multiline as="textarea" rows={5} ref={discriptionRef} required/> 
                     </Form.Group>
 
                     <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
