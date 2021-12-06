@@ -14,24 +14,28 @@ import img from '../../../images/logo11.png'
 export default function Event({event: { discription,title }}) {
 
   function keepOnFormatStr(str)  {
-    return str.replaceAll("\\\\n", "\n").replaceAll("\\\\r", '\r').replaceAll('\\\\t', '\t');
+    return str.replaceAll("\\\\n", '\n').replaceAll("\\\\r", '\r').replaceAll('\\\\t', '\t');
 }  
   const discriptionText = {discription}.discription
   const discFormated = keepOnFormatStr(discriptionText) ;
-  // console.log(discriptionText);
+  const newText = discFormated.split('\n').map(str => <>{str}<br/></>);
+  // console.log(newText);
   // console.log(discFormated)
 
   const ReadMore = ({ children }) => {
-    const text = children;
+
+    const text = children
+
     const [isReadMore, setIsReadMore] = useState(true);
     const toggleReadMore = () => {
       setIsReadMore(!isReadMore);
     };
 
     return (
-      <p className="text">
+      <p className="text" >
+
         {isReadMore ? text.slice(0, 150) : text}
-        <span onClick={toggleReadMore} className="read-or-hide" style={{color:'blue' ,textDecoration:'underline'}}>
+        <span onClick={toggleReadMore} style={{color:'blue' ,textDecoration:'underline'}}>
           {isReadMore ? "...read more" : " show less"}
         </span>
       </p>
@@ -52,7 +56,7 @@ export default function Event({event: { discription,title }}) {
       
       action={
         <IconButton aria-label="add to favorites">
-        <FavoriteIcon />
+        <FavoriteIcon  />
       </IconButton>  
         }
 
@@ -71,8 +75,10 @@ export default function Event({event: { discription,title }}) {
 
 
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-        <ReadMore children={discFormated}/>
+        <Typography component={'span'} variant="body2" color="text.secondary">
+
+        <ReadMore children={newText} />
+
         </Typography>
       </CardContent>
     </Card>

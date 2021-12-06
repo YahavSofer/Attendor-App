@@ -6,11 +6,14 @@ import { addDoc,doc,getDocs,collection, query, where  } from "firebase/firestore
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
+import DateTimePicker from '@mui/lab/DateTimePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import {  useAuth } from '../../../context/AuthContext'
 import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
 import { format } from 'date-fns'
+
+{/* https://mui.com/components/pickers/ */}
 
 export default function CreateEvent() {
 
@@ -134,19 +137,32 @@ async function handleCreatePathName(){
                 <h2 className="text-center mb-4">Create New Event</h2>
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="eventname" >
-                        <Form.Label>Event Title</Form.Label>
-                        <Form.Control type="text" ref={eventTitleRef} required/> 
+                        {/* <Form.Label>Event Title</Form.Label>     */}
+                        {/* <Form.Control type="text" ref={eventTitleRef} required/>  */}
+                        <TextField  ref={eventTitleRef} id="outlined-basic" size="small" label="Event Title" variant="outlined" required style={{background:'white',borderRadius:'5px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
                     <Form.Group id="eventlocation">
-                        <Form.Label>Event Location</Form.Label>
-                        <Form.Control type="text" ref={eventLocationRef} required/> 
+                        {/* <Form.Label>Event Location</Form.Label> */}
+                        {/* <Form.Control type="text" ref={eventLocationRef} required/>  */}
+                        <TextField  required ref={eventLocationRef} id="outlined-basic" size="small" label="Event Location" variant="outlined" required style={{background:'white',borderRadius:'5px',marginTop:'20px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
 
                 <Form.Group id="eventDate">
-                <Form.Label>Event Date</Form.Label>
+                <Form.Label></Form.Label>
                 <div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DesktopDatePicker
+                     <DateTimePicker
+                            required
+                            label="Event Date"
+                            value={dateValue}
+                            onChange={handleChangeDate}
+                            ref={eventDateRef}
+                            renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px'}}  />}
+                        />
+
+
+
+                    {/* <DesktopDatePicker
                         
                         required
                         inputFormat="hh:mm dd/MM/yyyy"
@@ -154,11 +170,12 @@ async function handleCreatePathName(){
                         onChange={handleChangeDate}
                         ref={eventDateRef}
                         renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px'}} />}
-                                            />
+                                            /> */}
+
                 </LocalizationProvider>
-                </div>
-                </Form.Group>
-                {/* https://mui.com/components/pickers/ */}
+            </div>
+        </Form.Group>
+                
 
                 <Form.Group  id="eventPicture" className="mb-3 ">
                     <Form.Label>Upload Event pricture</Form.Label>
