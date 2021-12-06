@@ -1,17 +1,22 @@
 import React, {useRef, useState,useEffect} from 'react'
-import {Card, Form,Container, Image} from 'react-bootstrap'
+import {Card, Form,Container, Image,InputGroup} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../../firebaseConfig'
 import { addDoc,doc,getDocs,collection, query, where  } from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
+// import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import {  useAuth } from '../../../context/AuthContext'
 import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
-import { format } from 'date-fns'
+// import { format } from 'date-fns'
 
 {/* https://mui.com/components/pickers/ */}
 
@@ -160,6 +165,8 @@ async function handleCreatePathName(){
                             renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px'}}  />}
                         />
 
+            {/* it didnt work for you, because you used with DesktopDatePicker and its just Date without Time.
+            I changed it to DateTimePicker */}
 
 
                     {/* <DesktopDatePicker
@@ -192,6 +199,16 @@ async function handleCreatePathName(){
                     <Form.Group.Text>₪</Form.Group.Text>
                     <Form.Group.Text>.00</Form.Group.Text>
                 </Form.Group> */}
+
+                <Form.Group id="cost" className="mb-3">
+                <Form.Label htmlFor="inlineFormInputGroup" >
+                        Event Cost
+                    </Form.Label>
+                    <InputGroup className="mb-2">
+                        <InputGroup.Text>$</InputGroup.Text>
+                        <Form.Control id="inlineFormInputGroup" placeholder="Free" />
+                    </InputGroup>
+                    </Form.Group>
                 {/* https://react-bootstrap.github.io/components/input-group/ */}
 
                 <Form.Group id="Minimum Participants" >
