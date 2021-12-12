@@ -11,6 +11,21 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import {db,storage} from '../../../firebaseConfig'
 import { ref, getDownloadURL } from "firebase/storage";
 import { addDoc,doc,getDocs,collection, query, where,Timestamp } from "firebase/firestore"
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+
+
+const AttendUnClickedButtonStyle ={
+  backgroundColor:"#83c5be",
+};
+
+const AttendClickedButtonStyle ={
+  backgroundColor: 'gray' ,
+};
+
+const LikeClickedButtonStyle ={
+  color:red[500],
+};
 
 
 export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,userid }}) {
@@ -22,13 +37,27 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   const descriptionText = {description}.description
   const descFormated = keepOnFormatStr(descriptionText) ;
   const newText = descFormated.split('\n').map(str => <>{str}<br/></>);
-
+  
   const dateTime =eventDate.toDate()
 
-  // get event image
+  const [attend, setAttend] = useState(false) // check if the button is clicked
+  const [like, setLike] = useState(false) // check if the button is clicked
+
+  const handleAttendClick=()=>{
+    setAttend(!attend)
+  };
+  const handleLikeClick=()=>{
+    setLike(!like)
+  };
+
+  //// get event image ////
   const starsRef = ref(storage, eventImage);
   console.log(starsRef);
   const img = getDownloadURL(starsRef)
+  ///////////////////////////
+
+
+  //// read more option ////
   const ReadMore = ({ children }) => {
 
     const text = children
@@ -37,7 +66,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
     const toggleReadMore = () => {
       setIsReadMore(!isReadMore);
     };
-
+ 
     return (
       <p className="text" >
 
@@ -48,10 +77,13 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       </p>
     );
   };
-
+ ///////////////////////////
 
 
   return (
+    
+
+
 
     <Card sx={{ maxWidth: '100%',marginBottom:'16px' }} key={id}>
       <CardHeader
@@ -62,9 +94,16 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       }
       
       action={
-        <IconButton aria-label="add to favorites">
-        <FavoriteIcon  />
-      </IconButton>  
+        <>
+        <IconButton aria-label="Like icon" >
+        {/* icon like */}
+        <FavoriteIcon style={like ? LikeClickedButtonStyle : null} onClick={handleLikeClick}   /> 
+        </IconButton>
+        <Button variant="contained"  onClick={handleAttendClick} style={attend ? AttendClickedButtonStyle: AttendUnClickedButtonStyle} >
+          {!attend ? 'Attend' : 'Disattend'}
+        </Button>
+        </>
+
         }
 
         title={title}    // event title
