@@ -8,20 +8,27 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import img from '../../../images/logo11.png'
+import {db,storage} from '../../../firebaseConfig'
+import { ref, getDownloadURL } from "firebase/storage";
+import { addDoc,doc,getDocs,collection, query, where,Timestamp } from "firebase/firestore"
 
 
-export default function Event({event: { discription,title }}) {
+export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,userid }}) {
 
   function keepOnFormatStr(str)  {
     return str.replaceAll("\\\\n", '\n').replaceAll("\\\\r", '\r').replaceAll('\\\\t', '\t');
 }  
-  const discriptionText = {discription}.discription
-  const discFormated = keepOnFormatStr(discriptionText) ;
-  const newText = discFormated.split('\n').map(str => <>{str}<br/></>);
-  // console.log(newText);
-  // console.log(discFormated)
 
+  const descriptionText = {description}.description
+  const descFormated = keepOnFormatStr(descriptionText) ;
+  const newText = descFormated.split('\n').map(str => <>{str}<br/></>);
+
+  const dateTime =eventDate.toDate()
+
+  // get event image
+  const starsRef = ref(storage, eventImage);
+  console.log(starsRef);
+  const img = getDownloadURL(starsRef)
   const ReadMore = ({ children }) => {
 
     const text = children
@@ -46,10 +53,10 @@ export default function Event({event: { discription,title }}) {
 
   return (
 
-    <Card sx={{ maxWidth: '100%',marginBottom:'16px' }}>
+    <Card sx={{ maxWidth: '100%',marginBottom:'16px' }} key={id}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">    {/*put aria-label=user name*/}
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="user-name">    
             R         {/* if user have profile pic --> set pic ; else --> place first letter from fisrt name on CapsLock*/}
           </Avatar>
       }
@@ -61,14 +68,16 @@ export default function Event({event: { discription,title }}) {
         }
 
         title={title}    // event title
-        subheader="September 14, 2016"       // event Date&time
+        subheader= {dateTime.getDate()+ '-'+(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+'  ' 
+        +dateTime.toLocaleTimeString('en-US')}     // event Date&time
+
       />
 
       {/* if event pic is True --> place pic ; else --> place null */}
       <CardMedia
         component="img"        
         image = {img}
-        alt="Paella dish"
+        alt="Event Picture"
         style={{maxWidth:'30%',display:'block', margin:'auto'}}
 
       />

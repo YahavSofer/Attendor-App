@@ -2,7 +2,7 @@ import React, {useRef, useState,useEffect} from 'react'
 import {Card, Form,Container, Image,InputGroup} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../../firebaseConfig'
-import { addDoc,doc,getDocs,collection, query, where  } from "firebase/firestore"
+import { addDoc,doc,getDocs,collection, query, where,Timestamp  } from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 // import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
@@ -25,15 +25,15 @@ export default function CreateEvent() {
 
     const eventTitleRef = useRef()
     const eventLocationRef = useRef()
-    const eventDateRef = useRef()
-    const discriptionRef = useRef()
+    const descriptionRef = useRef()
     const [loading, setLoading] = useState(false)
     const [image, setImage] = useState(null)
     const [imageUrl, setImageURL] = useState("")
     const [tempImgUrl, setTempImgUrl] =useState(no_Img)
     const {currentUser} = useAuth()
-    const [dateValue, setValue] = useState(Date(Date.now()))
+    const [dateValue, setValue] = useState(Date.now()) // not working
     const [closeIconShow, setCloseIconShow] = useState(false)
+    const [cost,setCost] = useState(0)
     const fileRef = useRef()
     const costRef = useRef()
     const minPartiRef = useRef()
@@ -45,7 +45,9 @@ function keepOnFormatStr(str)  {
     }    
 
 const handleChangeDate = (newValue) => {
-          setValue(newValue);
+
+        setValue(newValue)
+
         };
         
 function handleChangePicture(e) {
@@ -59,6 +61,17 @@ function OnClickCloseIcon(){
     setCloseIconShow(false)
     setTempImgUrl(no_Img)
     fileRef.current.value = ''
+}
+
+function HandleCost(){
+    console.log(costRef.current.value);
+
+    if (costRef.current.value === null){
+        setCost(0)
+    }
+    else{
+        setCost(costRef.current.value)
+    }
 }
 
 async function CountUserEvents(){
@@ -83,6 +96,11 @@ async function handleCreatePathName(){
         try{
             setLoading(true)
 
+            HandleCost()
+            
+            let timestemp = new Date(dateValue)
+            let ftime =Timestamp.fromDate(timestemp).toDate()
+
             if(image !== null){
                 const path = await handleCreatePathName()
                 const ref = storage.ref(`/images/event_pictures/${path}`);
@@ -96,16 +114,13 @@ async function handleCreatePathName(){
                                 userid: currentUser.uid,
                                 title: eventTitleRef.current.value,
                                 location: eventLocationRef.current.value,
-                                eventDate: dateValue,
+                                eventDate: ftime,
                                 eventImage: url, 
-                                // eventCost: costRef.current.value,
-                                eventMinParti: minPartiRef.current.value,
-                                eventMaxParti: maxPartiRef.current.value,
-                                discription: discriptionRef.current.value              
-                
+                                eventCost: Number(cost),
+                                eventMinParti: Number(minPartiRef.current.value),
+                                eventMaxParti: Number(maxPartiRef.current.value),
+                                description: keepOnFormatStr(descriptionRef.current.value)         
                               });
-                        
-                        
                         });
                 })}
             else{        
@@ -113,12 +128,12 @@ async function handleCreatePathName(){
                         userid: currentUser.uid,
                         title: eventTitleRef.current.value,
                         location: eventLocationRef.current.value,
-                        eventDate: dateValue,
+                        eventDate: ftime,
                         eventImage: imageUrl, 
-                        // eventCost: costRef.current.value,
-                        eventMinParti: minPartiRef.current.value,
-                        eventMaxParti: maxPartiRef.current.value,
-                        discription: keepOnFormatStr(discriptionRef.current.value)              
+                        eventCost: Number(cost),
+                        eventMinParti: Number(minPartiRef.current.value),
+                        eventMaxParti: Number(maxPartiRef.current.value),
+                        description: keepOnFormatStr(descriptionRef.current.value)              
 
                     });
             }
@@ -144,12 +159,12 @@ async function handleCreatePathName(){
                     <Form.Group id="eventname" >
                         {/* <Form.Label>Event Title</Form.Label>     */}
                         {/* <Form.Control type="text" ref={eventTitleRef} required/>  */}
-                        <TextField  ref={eventTitleRef} id="outlined-basic" size="small" label="Event Title" variant="outlined" required style={{background:'white',borderRadius:'5px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        <TextField  inputRef={eventTitleRef} id="eventTitle" size="small" label="Event Title" variant="outlined" required style={{background:'white',borderRadius:'5px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
                     <Form.Group id="eventlocation">
                         {/* <Form.Label>Event Location</Form.Label> */}
                         {/* <Form.Control type="text" ref={eventLocationRef} required/>  */}
-                        <TextField  required ref={eventLocationRef} id="outlined-basic" size="small" label="Event Location" variant="outlined" required style={{background:'white',borderRadius:'5px',marginTop:'20px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        <TextField  required inputRef={eventLocationRef} id="eventlocation" size="small" label="Event Location" variant="outlined" required style={{background:'white',borderRadius:'5px',marginTop:'20px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
 
                 <Form.Group id="eventDate">
@@ -161,7 +176,6 @@ async function handleCreatePathName(){
                             label="Event Date"
                             value={dateValue}
                             onChange={handleChangeDate}
-                            ref={eventDateRef}
                             renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px'}}  />}
                         />
 
@@ -206,7 +220,7 @@ async function handleCreatePathName(){
                     </Form.Label>
                     <InputGroup className="mb-2">
                         <InputGroup.Text>$</InputGroup.Text>
-                        <Form.Control id="inlineFormInputGroup" placeholder="Free" />
+                        <Form.Control id="inlineFormInputGroup" placeholder="Free" type='number' ref={costRef}/>
                     </InputGroup>
                     </Form.Group>
                 {/* https://react-bootstrap.github.io/components/input-group/ */}
@@ -222,9 +236,9 @@ async function handleCreatePathName(){
                 </Form.Group>
 
 
-                <Form.Group id="discription" >
-                        <Form.Label>Discription</Form.Label>
-                        <Form.Control type="text" multiline as="textarea" rows={5} ref={discriptionRef} required/> 
+                <Form.Group id="description" >
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control type="text" multiline="true" as="textarea" rows={5} ref={descriptionRef} required/> 
                     </Form.Group>
 
                     <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
