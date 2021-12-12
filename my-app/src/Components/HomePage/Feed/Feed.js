@@ -20,13 +20,6 @@ export default function Feed() {
           return querySnapshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id})
           )})
 
-        
-        //   `https://jsonplaceholder.typicode.com/posts?_page=1&_limit=20`
-        //   // For json server use url below
-        //   // `http://localhost:3004/comments?_page=1&_limit=20`
-        // );
-        // const data = await res.json();
-
         setEventData(AllEvents);
         console.log(AllEvents);
       };
