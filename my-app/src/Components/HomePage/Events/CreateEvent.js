@@ -34,9 +34,9 @@ export default function CreateEvent() {
     const [dateValue, setValue] = useState(Date.now()) // not working
     const [closeIconShow, setCloseIconShow] = useState(false)
     const [cost,setCost] = useState(0)
+    const [MaxParti, setMaxParti] = useState("No Limit")
     const fileRef = useRef()
     const costRef = useRef()
-    const minPartiRef = useRef()
     const maxPartiRef = useRef()
 
 
@@ -73,6 +73,15 @@ function HandleCost(){
         setCost(costRef.current.value)
     }
 }
+
+const HandleMaxParti = (newValue) => {
+    if (newValue.value === null){
+        setMaxParti("No Limit")
+        }
+    else{
+        setMaxParti(Number(newValue.value))
+        }
+    };
 
 async function CountUserEvents(){
     const eventsDB = collection(db, "Events")
@@ -117,8 +126,7 @@ async function handleCreatePathName(){
                                 eventDate: ftime,
                                 eventImage: url, 
                                 eventCost: Number(cost),
-                                eventMinParti: Number(minPartiRef.current.value),
-                                eventMaxParti: Number(maxPartiRef.current.value),
+                                eventMaxParti: MaxParti,
                                 description: keepOnFormatStr(descriptionRef.current.value)         
                               });
                         });
@@ -131,8 +139,7 @@ async function handleCreatePathName(){
                         eventDate: ftime,
                         eventImage: imageUrl, 
                         eventCost: Number(cost),
-                        eventMinParti: Number(minPartiRef.current.value),
-                        eventMaxParti: Number(maxPartiRef.current.value),
+                        eventMaxParti: MaxParti,
                         description: keepOnFormatStr(descriptionRef.current.value)              
 
                     });
@@ -157,26 +164,27 @@ async function handleCreatePathName(){
                 <h2 className="text-center mb-4">Create New Event</h2>
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="eventname" >
+                    <Form.Label>Event Title</Form.Label>
                         {/* <Form.Label>Event Title</Form.Label>     */}
                         {/* <Form.Control type="text" ref={eventTitleRef} required/>  */}
-                        <TextField  inputRef={eventTitleRef} id="eventTitle" size="small" label="Event Title" variant="outlined" required style={{background:'white',borderRadius:'5px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        <TextField  inputRef={eventTitleRef} id="eventTitle" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
                     <Form.Group id="eventlocation">
+                    <Form.Label>Event Location</Form.Label>
                         {/* <Form.Label>Event Location</Form.Label> */}
                         {/* <Form.Control type="text" ref={eventLocationRef} required/>  */}
-                        <TextField  required inputRef={eventLocationRef} id="eventlocation" size="small" label="Event Location" variant="outlined" required style={{background:'white',borderRadius:'5px',marginTop:'20px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        <TextField  required inputRef={eventLocationRef} id="eventlocation" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px', paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
 
                 <Form.Group id="eventDate">
-                <Form.Label></Form.Label>
+                <Form.Label>Event Date</Form.Label>
                 <div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                      <DateTimePicker
                             required
-                            label="Event Date"
                             value={dateValue}
                             onChange={handleChangeDate}
-                            renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px'}}  />}
+                            renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px',marginBottom: '10px'}}  />}
                         />
 
             {/* it didnt work for you, because you used with DesktopDatePicker and its just Date without Time.
@@ -220,19 +228,15 @@ async function handleCreatePathName(){
                     </Form.Label>
                     <InputGroup className="mb-2">
                         <InputGroup.Text>$</InputGroup.Text>
-                        <Form.Control id="inlineFormInputGroup" placeholder="Free" type='number' ref={costRef}/>
+                        <Form.Control id="inlineFormInputGroup" placeholder="Free" type='number' min="0" ref={costRef}/>
                     </InputGroup>
                     </Form.Group>
                 {/* https://react-bootstrap.github.io/components/input-group/ */}
 
-                <Form.Group id="Minimum Participants" >
-                        <Form.Label>Minimum Participants</Form.Label>
-                        <Form.Control type="number" ref={minPartiRef} required/> 
-                </Form.Group>
 
                 <Form.Group id="Maximum Participants" >
                         <Form.Label>Maximum Participants</Form.Label>
-                        <Form.Control type="number" ref={maxPartiRef} required/> 
+                        <Form.Control type="number" min="1" ref={maxPartiRef} onChange={HandleMaxParti} style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}}/> 
                 </Form.Group>
 
 
