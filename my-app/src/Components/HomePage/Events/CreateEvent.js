@@ -127,8 +127,10 @@ async function handleCreatePathName(){
                                 eventImage: url, 
                                 eventCost: Number(cost),
                                 eventMaxParti: MaxParti,
-                                description: keepOnFormatStr(descriptionRef.current.value)         
-                              });
+                                description: keepOnFormatStr(descriptionRef.current.value),
+                                userAttended: [],         
+                                userLiked:[]
+                            });
                         });
                 })}
             else{        
@@ -140,8 +142,9 @@ async function handleCreatePathName(){
                         eventImage: imageUrl, 
                         eventCost: Number(cost),
                         eventMaxParti: MaxParti,
-                        description: keepOnFormatStr(descriptionRef.current.value)              
-
+                        description: keepOnFormatStr(descriptionRef.current.value),              
+                        userAttended: [],         
+                        userLiked:[]
                     });
             }
 

@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react'
 import {Card, Form,Container, Image} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../firebaseConfig'
-import { setDoc,doc} from "firebase/firestore"
+import { setDoc,doc,Timestamp} from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
@@ -60,6 +60,9 @@ function OnClickCloseIcon(){
 
         try{
             setLoading(true)
+            
+            let timestemp = new Date(dateValue)
+            let ftime =Timestamp.fromDate(timestemp).toDate()
 
             if(image !== null){
                         const ref = storage.ref(`/images/profile_pictures/${currentUser.uid}_Profile`);
@@ -72,9 +75,11 @@ function OnClickCloseIcon(){
                                 await setDoc(doc(db, "users",currentUser.uid),{
                                     first: firstNameRef.current.value,
                                     last: lastNameRef.current.value,
-                                    birthday: dateValue,
+                                    birthday: ftime,
                                     gender: gender, 
-                                    profileImage: url
+                                    profileImage: url,
+                                    eventLiked: [],
+                                    eventAttending:[]
                             });
                         });
                 }
@@ -84,10 +89,11 @@ function OnClickCloseIcon(){
             await setDoc(doc(db, "users",currentUser.uid),{
                 first: firstNameRef.current.value,
                 last: lastNameRef.current.value,
-                birthday: dateValue,
+                birthday: ftime,
                 gender: gender, 
-                profileImage: imageUrl
-
+                profileImage: imageUrl,
+                eventLiked: [],
+                eventAttending:[]
 
               });
             }
