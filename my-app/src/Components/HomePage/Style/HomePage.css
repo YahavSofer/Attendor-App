@@ -1,8 +1,9 @@
 .sticky{
-    position: fixed;
-    /* width: 20vh; */
+    width:30vh;
+    position:fixed;
+    right:5%;
 }
-
 .bodyDiv{
+    
     min-height: 2000px;
 }

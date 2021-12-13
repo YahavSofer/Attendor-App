@@ -18,7 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Attendor_img from '../../../images/logo12.png'
 import { useHistory } from 'react-router-dom'
 import {  useAuth } from '../../../context/AuthContext'
-
+import { Link } from "react-router-dom";
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -199,7 +199,9 @@ export default function NavBar() {
             aria-label="open drawer"
             sx={{ mr: 1 }}
           >
-            <Image src={Attendor_img} style={{height:'45px',width:'45px'}}/>
+            <Link to='/user'>
+              <Image src={Attendor_img} style={{height:'45px',width:'45px'}}/>
+            </Link>
           </IconButton>
           <Typography
             variant="h6"

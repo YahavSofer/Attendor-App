@@ -12,6 +12,7 @@
     align-items: center;
 
     transition: all 5s ease-in-out;
+    z-index: 3;
   }
   
   .popup-inner {
@@ -30,5 +31,3 @@
     font-size: 20px;
 
   }
-
-  

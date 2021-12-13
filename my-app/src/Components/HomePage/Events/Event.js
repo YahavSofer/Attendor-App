@@ -8,11 +8,14 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import {db,storage} from '../../../firebaseConfig'
-import { addDoc,doc,getDoc,collection, query, where,Timestamp } from "firebase/firestore"
+import {db} from '../../../firebaseConfig'
+import { doc,getDoc ,updateDoc ,arrayRemove} from "firebase/firestore"
 import Button from '@mui/material/Button';
 import logoImage from'../../../images/logo11.png'
 import AttendPopUp from './AttendPopUp/AttendPopup'
+import {  useAuth } from '../../../context/AuthContext'
+import { autocompleteClasses } from '@mui/material';
+
 
 ////////// styling ////////////////////
 
@@ -26,12 +29,13 @@ const AttendClickedButtonStyle ={
 
 const LikeClickedButtonStyle ={
   color:red[500],
+
 };
 ////////////////////////////////////////
 
 
 
-export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,userid }}) {
+export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,userid}}) {
 
   function keepOnFormatStr(str){
     return str.replaceAll("\\\\n", '\n').replaceAll("\\\\r", '\r').replaceAll('\\\\t', '\t');
@@ -41,7 +45,8 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   const [profileImage,setProfileImage] = useState()
   const [isProfilePic,setIsProfilePic] = useState(false)
   const [userName,setUserName] = useState()
-
+  
+  const {currentUser} = useAuth()
 
 
 useEffect(() => {
@@ -77,7 +82,7 @@ useEffect(() => {
   const [isImg,setIsImg] = useState(false)
   
   const [buttonPopup,setButtonPopup] = useState(false)
-
+  const [checkAttending,setCheckAttending] = useState(false)
 
 
   const handleLoadPicture =() =>{
@@ -86,13 +91,32 @@ useEffect(() => {
     }
   }
 
+  const RemoveItemFromArray = async() =>{
+    const UserAttendingArray = doc(db, "users", currentUser.uid);
+    await updateDoc(UserAttendingArray, {
+      eventAttending: arrayRemove(id)
+  }).then(console.log('event removed from user attening list'))
+
+  const eventsAttendings = doc(db, "Events", id);
+  await updateDoc(eventsAttendings, {
+    eventAttending: arrayRemove(currentUser.uid)
+}).then(console.log('secceed'))
+
+}
 
 
-  const handleAttendClick=()=>{
+  const handleAttendClick=(e)=>{
     setAttend(!attend)
+    // console.log(e.target.innerText);
+    if(e.target.innerText ==='DISATTEND'){
+      console.log('Disattend clicked');
+      setCheckAttending(false)
+      RemoveItemFromArray()
+    }
     if (attend === false){
       setButtonPopup(true)
     }
+
   };
 
   const handleLikeClick=()=>{
@@ -148,13 +172,18 @@ useEffect(() => {
       
       action={
         <>
-        <IconButton aria-label="Like icon" >
-        {/* icon like */}
-        <FavoriteIcon style={like ? LikeClickedButtonStyle : null} onClick={handleLikeClick}   /> 
-        </IconButton>
-        <Button variant="contained"  onClick={handleAttendClick} style={attend ? AttendClickedButtonStyle: AttendUnClickedButtonStyle} >
-          {!attend ? 'Attend' : 'Disattend'}
-        </Button>
+        <div>
+          <Button variant="contained"  onClick={handleAttendClick} style={attend ? AttendClickedButtonStyle: AttendUnClickedButtonStyle} >
+            {!attend ? 'Attend Now' : 'Disattend'}
+          </Button>
+        </div>
+          {/* <br/> */}
+         <div style={{marginLeft:'30%'}}> 
+          <IconButton aria-label="Like icon" >
+          {/* icon like */}
+          <FavoriteIcon style={like ? LikeClickedButtonStyle : null} onClick={handleLikeClick}   /> 
+          </IconButton>
+          </div>
         </>
 
         }
@@ -185,7 +214,21 @@ useEffect(() => {
     </Card>
 
 
-      <AttendPopUp trigger={buttonPopup} setTrigger={setButtonPopup} setAttendValue={setAttend}/>
+      <AttendPopUp 
+      username={userName}
+      trigger={buttonPopup} 
+      setTrigger={setButtonPopup} 
+      setAttendValue={setAttend}
+      currentUserID = {currentUser.uid}
+      eventID ={id}
+      eventTitle={title}
+      eventDate={dateTime.getDate()+ '-'+(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()}
+      eventTime={dateTime.toLocaleTimeString('en-US')}
+      eventLocation ={location}
+      checkAttending = {checkAttending}
+      setCheckAttending = {setCheckAttending}
+      />
+
 
     </>
   );
