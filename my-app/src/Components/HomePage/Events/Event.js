@@ -9,10 +9,12 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {db,storage} from '../../../firebaseConfig'
-import { ref, getDownloadURL } from "firebase/storage";
 import { addDoc,doc,getDoc,collection, query, where,Timestamp } from "firebase/firestore"
 import Button from '@mui/material/Button';
 import logoImage from'../../../images/logo11.png'
+import AttendPopUp from './AttendPopUp/AttendPopup'
+
+////////// styling ////////////////////
 
 const AttendUnClickedButtonStyle ={
   backgroundColor:"#83c5be",
@@ -25,18 +27,23 @@ const AttendClickedButtonStyle ={
 const LikeClickedButtonStyle ={
   color:red[500],
 };
+////////////////////////////////////////
+
 
 
 export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,userid }}) {
 
-  function keepOnFormatStr(str)  {
+  function keepOnFormatStr(str){
     return str.replaceAll("\\\\n", '\n').replaceAll("\\\\r", '\r').replaceAll('\\\\t', '\t');
-}  
+    }  
 
 
   const [profileImage,setProfileImage] = useState()
   const [isProfilePic,setIsProfilePic] = useState(false)
   const [userName,setUserName] = useState()
+
+
+
 useEffect(() => {
   // onload - get all events from firestore
 
@@ -69,28 +76,32 @@ useEffect(() => {
   const [like, setLike] = useState(false) // check if the button is clicked
   const [isImg,setIsImg] = useState(false)
   
+  const [buttonPopup,setButtonPopup] = useState(false)
+
+
 
   const handleLoadPicture =() =>{
     if(eventImage !== ""){
       setIsImg(true)
     }
-    
   }
 
 
 
   const handleAttendClick=()=>{
     setAttend(!attend)
+    if (attend === false){
+      setButtonPopup(true)
+    }
   };
+
   const handleLikeClick=()=>{
     setLike(!like)
   };
 
 
-  //// get event image ///
-  ///////////////////////////
 
-  //// set subtitle in cardHedaer of time and location ////
+//// set subtitle in cardHedaer of time and location ////
   const subheader =
           <Typography style={{fontSize: '14px'}}>
               {userName}<br/>{(dateTime.getDate()+ '-'+(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+'  ' 
@@ -124,7 +135,7 @@ useEffect(() => {
 
 
   return (
-
+  <>
     <Card sx={{ maxWidth: '100%',marginBottom:'16px' }} key={id}>
       <CardHeader
         avatar={
@@ -173,5 +184,9 @@ useEffect(() => {
       </CardContent>
     </Card>
 
+
+      <AttendPopUp trigger={buttonPopup} setTrigger={setButtonPopup} setAttendValue={setAttend}/>
+
+    </>
   );
 }
