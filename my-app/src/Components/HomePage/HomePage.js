@@ -2,23 +2,21 @@ import React from 'react'
 import { Container,Row,Col,Card} from 'react-bootstrap'
 import './Style/HomePage.css'
 import Feed from './Feed/Feed'
-import SideBar from './Feed/SideBar'
+import FeedFilters from './Feed/FeedFilters'
 
 
 export default function HomePage() {
     return (
         <>
-    <div className='bodyDiv'>         
+    <div className='bodyDiv'>  
+           
         <Container className='flex-warp' fluid>
+
             <Row>
-            <Col className='sticky'>
-                <SideBar/>
-
-            </Col>
-            <Col style={{maxWidth: '95%'}}>
-                    <Feed/>
-            </Col>
-
+            <FeedFilters/>
+            </Row>
+            <Row>
+                <Feed/>
             </Row>
         </Container>
     </div>

@@ -71,7 +71,7 @@ function OnClickCloseIcon(){
                         ref
                             .getDownloadURL()
                             .then(async (url) => {
-                                setImage(null);
+                                // setImage(null);
                                 await setDoc(doc(db, "users",currentUser.uid),{
                                     first: firstNameRef.current.value,
                                     last: lastNameRef.current.value,

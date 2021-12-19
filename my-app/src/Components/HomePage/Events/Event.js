@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {db} from '../../../firebaseConfig'
-import { doc,getDoc,getDocs,collection,updateDoc ,arrayRemove, where,query} from "firebase/firestore"
+import { doc,getDoc,getDocs,collection,updateDoc ,arrayRemove,arrayUnion, where,query} from "firebase/firestore"
 import Button from '@mui/material/Button';
 import logoImage from'../../../images/logo11.png'
 import AttendPopUp from './AttendPopUp/AttendPopup'
@@ -44,48 +44,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   const [profileImage,setProfileImage] = useState()
   const [isProfilePic,setIsProfilePic] = useState(false)
   const [userName,setUserName] = useState()
-  
   const {currentUser} = useAuth()
-
-
-useEffect(() => {
-  // onload - get all events from firestore
-
-  // set user profile in event profile picture. if they dont have, place icon insted
-  const getUserProfileImg = async () => {
-    const userDoc = await getDoc(doc(db,'users',userid))
-    .then( u =>{
-                setProfileImage(u.data().profileImage);
-                setUserName(u.data().first +' '+u.data().last);
-                // console.log(userName ,profileImage);
-    } )
-      
-  };
-
-  const setAttendedToEvents =async () =>{
-    
-    const EventDoc = await getDoc(doc(db,'Events',id))
-    .then( e =>{
-                (e.data().eventAttending || []).map((uid)=>{
-                  if(uid == currentUser.uid){
-                    // console.log("current user is attending to "+id+" event");
-                    setAttend(true)
-
-                  }
-                });
-
-    } )
-   };
-
-  setAttendedToEvents();
-  getUserProfileImg();
-  
-  if (profileImage !== ""){
-    setIsProfilePic(true)
-  } 
-}, []);
-
-
 
   const descriptionText = {description}.description
   const descFormated = keepOnFormatStr(descriptionText) ;
@@ -101,12 +60,67 @@ useEffect(() => {
   const [checkAttending,setCheckAttending] = useState(false)
 
 
+  useEffect(() => {
+    // onload - get all events from firestore
+  
+    // set user profile in event profile picture. if they dont have, place icon insted
+    const getUserProfileImg = async () => {
+      const userDoc = await getDoc(doc(db,'users',userid))
+      .then( u =>{
+                  setProfileImage(u.data().profileImage);
+                  setUserName(u.data().first +' '+u.data().last);
+                  // console.log(userName ,profileImage);
+      } )
+        
+    };
+  
+    const setLikeToEvent =async () =>{
+      
+      const userDoc = await getDoc(doc(db,'users',currentUser.uid))
+            .then( u =>{
+                        // console.log(u.data());
+                        (u.data().eventLiked || []).map((eventId)=>{
+                          if(eventId == id){
+                            // console.log("current user is attending to "+id+" event");
+                            setLike(true)
+                            }
+                          });
+                        })  
+            };
+  
+  
+    const setAttendedToEvents =async () =>{
+      
+      const EventDoc = await getDoc(doc(db,'Events',id))
+            .then( e =>{
+                        (e.data().eventAttending || []).map((uid)=>{
+                          if(uid == currentUser.uid){
+                            // console.log("current user is attending to "+id+" event");
+                            setAttend(true)
+                            }
+                          });
+                        })  
+                        };
+  
+    setLikeToEvent();
+    setAttendedToEvents();
+    getUserProfileImg();
+    
+    if (profileImage !== ""){
+      setIsProfilePic(true)
+    } 
+  }, []);
+
+
+
   const handleLoadPicture =() =>{
     if(eventImage !== ""){
       setIsImg(true)
     }
   }
 
+
+  // remove events IDs from the arrays in user Doc and Event Doc calls 'eventAttending'
   const RemoveItemFromArray = async() =>{
     const UserAttendingArray = doc(db, "users", currentUser.uid);
     await updateDoc(UserAttendingArray, {
@@ -120,7 +134,8 @@ useEffect(() => {
 
 }
 
-
+// when user click on Attend Button start this function.
+//change attend state, and check if the user attend or diattend.
   const handleAttendClick=(e)=>{
     setAttend(!attend)
     // console.log(e.target.innerText);
@@ -135,11 +150,29 @@ useEffect(() => {
 
   };
 
-  const handleLikeClick=()=>{
-    setLike(!like)
+  const updateLikeArray = async() =>{
+    const UserLikedArray = doc(db, "users", currentUser.uid);
+    await updateDoc(UserLikedArray, {
+      eventLiked: arrayUnion(id)
+  }).then(console.log('event added to user Like list'))
+  }
+
+  const removeLikeFromArray = async() =>{
+    const UserLikedArray = doc(db, "users", currentUser.uid);
+    await updateDoc(UserLikedArray, {
+      eventLiked: arrayRemove(id)
+  }).then(console.log('event removed from user Liked list'))
   };
 
-
+  const handleLikeClick=()=>{
+    if(like === false){
+      updateLikeArray()
+    }
+    else{
+      removeLikeFromArray()
+    }
+    setLike(!like)
+  };
 
 //// set subtitle in cardHedaer of time and location ////
   const subheader =
