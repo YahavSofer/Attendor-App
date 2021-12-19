@@ -76,7 +76,7 @@ export default function AttendPopUp(props){
                           </Typography>
 
                           <span style={{ marginTop:'20px', display: 'flex',justifyContent:'space-evenly'}}>
-                              <Button disabled={loading} variant="contained" startIcon={<AssistantIcon />} onClick={handleAttend} >Get recommendations</Button>
+                              <Button disabled={loading} variant="contained" startIcon={<AssistantIcon />} >Get recommendations</Button>
                               <Button disabled={loading} variant="outlined" startIcon={<CancelIcon />} onClick={handleClose}>Close</Button>
                           </span>
                         </>

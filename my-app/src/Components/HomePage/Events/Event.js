@@ -9,12 +9,11 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {db} from '../../../firebaseConfig'
-import { doc,getDoc ,updateDoc ,arrayRemove} from "firebase/firestore"
+import { doc,getDoc,getDocs,collection,updateDoc ,arrayRemove, where,query} from "firebase/firestore"
 import Button from '@mui/material/Button';
 import logoImage from'../../../images/logo11.png'
 import AttendPopUp from './AttendPopUp/AttendPopup'
 import {  useAuth } from '../../../context/AuthContext'
-import { autocompleteClasses } from '@mui/material';
 
 
 ////////// styling ////////////////////
@@ -35,7 +34,7 @@ const LikeClickedButtonStyle ={
 
 
 
-export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,userid}}) {
+export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,userid,eventAttending}}) {
 
   function keepOnFormatStr(str){
     return str.replaceAll("\\\\n", '\n').replaceAll("\\\\r", '\r').replaceAll('\\\\t', '\t');
@@ -52,16 +51,33 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 useEffect(() => {
   // onload - get all events from firestore
 
+  // set user profile in event profile picture. if they dont have, place icon insted
   const getUserProfileImg = async () => {
     const userDoc = await getDoc(doc(db,'users',userid))
     .then( u =>{
                 setProfileImage(u.data().profileImage);
                 setUserName(u.data().first +' '+u.data().last);
-                console.log(userName ,profileImage);
+                // console.log(userName ,profileImage);
     } )
       
   };
 
+  const setAttendedToEvents =async () =>{
+    
+    const EventDoc = await getDoc(doc(db,'Events',id))
+    .then( e =>{
+                (e.data().eventAttending || []).map((uid)=>{
+                  if(uid == currentUser.uid){
+                    // console.log("current user is attending to "+id+" event");
+                    setAttend(true)
+
+                  }
+                });
+
+    } )
+   };
+
+  setAttendedToEvents();
   getUserProfileImg();
   
   if (profileImage !== ""){
