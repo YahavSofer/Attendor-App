@@ -197,7 +197,7 @@ export default function NavBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Button key="one" style={{background:'rgb(159, 255, 200,0.7)',fontWeight:'bold'}} endIcon={<AddCircleIcon/>}><Link to='user/create-event' style={{ textDecoration: 'none' }}>Create Event</Link></Button>
+          <Button key="one" style={{background:'rgb(159, 255, 200,0.7)',fontWeight:'bold'}} endIcon={<AddCircleIcon/>}><Link to='/user/create-event' style={{ textDecoration: 'none' }}>Create Event</Link></Button>
             <IconButton
               size="large"
               edge="end"
