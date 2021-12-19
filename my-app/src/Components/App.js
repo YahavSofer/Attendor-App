@@ -7,7 +7,7 @@ import UserProfile from "./HomePage/UserProfile";
 import Login from './UserAccount/Login'
 import PrivateRoute from './PrivateRoute'
 import ForgotPassword from './UserAccount/ForgotPassword'
-import UpdateProfile from './UserAccount/UpdateProfile'
+import UpdatePassword from './UserAccount/UpdatePassword'
 import UserForm from './UserAccount/UserForm'
 import MessageSignUp from './UserAccount/MessageSignUp'
 import CreateEvent from './HomePage/Events/CreateEvent'

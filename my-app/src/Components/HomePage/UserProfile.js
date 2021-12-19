@@ -78,7 +78,7 @@ export default function UserProfile() {
                 <strong>Last Name : </strong>{lastName}<br></br>
                 <strong>Gender : </strong>{userGender}<br></br>
                 <strong>Birthday : </strong>{userBirthDay}<br></br>
-                <Link to='/user/update-profile' className="btn btn-primary " style={{marginTop:"10px"}}>Edit Profile</Link>
+                <Link to='/user/update-password' className="btn btn-primary " style={{marginTop:"10px"}}>Change Password</Link>
                 </Col>
                 <Col>
                 {isProfilePic?

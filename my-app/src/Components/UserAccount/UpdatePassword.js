@@ -4,7 +4,7 @@ import { Link ,useHistory } from 'react-router-dom'
 import {useAuth} from '../../context/AuthContext'
 
 
-export default function UpdateProfile() {
+export default function UpdatePassword() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passworConfirmationdRef =useRef()
@@ -51,21 +51,18 @@ export default function UpdateProfile() {
     }
     return (
         <>
+        <div style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)',
+            minWidth: '600px'
+          }} >
                 <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
         <div className='w-100'> 
         <Card>
             <Card.Body>
-                <h2 className="text-center mb-4">Update Profile</h2>
+                <h2 className="text-center mb-4">Change Password</h2>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit = {handleSubmit}>
-                    <Form.Group id="email">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" ref={emailRef} required defaultValue={currentUser.email}/> 
-                    </Form.Group>    
-                    <Form.Group id="email-confirm">
-                        <Form.Label>Re-Enter Email</Form.Label>
-                        <Form.Control type="email" ref={emailConfirmationRef} required defaultValue={currentUser.email}/> 
-                    </Form.Group>   
                     <Form.Group id="password">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type='password' ref={passwordRef} placeholder="Leave blank to keep the same"/> 
@@ -83,11 +80,11 @@ export default function UpdateProfile() {
             </Card.Body>
         </Card>
             <div className="w-100 text-center mt-2"> 
-                <Link to='/'>Cancel</Link>    
+                <Link to='/user'>Cancel</Link>    
             </div>
             </div>
 </Container>  
-            
+</div>
     </>
     )
 }

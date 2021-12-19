@@ -5,7 +5,7 @@ import Feed from './HomePage/Feed/Feed'
 import UserProfile from './HomePage/UserProfile'
 import MayNavBar from './HomePage/NavigationBar/MayNavBar'
 import CreateEvent from './HomePage/Events/CreateEvent'
-import UpdateProfile from './UserAccount/UpdateProfile'
+import UpdatePassword from './UserAccount/UpdatePassword'
 import PrivateRoute from './PrivateRoute'
 import HomePage from './HomePage/HomePage'
 
@@ -23,7 +23,7 @@ export default function HomePageRoutes(){
                     <Switch>
                             <PrivateRoute  exact path={`${match.url}/`} component={HomePage} />
                             <PrivateRoute  exact path={`${match.url}/feed`} component={Feed} />
-                            <PrivateRoute  path={`${match.url}/update-profile`} component={UpdateProfile} />
+                            <PrivateRoute  path={`${match.url}/update-password`} component={UpdatePassword} />
                             <PrivateRoute  path={`${match.url}/profile`} component={UserProfile} />
                             <PrivateRoute  path={`${match.url}/create-event`} component={CreateEvent} /> 
                     </Switch>
