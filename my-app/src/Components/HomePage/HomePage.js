@@ -15,6 +15,7 @@ export default function HomePage() {
             <Row>
             <FeedFilters/>
             </Row>
+            
             <Row>
                 <Feed/>
             </Row>
