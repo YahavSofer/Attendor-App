@@ -94,7 +94,7 @@ export default function NavBar() {
     setAnchorEl(null);
     handleMobileMenuClose();
     if(e.target.textContent=== 'Profile'){
-      history.push('user/profile')
+      history.push('/user/profile')
     }
     else if (e.target.textContent=== 'Log Out'){
       handleLogout()
