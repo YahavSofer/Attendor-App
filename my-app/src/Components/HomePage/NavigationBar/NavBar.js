@@ -98,9 +98,13 @@ export default function NavBar() {
     if(e.target.textContent=== 'Profile'){
       history.push('/user/profile')
     }
+    else if (e.target.textContent=== 'My Events'){
+      history.push('/user/my-events')
+    }
     else if (e.target.textContent=== 'Log Out'){
       handleLogout()
     }
+  
 
     
     
@@ -133,6 +137,7 @@ export default function NavBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My Events</MenuItem>
       <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
     </Menu>
   );
@@ -155,6 +160,7 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My Events</MenuItem>
       <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
     </Menu>
   );
