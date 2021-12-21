@@ -58,20 +58,22 @@ function OnClickCloseIcon(){
 function HandleCost(){
     console.log(costRef.current.value);
 
-    if (costRef.current.value === null){
-        setCost(0)
+    if (costRef.current.value > 0){
+        setCost(costRef.current.value)
+        
     }
     else{
-        setCost(costRef.current.value)
+        setCost(0)
     }
 }
 
 const HandleMaxParti = (newValue) => {
-    if (newValue.value === null){
+    console.log(newValue);
+    if (newValue === null){
         setMaxParti("No Limit")
         }
     else{
-        setMaxParti(Number(newValue.value))
+        setMaxParti(Number(newValue))
         }
     };
 
@@ -209,7 +211,7 @@ async function handleCreatePathName(){
                     </Form.Label>
                     <InputGroup className="mb-2">
                         <InputGroup.Text>$</InputGroup.Text>
-                        <Form.Control id="inlineFormInputGroup" placeholder="Free" type='number' min="0" ref={costRef}/>
+                        <Form.Control  placeholder="Free" type='number' min="0" ref={costRef} onChange={HandleCost}/>
                     </InputGroup>
                     </Form.Group>
                 {/* https://react-bootstrap.github.io/components/input-group/ */}
@@ -217,7 +219,7 @@ async function handleCreatePathName(){
 
                 <Form.Group id="Maximum Participants" >
                         <Form.Label>Maximum Participants</Form.Label>
-                        <Form.Control type="number" min="1" ref={maxPartiRef} onChange={HandleMaxParti} style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}}/> 
+                        <Form.Control type="number" min="1" ref={maxPartiRef} onChange={(e)=>{HandleMaxParti(e.target.value)}} style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}}/> 
                 </Form.Group>
 
 

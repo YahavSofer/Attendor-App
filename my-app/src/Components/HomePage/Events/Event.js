@@ -41,7 +41,7 @@ const LikeClickedButtonStyle ={
 
 
 
-export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,eventMaxParti,eventCost,userid,userAttended}}) {
+export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMaxParti,eventCost,userid,userAttended}}) {
 
   const event={
     e_id: id,
@@ -50,7 +50,6 @@ export default function Event({event: { id,description,title,eventDate,eventImag
     e_eventDate: eventDate,
     e_eventImage: eventImage,
     e_location: location,
-    e_eventMinParti: eventMinParti,
     e_eventMaxParti: eventMaxParti,
     e_userid: userid,
     e_eventCost: eventCost,
@@ -80,7 +79,11 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   
   const [buttonPopup,setButtonPopup] = useState(false)
   const [checkAttending,setCheckAttending] = useState(false)
+  const [attendingCounter,setAttendingCounter] = useState()
 
+  // const getCounter=()=>{
+  //   setAttendingCounter({userAttended}.userAttended.length)
+  // } 
 
 /////////////////////////////////////////////////////////////////
                     //start of UseEffect//
@@ -103,7 +106,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       
       const userDoc = await getDoc(doc(db,'users',currentUser.uid))
             .then( u =>{
-                        console.log(u.data());
+                        // console.log(u.data());
                         (u.data().userLiked || []).map((eventId)=>{
                           if(eventId == id){
                             // console.log("current user is attending to "+id+" event");
@@ -126,13 +129,18 @@ export default function Event({event: { id,description,title,eventDate,eventImag
                           });
                         })  
                         };
+
+
   
     setLikeToEvent();
     setAttendedToEvents();
-    getUserProfileImg();
-    
+    getUserProfileImg();  
+    setAttendingCounter({userAttended}.userAttended.length)
+
+
     if (profileImage !== ""){
       setIsProfilePic(true)
+
     } 
   }, []);
 /////////////////////////////////////////////////////////////////
@@ -176,6 +184,8 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       console.log('Disattend clicked');
       setCheckAttending(false)
       RemoveItemFromArray()
+      setAttendingCounter(attendingCounter-1)
+
     }
     if (attend === false){
       setButtonPopup(true)
@@ -219,13 +229,15 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
 //// set subtitle in cardHedaer of time and location ////
   const subheader =
-          <Typography style={{fontSize: '14px'}}>
-              {userName}<br/>{(dateTime.getDate()+ '-'+(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+'  ' 
-        +dateTime.toLocaleTimeString('en-US'))}
-        <br/>{location}
+          <Typography style={{fontSize: '14px'}} >
+              <b>Event Owner: </b>{userName}<br/>
+              <b>Date & Time: </b>{(dateTime.getDate()+ '-'+(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+'  ' 
+        +dateTime.toLocaleTimeString('en-US'))}<br/>
+        <b>Location: </b>{location}<br/>
+        <b>Cost: </b>{(eventCost=='0')? 'Free': eventCost+'$'}<br/>
+        <b>Participants: </b> {(eventMaxParti==='No Limit') ? eventMaxParti: attendingCounter+'/'+eventMaxParti}
+
           </Typography>
-
-
 
   //// read more option ////
   // const ReadMore = ({ children }) => {
@@ -253,10 +265,9 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       <CardHeader
         avatar={
           isProfilePic?
-          <Avatar src={profileImage} aria-label="user-name"/>   
+          <Avatar src={profileImage} aria-label="user-name" style={{marginTop:'-70px'}}/>   
           :
           <Avatar src="" aria-label="user-name"/>    
-
       }
       
       
@@ -267,7 +278,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
         // show attend and like buttons  
         <> 
         <div>
-          <Button variant="contained"  onClick={handleAttendClick} style={attend ? AttendClickedButtonStyle: AttendUnClickedButtonStyle} >
+          <Button disable={(attendingCounter === eventMaxParti )} variant="contained"  onClick={handleAttendClick} style={attend ? AttendClickedButtonStyle: AttendUnClickedButtonStyle} >
             {!attend ? 'Attend Now' : 'Disattend'}
           </Button>
         </div>
@@ -329,6 +340,8 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       eventLocation ={location}
       checkAttending = {checkAttending}
       setCheckAttending = {setCheckAttending}
+      attendingCounter = {attendingCounter}
+      setAttendingCounter = {setAttendingCounter}
       />
 
 

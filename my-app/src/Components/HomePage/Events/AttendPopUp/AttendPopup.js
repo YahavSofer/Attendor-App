@@ -40,7 +40,10 @@ export default function AttendPopUp(props){
       userAttended: arrayUnion(props.currentUserID)
   }).then(console.log('secceed'))
 
+    props.setAttendingCounter(props.attendingCounter+1)
+    
     props.setCheckAttending(true)
+
     setLoading(false)
 
   }
