@@ -188,6 +188,11 @@ export default function Event({event: { id,description,title,eventDate,eventImag
     await updateDoc(UserLikedArray, {
       userLiked: arrayUnion(id)
   }).then(console.log('event added to user Like list'))
+
+  const eventLikedArray = doc(db, "Events", id);
+  await updateDoc(eventLikedArray, {
+    userLiked: arrayUnion(currentUser.uid)
+}).then(console.log('event added to user Like list'))
   }
 
   const removeLikeFromArray = async() =>{
@@ -195,6 +200,11 @@ export default function Event({event: { id,description,title,eventDate,eventImag
     await updateDoc(UserLikedArray, {
       userLiked: arrayRemove(id)
   }).then(console.log('event removed from user Liked list'))
+
+  const eventLikedArray = doc(db, "Events", id);
+  await updateDoc(eventLikedArray, {
+    userLiked: arrayRemove(currentUser.uid)
+  }).then(console.log('event added to user Like list'))
   };
 
   const handleLikeClick=()=>{

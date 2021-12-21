@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container,Row,Col,Card} from 'react-bootstrap'
-import './Style/HomePage.css'
 import Feed from './Feed/Feed'
 
 
