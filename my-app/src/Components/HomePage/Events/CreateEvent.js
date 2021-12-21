@@ -146,7 +146,9 @@ async function handleCreatePathName(){
             }
 
             // console.log('event added!');
+            alert('Your event has created successfuly!')
             history.push('/user')
+            history.go(0)
         }catch(e){
             console.error("Error adding document: ", e);
         }
