@@ -38,14 +38,14 @@ export default function UserProfile() {
         const getUserProfileImg = async () => {
           const userDoc = await getDoc(doc(db,'users',currentUser.uid))
           .then( u =>{
-                      setProfileImage(u.data().profileImage);
-                      setFirstName(u.data().first);
-                      setLastName(u.data().last);
-                      setGender(u.data().gender)
-                      const d = (u.data().birthday.toDate())
-                      setBirthday(d.getDate()+ '/'+(d.getMonth()+1)+'/'+d.getFullYear())
+                      // setProfileImage(u.data().profileImage);
+                      // setFirstName(u.data().first);
+                      // setLastName(u.data().last);
+                      // setGender(u.data().gender)
+                      // const d = (u.data().birthday.toDate())
+                      // setBirthday(d.getDate()+ '/'+(d.getMonth()+1)+'/'+d.getFullYear())
 
-                      console.log(d.getDate());
+                      // console.log(d.getDate());
                      console.log(u.data());
 
           } )
