@@ -228,22 +228,22 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
 
   //// read more option ////
-  const ReadMore = ({ children }) => {
-    const text = children
-    const [isReadMore, setIsReadMore] = useState(true);
-    const toggleReadMore = () => {
-      setIsReadMore(!isReadMore);
-    }
-    return (
-              <p className="text" >
+  // const ReadMore = ({ children }) => {
+  //   const text = children
+  //   const [isReadMore, setIsReadMore] = useState(true);
+  //   const toggleReadMore = () => {
+  //     setIsReadMore(!isReadMore);
+  //   }
+  //   return (
+  //             <p className="text" >
 
-                {isReadMore ? text.slice(0, 150) : text}
-                <span onClick={toggleReadMore} style={{color:'blue' ,textDecoration:'underline'}}>
-                  {isReadMore ? "...read more" : " show less"}
-                </span>
-              </p>
-            );
-  };
+  //               {isReadMore ? text.slice(0, 150) : text}
+  //               <span onClick={toggleReadMore} style={{color:'blue' ,textDecoration:'underline'}}>
+  //                 {isReadMore ? "...read more" : " show less"}
+  //               </span>
+  //             </p>
+  //           );
+  // };
  ///////////////////////////
 
 
@@ -309,8 +309,8 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       <CardContent>
         <Typography component={'span'} variant="p" fontSize='18px' color="text.secondary">
 
-        <ReadMore children={newText} />
-
+        {/* <ReadMore children={newText} /> */}
+        {newText}
         </Typography>
       </CardContent>
     </Card>
