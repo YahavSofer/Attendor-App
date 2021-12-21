@@ -43,7 +43,7 @@ export default function UserProfile() {
                       setLastName(u.data().last);
                       setGender(u.data().gender)
                       const d = (u.data().birthday.toDate())
-                      setBirthday(d.getDate()+ '-'+(d.getMonth()+1)+'-'+d.getFullYear())
+                      setBirthday(d.getDate()+ '/'+(d.getMonth()+1)+'/'+d.getFullYear())
 
                       console.log(d.getDate());
                      console.log(u.data());
@@ -78,7 +78,7 @@ export default function UserProfile() {
                 <strong>Last Name : </strong>{lastName}<br></br>
                 <strong>Gender : </strong>{userGender}<br></br>
                 <strong>Birthday : </strong>{userBirthDay}<br></br>
-                <Link to='/user/update-password' className="btn btn-primary " style={{marginTop:"10px"}}>Change Password</Link>
+                <Link to='/user/update-password' className="btn btn-primary" style={{marginTop:"10px"}}>Change Password</Link>
                 </Col>
                 <Col>
                 {isProfilePic?
