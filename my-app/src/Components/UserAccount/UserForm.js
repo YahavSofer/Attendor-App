@@ -64,7 +64,7 @@ function OnClickCloseIcon(){
             
             let timestemp = new Date(dateValue)
             let ftime =Timestamp.fromDate(timestemp).toDate()
-
+            // console.log(firstNameRef.current.value,lastNameRef.current.value,ftime,gender )
             if(image !== null){
                         const ref = storage.ref(`/images/profile_pictures/${currentUser.uid}_Profile`);
                         const uploadTask = ref.put(image);
@@ -72,7 +72,8 @@ function OnClickCloseIcon(){
                         ref
                             .getDownloadURL()
                             .then(async (url) => {
-                                // setImage(null);
+                                setImage(null);
+                                console.log(firstNameRef.current.value )
                                 await setDoc(doc(db, "users",currentUser.uid),{
                                     first: firstNameRef.current.value,
                                     last: lastNameRef.current.value,
