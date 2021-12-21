@@ -18,6 +18,8 @@ import {  useAuth } from '../../../context/AuthContext'
 import { Link } from "react-router-dom";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from '@mui/material/Button';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import UpdateIcon from '@mui/icons-material/Update';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -197,7 +199,9 @@ export default function NavBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold'}} startIcon={<AddCircleIcon/>}><Link to='/user/create-event' style={{ textDecoration: 'none' }}>Create Event</Link></Button>
+          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<UpdateIcon/>}><Link to='/user' style={{ textDecoration: 'none', textTransform:'none' }}>Upcoming Events</Link></Button>
+          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<FavoriteIcon/>}><Link to='/user' style={{ textDecoration: 'none', textTransform:'none' }}>Liked Events</Link></Button>
+          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',minHeight:'1px'}} startIcon={<AddCircleIcon/>}><Link to='/user/create-event' style={{ textDecoration: 'none', textTransform:'none' }}>Create Event</Link></Button>
             <IconButton
               size="large"
               edge="end"
