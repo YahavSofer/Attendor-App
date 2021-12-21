@@ -2,7 +2,7 @@ import React ,{useEffect,useState} from 'react'
 import { Container } from 'react-bootstrap'
 import Event from '../Events/Event'
 import {db,storage} from '../../../firebaseConfig'
-import {getDocs,collection,limit,startAfter,doc} from "firebase/firestore"
+import {getDocs,collection,query,startAt,orderBy,Timestamp} from "firebase/firestore"
 import Button from '@mui/material/Button'
 import { Link } from "react-router-dom"
 import UndoIcon from '@mui/icons-material/Undo';
@@ -17,16 +17,22 @@ export default function Feed() {
       // onload - get all events from firestore
 
       const getEvents = async () => {
-        const AllEvents = await getDocs(collection(db,'Events'))
-        .then(function(querySnapshot) {
-          return querySnapshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id})
-          )})
+        
+        let timestamp = new Date(Timestamp.now().seconds*1000).setHours(24,0,0,0)
+        console.log(timestamp);
+        const eventsDB = collection(db, "Events")
+        const q = query(eventsDB, orderBy("eventDate"), startAt(timestamp)); 
+        const querySnapshot = await getDocs(q).then(res =>{
+                return res.docs.map(doc => Object.assign(doc.data(), {id: doc.id})
+        )})
+        console.log(querySnapshot);
+        setEventData(querySnapshot);
 
-        setEventData(AllEvents);
-        console.log(AllEvents);
+
       };
   
       getEvents();
+
     }, []);
 
 
