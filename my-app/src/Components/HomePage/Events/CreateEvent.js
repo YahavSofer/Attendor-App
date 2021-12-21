@@ -98,14 +98,14 @@ async function handleCreatePathName(){
             setLoading(true)
 
             HandleCost()
-            
+
             let timestemp = new Date(dateValue)
             let ftime =Timestamp.fromDate(timestemp).toDate()
+
 
             if(image !== null){
                 const path = await handleCreatePathName()
                 const ref = storage.ref(`/images/event_pictures/${path}`);
-
                 const uploadTask = ref.put(image);
                 uploadTask.on("state_changed", console.log, console.error,() => {
                     ref
@@ -119,7 +119,7 @@ async function handleCreatePathName(){
                                 eventImage: url, 
                                 eventCost: Number(cost),
                                 eventMaxParti: MaxParti,
-                                description: keepOnFormatStr(descriptionRef.current.value),
+                                description: keepOnFormatStr(descriptionRef.current.value),              
                                 userAttended: [],         
                                 userLiked:[]
                             });
@@ -161,15 +161,11 @@ async function handleCreatePathName(){
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="eventname" >
                     <Form.Label>Event Title</Form.Label>
-                        {/* <Form.Label>Event Title</Form.Label>     */}
-                        {/* <Form.Control type="text" ref={eventTitleRef} required/>  */}
-                        <TextField  inputRef={eventTitleRef} id="eventTitle" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        <TextField inputRef={eventTitleRef}  id="eventTitle" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
                     <Form.Group id="eventlocation">
                     <Form.Label>Event Location</Form.Label>
-                        {/* <Form.Label>Event Location</Form.Label> */}
-                        {/* <Form.Control type="text" ref={eventLocationRef} required/>  */}
-                        <TextField  required inputRef={eventLocationRef} id="eventlocation" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px', paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        <TextField required inputRef={eventLocationRef} id="eventlocation" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px', paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
 
                 <Form.Group id="eventDate">
