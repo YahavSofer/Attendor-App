@@ -33,7 +33,7 @@ export default function Feed() {
 
     return (
         <>
-    <Container style={{paddingRight:'100px'}}>
+    <Container>
 
     {/* this is the way to render the posts */}
     

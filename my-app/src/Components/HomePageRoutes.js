@@ -30,6 +30,7 @@ export default function HomePageRoutes(){
                             <PrivateRoute  path={`${match.url}/profile`} component={UserProfile} />
                             <PrivateRoute  path={`${match.url}/create-event`} component={CreateEvent} /> 
                             <PrivateRoute  path={`${match.url}/update-event`} component={UpdateEvent} /> 
+                            
 
                     </Switch>
             </Container>
