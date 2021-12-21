@@ -23,7 +23,7 @@ export default function Feed() {
           )})
 
         setEventData(querySnapshot);
-        console.log(querySnapshot);
+        // console.log(querySnapshot);
       };
   
       getEvents();
