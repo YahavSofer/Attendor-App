@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef, useState,setTim} from 'react'
 import {Card, Form,Container, Image} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../firebaseConfig'
@@ -64,10 +64,6 @@ function OnClickCloseIcon(){
             
             let timestemp = new Date(dateValue)
             let ftime =Timestamp.fromDate(timestemp).toDate()
-<<<<<<< HEAD
-
-=======
->>>>>>> 81c871512c5a9705b4bc5690d7d14e0306ef2b9e
             const formData={
                 first: firstNameRef.current.value,
                 last: lastNameRef.current.value,         
@@ -79,8 +75,8 @@ function OnClickCloseIcon(){
                         ref
                             .getDownloadURL()
                             .then(async (url) => {
-                                setImage(null);
-                                console.log(firstNameRef.current.value )
+                                // setImage(null);
+                                console.log(formData)
                                 await setDoc(doc(db, "users",currentUser.uid),{
                                     first: formData.first,
                                     last: formData.last,
@@ -105,8 +101,11 @@ function OnClickCloseIcon(){
 
               });
             }
-        history.push('/user')
-        history.go(0)
+        const timer = setTimeout(() => {
+            history.push('/user')
+              }, 2000);
+        
+        // history.go(0)
         }catch(e){
             console.error("Error adding document: ", e);
         }

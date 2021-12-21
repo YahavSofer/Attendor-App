@@ -103,7 +103,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       
       const userDoc = await getDoc(doc(db,'users',currentUser.uid))
             .then( u =>{
-                        // console.log(u.data());
+                        console.log(u.data());
                         (u.data().userLiked || []).map((eventId)=>{
                           if(eventId == id){
                             // console.log("current user is attending to "+id+" event");
