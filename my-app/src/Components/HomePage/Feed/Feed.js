@@ -16,7 +16,7 @@ export default function Feed() {
 
       const getEvents = async () => {
         const AllEvents =collection(db,'Events')
-        const q = query(AllEvents, orderBy("eventDate", "asc"));
+        const q = query(AllEvents, orderBy("eventDate", "desc"));
         const querySnapshot = await getDocs(q)
         .then(function(qSanpshot) {
           return qSanpshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id})

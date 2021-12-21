@@ -33,8 +33,8 @@ const AttendClickedButtonStyle ={
 
 const LikeClickedButtonStyle ={
   color:red[500],
-  marginRight:'20px',
-  marginTop:'10px',
+  // marginRight:'20px',
+  // marginTop:'10px',
 
 };
 ////////////////////////////////////////
