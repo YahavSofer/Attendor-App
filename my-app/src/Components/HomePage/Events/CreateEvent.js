@@ -96,7 +96,11 @@ async function handleCreatePathName(){
         
         try{
             setLoading(true)
-
+            const formData={
+                title: eventTitleRef.current.value,
+                location: eventLocationRef.current.value,
+                description: keepOnFormatStr(descriptionRef.current.value)            
+            }
             HandleCost()
 
             let timestemp = new Date(dateValue)
@@ -111,15 +115,16 @@ async function handleCreatePathName(){
                     ref
                         .getDownloadURL()
                         .then(async (url)=>{
+
                             await addDoc(collection(db, "Events"),{
                                 userid: currentUser.uid,
-                                title: eventTitleRef.current.value,
-                                location: eventLocationRef.current.value,
+                                title: formData.title,
+                                location: formData.location,
                                 eventDate: ftime,
                                 eventImage: url, 
                                 eventCost: Number(cost),
                                 eventMaxParti: MaxParti,
-                                description: keepOnFormatStr(descriptionRef.current.value),              
+                                description: keepOnFormatStr(formData.description),              
                                 userAttended: [],         
                                 userLiked:[]
                             });

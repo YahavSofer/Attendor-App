@@ -65,6 +65,10 @@ function OnClickCloseIcon(){
             let timestemp = new Date(dateValue)
             let ftime =Timestamp.fromDate(timestemp).toDate()
 
+            const formData={
+                first: firstNameRef.current.value,
+                last: lastNameRef.current.value,         
+            }
             if(image !== null){
                         const ref = storage.ref(`/images/profile_pictures/${currentUser.uid}_Profile`);
                         const uploadTask = ref.put(image);
@@ -74,8 +78,8 @@ function OnClickCloseIcon(){
                             .then(async (url) => {
                                 // setImage(null);
                                 await setDoc(doc(db, "users",currentUser.uid),{
-                                    first: firstNameRef.current.value,
-                                    last: lastNameRef.current.value,
+                                    first: formData.first,
+                                    last: formData.last,
                                     birthday: ftime,
                                     gender: gender, 
                                     profileImage: url,
@@ -83,8 +87,7 @@ function OnClickCloseIcon(){
                                     userAttended:[]
                             });
                         });
-                }
-                        )}
+                })}
 
             else{
             await setDoc(doc(db, "users",currentUser.uid),{
