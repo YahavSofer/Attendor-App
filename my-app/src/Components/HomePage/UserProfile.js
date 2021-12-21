@@ -65,10 +65,10 @@ export default function UserProfile() {
             transform: 'translate(-50%, -50%)',
             minWidth: '600px'
           }} >
-            <Card  >
+            <Card style={{background:'#f0f2f5'}} >
                 <Card.Body>
                 <Row>
-                <h2 className="text-center mb-4" style={{display:"inline"}}>My Profile </h2>
+                <u style={{display:"inline"}}><h2 className="text-center mb-4" >My Profile </h2></u>
                 </Row>
                 <Row>
                 <Col>

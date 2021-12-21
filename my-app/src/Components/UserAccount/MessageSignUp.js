@@ -1,5 +1,7 @@
 import React from 'react'
 import {Card,Container} from 'react-bootstrap'
+import {Button} from '@mui/material'
+import { Link ,useHistory } from 'react-router-dom'
 
 export default function MessageSignUp() {
     return (
@@ -14,7 +16,8 @@ export default function MessageSignUp() {
                     <p style={{color:'#0081A7',fontSize:'18px'}}>verification email sent to your email address, Please check your email.
                     </p>
                 </Card>
-            </Card.Body>
+                <Button type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'><Link to='/' style={{color: '#FFF', textDecoration: 'none'}}>Log In</Link></Button>
+            </Card.Body>  
         </Card>
             </Container>
 

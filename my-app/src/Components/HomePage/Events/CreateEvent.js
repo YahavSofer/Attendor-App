@@ -160,9 +160,9 @@ async function handleCreatePathName(){
         <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
         <div className='w-100'> 
         <Container style={{minWidth:'350px',maxWidth:'400px'}}>
-        <Card className='shadow rounded' style={{background:'#83c5be'}}>
+        <Card className='shadow rounded' style={{background:'#f0f2f5'}}>
             <Card.Body>
-                <h2 className="text-center mb-4">Create New Event</h2>
+                <u><h2 className="text-center mb-4">Create New Event</h2></u>
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="eventname" >
                     <Form.Label>Event Title</Form.Label>
