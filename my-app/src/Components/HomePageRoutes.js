@@ -10,9 +10,10 @@ import PrivateRoute from './PrivateRoute'
 import HomePage from './HomePage/HomePage'
 import UserRcommendations from './HomePage/Recommendations/UserRcommendations'
 import UpdateEvent from './HomePage/Events/UpdateEvent'
+import LikedEvents from './Liked/LikedEvents'
 
 export default function HomePageRoutes(){
-    
+
     const match = useRouteMatch();
 
     return (
@@ -30,7 +31,7 @@ export default function HomePageRoutes(){
                             <PrivateRoute  path={`${match.url}/profile`} component={UserProfile} />
                             <PrivateRoute  path={`${match.url}/create-event`} component={CreateEvent} /> 
                             <PrivateRoute  path={`${match.url}/update-event`} component={UpdateEvent} /> 
-                            
+                            <PrivateRoute  path={`${match.url}/liked-events`} component={LikedEvents} /> 
 
                     </Switch>
             </Container>
