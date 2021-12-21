@@ -58,9 +58,9 @@ export default function UpdatePassword() {
           }} >
                 <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
         <div className='w-100'> 
-        <Card>
+        <Card style={{background:'#f0f2f5'}}>
             <Card.Body>
-                <h2 className="text-center mb-4">Change Password</h2>
+                <u><h2 className="text-center mb-4">Change Password</h2></u>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="password">
