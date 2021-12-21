@@ -5,20 +5,12 @@ import {db,storage} from '../../../firebaseConfig'
 import { addDoc,doc,getDocs,collection, query, where,Timestamp  } from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
-// import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import {  useAuth } from '../../../context/AuthContext'
 import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
-// import { format } from 'date-fns'
-
-{/* https://mui.com/components/pickers/ */}
+import { useHistory } from 'react-router-dom'
 
 export default function CreateEvent() {
 
@@ -38,7 +30,7 @@ export default function CreateEvent() {
     const fileRef = useRef()
     const costRef = useRef()
     const maxPartiRef = useRef()
-
+    const history = useHistory()
 
 function keepOnFormatStr(str)  {
         return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
@@ -148,7 +140,8 @@ async function handleCreatePathName(){
                     });
             }
 
-            console.log('event added!');
+            // console.log('event added!');
+            history.push('/user')
         }catch(e){
             console.error("Error adding document: ", e);
         }
@@ -190,19 +183,6 @@ async function handleCreatePathName(){
                             renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px',marginBottom: '10px'}}  />}
                         />
 
-            {/* it didnt work for you, because you used with DesktopDatePicker and its just Date without Time.
-            I changed it to DateTimePicker */}
-
-
-                    {/* <DesktopDatePicker
-                        
-                        required
-                        inputFormat="hh:mm dd/MM/yyyy"
-                        value={dateValue}
-                        onChange={handleChangeDate}
-                        ref={eventDateRef}
-                        renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px'}} />}
-                                            /> */}
 
                 </LocalizationProvider>
             </div>
@@ -216,14 +196,7 @@ async function handleCreatePathName(){
                         {closeIconShow ? <CloseIcon  style={{ cursor:'pointer', position: 'absolute',right: '70px',top: '10px',lineHeight :'0'}} onClick={OnClickCloseIcon}/> : null}
                         <Image src={tempImgUrl} alt="" fluid className="w-50 h-50 mt-3 mx-auto d-block" rounded />
                     </Container>
-
                 </Form.Group>
-
-                {/* <Form.Group id="cost" className="mb-3">
-                    <Form.Control aria-label="Amount (to the nearest shekel)" ref={costRef}/>
-                    <Form.Group.Text>₪</Form.Group.Text>
-                    <Form.Group.Text>.00</Form.Group.Text>
-                </Form.Group> */}
 
                 <Form.Group id="cost" className="mb-3">
                 <Form.Label htmlFor="inlineFormInputGroup" >

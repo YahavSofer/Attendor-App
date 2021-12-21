@@ -2,8 +2,8 @@ import React ,{useEffect,useState} from 'react'
 import { Container } from 'react-bootstrap'
 import Event from '../Events/Event'
 
-import {db,storage} from '../../../firebaseConfig'
-import {getDocs,collection,limit,startAfter,doc} from "firebase/firestore"
+import {db} from '../../../firebaseConfig'
+import {getDocs,collection,orderBy,query} from "firebase/firestore"
 
 //  npm install --save react-infinite-scroll-component
 
@@ -15,13 +15,15 @@ export default function Feed() {
       // onload - get all events from firestore
 
       const getEvents = async () => {
-        const AllEvents = await getDocs(collection(db,'Events'))
-        .then(function(querySnapshot) {
-          return querySnapshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id})
+        const AllEvents =collection(db,'Events')
+        const q = query(AllEvents, orderBy("eventDate", "asc"));
+        const querySnapshot = await getDocs(q)
+        .then(function(qSanpshot) {
+          return qSanpshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id})
           )})
 
-        setEventData(AllEvents);
-        console.log(AllEvents);
+        setEventData(querySnapshot);
+        console.log(querySnapshot);
       };
   
       getEvents();

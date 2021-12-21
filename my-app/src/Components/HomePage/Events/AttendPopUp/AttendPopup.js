@@ -31,13 +31,13 @@ export default function AttendPopUp(props){
     // console.log(props.currentUserID);
     const UserAttendingArray = doc(db, "users", props.currentUserID);
     await updateDoc(UserAttendingArray, {
-      eventAttending: arrayUnion(props.eventID)
+      userAttended: arrayUnion(props.eventID)
   }).then(console.log('event added to user attening list'))
 
 
     const eventsAttendings = doc(db, "Events", props.eventID);
     await updateDoc(eventsAttendings, {
-      eventAttending: arrayUnion(props.currentUserID)
+      userAttended: arrayUnion(props.currentUserID)
   }).then(console.log('secceed'))
 
     props.setCheckAttending(true)

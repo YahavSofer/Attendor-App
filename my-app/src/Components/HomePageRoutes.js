@@ -8,7 +8,7 @@ import CreateEvent from './HomePage/Events/CreateEvent'
 import UpdatePassword from './UserAccount/UpdatePassword'
 import PrivateRoute from './PrivateRoute'
 import HomePage from './HomePage/HomePage'
-
+import UpdateEvent from './HomePage/Events/UpdateEvent'
 export default function HomePageRoutes(){
     
     const match = useRouteMatch();
@@ -26,6 +26,8 @@ export default function HomePageRoutes(){
                             <PrivateRoute  path={`${match.url}/update-password`} component={UpdatePassword} />
                             <PrivateRoute  path={`${match.url}/profile`} component={UserProfile} />
                             <PrivateRoute  path={`${match.url}/create-event`} component={CreateEvent} /> 
+                            <PrivateRoute  path={`${match.url}/update-event`} component={UpdateEvent} /> 
+
                     </Switch>
             </Container>
             </div>

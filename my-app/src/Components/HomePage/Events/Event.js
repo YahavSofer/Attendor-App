@@ -9,38 +9,61 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {db} from '../../../firebaseConfig'
-import { doc,getDoc,getDocs,collection,updateDoc ,arrayRemove,arrayUnion, where,query} from "firebase/firestore"
+import { doc,getDoc,updateDoc ,arrayRemove,arrayUnion} from "firebase/firestore"
 import Button from '@mui/material/Button';
 import logoImage from'../../../images/logo11.png'
 import AttendPopUp from './AttendPopUp/AttendPopup'
 import {  useAuth } from '../../../context/AuthContext'
-
+import EditIcon from '@mui/icons-material/Edit';
+import { useHistory } from 'react-router-dom'
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 ////////// styling ////////////////////
 
 const AttendUnClickedButtonStyle ={
   backgroundColor:"#83c5be",
+  marginRight:'20px',
+  marginTop:'10px',
 };
 
 const AttendClickedButtonStyle ={
   backgroundColor: 'gray' ,
+  marginRight:'20px',
+  marginTop:'10px',
 };
 
 const LikeClickedButtonStyle ={
   color:red[500],
+  marginRight:'20px',
+  marginTop:'10px',
 
 };
 ////////////////////////////////////////
 
 
 
-export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,userid,eventAttending}}) {
+export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMinParti,eventMaxParti,eventCost,userid,userAttended}}) {
+
+  const event={
+    e_id: id,
+    e_desc: description,
+    e_title: title,
+    e_eventDate: eventDate,
+    e_eventImage: eventImage,
+    e_location: location,
+    e_eventMinParti: eventMinParti,
+    e_eventMaxParti: eventMaxParti,
+    e_userid: userid,
+    e_eventCost: eventCost,
+    e_userAttended:userAttended
+
+  }
 
   function keepOnFormatStr(str){
     return str.replaceAll("\\\\n", '\n').replaceAll("\\\\r", '\r').replaceAll('\\\\t', '\t');
     }  
 
-
+  const history = useHistory()
   const [profileImage,setProfileImage] = useState()
   const [isProfilePic,setIsProfilePic] = useState(false)
   const [userName,setUserName] = useState()
@@ -60,6 +83,9 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   const [checkAttending,setCheckAttending] = useState(false)
 
 
+/////////////////////////////////////////////////////////////////
+                    //start of UseEffect//
+/////////////////////////////////////////////////////////////////
   useEffect(() => {
     // onload - get all events from firestore
   
@@ -79,7 +105,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       const userDoc = await getDoc(doc(db,'users',currentUser.uid))
             .then( u =>{
                         // console.log(u.data());
-                        (u.data().eventLiked || []).map((eventId)=>{
+                        (u.data().userLiked || []).map((eventId)=>{
                           if(eventId == id){
                             // console.log("current user is attending to "+id+" event");
                             setLike(true)
@@ -93,7 +119,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       
       const EventDoc = await getDoc(doc(db,'Events',id))
             .then( e =>{
-                        (e.data().eventAttending || []).map((uid)=>{
+                        (e.data().userAttended || []).map((uid)=>{
                           if(uid == currentUser.uid){
                             // console.log("current user is attending to "+id+" event");
                             setAttend(true)
@@ -110,8 +136,9 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       setIsProfilePic(true)
     } 
   }, []);
-
-
+/////////////////////////////////////////////////////////////////
+                    //End of UseEffect//
+/////////////////////////////////////////////////////////////////
 
   const handleLoadPicture =() =>{
     if(eventImage !== ""){
@@ -119,17 +146,24 @@ export default function Event({event: { id,description,title,eventDate,eventImag
     }
   }
 
+  const handleEdit=()=>{
+    history.push(
+      '/user/update-event',
+      {event: event }
 
-  // remove events IDs from the arrays in user Doc and Event Doc calls 'eventAttending'
+    )
+  }
+
+  // remove events IDs from the arrays in user Doc and Event Doc calls 'userAttended'
   const RemoveItemFromArray = async() =>{
     const UserAttendingArray = doc(db, "users", currentUser.uid);
     await updateDoc(UserAttendingArray, {
-      eventAttending: arrayRemove(id)
+      userAttended: arrayRemove(id)
   }).then(console.log('event removed from user attening list'))
 
   const eventsAttendings = doc(db, "Events", id);
   await updateDoc(eventsAttendings, {
-    eventAttending: arrayRemove(currentUser.uid)
+    userAttended: arrayRemove(currentUser.uid)
 }).then(console.log('secceed'))
 
 }
@@ -153,14 +187,14 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   const updateLikeArray = async() =>{
     const UserLikedArray = doc(db, "users", currentUser.uid);
     await updateDoc(UserLikedArray, {
-      eventLiked: arrayUnion(id)
+      userLiked: arrayUnion(id)
   }).then(console.log('event added to user Like list'))
   }
 
   const removeLikeFromArray = async() =>{
     const UserLikedArray = doc(db, "users", currentUser.uid);
     await updateDoc(UserLikedArray, {
-      eventLiked: arrayRemove(id)
+      userLiked: arrayRemove(id)
   }).then(console.log('event removed from user Liked list'))
   };
 
@@ -186,23 +220,20 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
   //// read more option ////
   const ReadMore = ({ children }) => {
-
     const text = children
-
     const [isReadMore, setIsReadMore] = useState(true);
     const toggleReadMore = () => {
       setIsReadMore(!isReadMore);
-    };
- 
+    }
     return (
-      <p className="text" >
+              <p className="text" >
 
-        {isReadMore ? text.slice(0, 150) : text}
-        <span onClick={toggleReadMore} style={{color:'blue' ,textDecoration:'underline'}}>
-          {isReadMore ? "...read more" : " show less"}
-        </span>
-      </p>
-    );
+                {isReadMore ? text.slice(0, 150) : text}
+                <span onClick={toggleReadMore} style={{color:'blue' ,textDecoration:'underline'}}>
+                  {isReadMore ? "...read more" : " show less"}
+                </span>
+              </p>
+            );
   };
  ///////////////////////////
 
@@ -219,22 +250,35 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
       }
       
-      action={
-        <>
+      
+        action={
+      //user cant do attending to his event,so we prevent the functionality of that
+
+        (currentUser.uid!==userid)?  
+        // show attend and like buttons  
+        <> 
         <div>
           <Button variant="contained"  onClick={handleAttendClick} style={attend ? AttendClickedButtonStyle: AttendUnClickedButtonStyle} >
             {!attend ? 'Attend Now' : 'Disattend'}
           </Button>
         </div>
-          {/* <br/> */}
+        
          <div style={{marginLeft:'30%'}}> 
           <IconButton aria-label="Like icon" >
-          {/* icon like */}
           <FavoriteIcon style={like ? LikeClickedButtonStyle : null} onClick={handleLikeClick}   /> 
           </IconButton>
           </div>
-        </>
+        </>:
 
+        // show Edit button
+        <>
+        <div style={{marginRight:'20px',marginTop:'10px'}}>
+          <Button variant="contained" endIcon={<EditIcon/>} onClick={handleEdit}>
+            Edit
+          </Button>
+        </div>
+        </>
+        
         }
 
         title={<h4>{title}</h4>}    // event title
@@ -254,7 +298,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
 
       <CardContent>
-        <Typography component={'span'} variant="body2" color="text.secondary">
+        <Typography component={'span'} variant="p" fontSize='18px' color="text.secondary">
 
         <ReadMore children={newText} />
 
