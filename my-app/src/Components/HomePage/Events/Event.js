@@ -81,6 +81,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   const [checkAttending,setCheckAttending] = useState(false)
   const [attendingCounter,setAttendingCounter] = useState()
 
+  const [disabledButton,setDisabledButton] = useState(false)
   // const getCounter=()=>{
   //   setAttendingCounter({userAttended}.userAttended.length)
   // } 
@@ -185,8 +186,10 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       setCheckAttending(false)
       RemoveItemFromArray()
       setAttendingCounter(attendingCounter-1)
+      setDisabledButton(false)
 
     }
+
     if (attend === false){
       setButtonPopup(true)
     }
@@ -278,7 +281,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
         // show attend and like buttons  
         <> 
         <div>
-          <Button disable={(attendingCounter === eventMaxParti )} variant="contained"  onClick={handleAttendClick} style={attend ? AttendClickedButtonStyle: AttendUnClickedButtonStyle} >
+          <Button disabled={disabledButton} variant="contained"  onClick={handleAttendClick} style={attend ? AttendClickedButtonStyle: AttendUnClickedButtonStyle} >
             {!attend ? 'Attend Now' : 'Disattend'}
           </Button>
         </div>
@@ -332,6 +335,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       trigger={buttonPopup} 
       setTrigger={setButtonPopup} 
       setAttendValue={setAttend}
+      attendValue = {attend}
       currentUserID = {currentUser.uid}
       eventID ={id}
       eventTitle={title}
@@ -342,6 +346,9 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       setCheckAttending = {setCheckAttending}
       attendingCounter = {attendingCounter}
       setAttendingCounter = {setAttendingCounter}
+      eventMaxParti = {eventMaxParti}
+      setDisabledButton= {setDisabledButton}
+      DisabledButton ={disabledButton}
       />
 
 

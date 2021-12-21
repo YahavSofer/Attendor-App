@@ -20,34 +20,38 @@ export default function AttendPopUp(props){
 
 
   const handleClose =() =>{
-    props.setTrigger(false)
-    if (!props.checkAttending){
-      props.setAttendValue(false)
-    }
+            props.setTrigger(false)
+            if (!props.checkAttending){
+              props.setAttendValue(false)
+            }
   }
 
   const handleAttend = async() =>{
-    setLoading(true)
-    // console.log(props.currentUserID);
-    const UserAttendingArray = doc(db, "users", props.currentUserID);
-    await updateDoc(UserAttendingArray, {
-      userAttended: arrayUnion(props.eventID)
-  }).then(console.log('event added to user attening list'))
+
+            setLoading(true)
+            // console.log(props.currentUserID);
+            const UserAttendingArray = doc(db, "users", props.currentUserID);
+            await updateDoc(UserAttendingArray, {
+              userAttended: arrayUnion(props.eventID)
+          }).then(console.log('event added to user attening list'))
 
 
-    const eventsAttendings = doc(db, "Events", props.eventID);
-    await updateDoc(eventsAttendings, {
-      userAttended: arrayUnion(props.currentUserID)
-  }).then(console.log('secceed'))
+            const eventsAttendings = doc(db, "Events", props.eventID);
+            await updateDoc(eventsAttendings, {
+              userAttended: arrayUnion(props.currentUserID)
+          }).then(console.log('secceed'));
 
-    props.setAttendingCounter(props.attendingCounter+1)
-    
-    props.setCheckAttending(true)
+          props.setAttendingCounter(props.attendingCounter+1);
+          if((props.attendingCounter === props.eventMaxParti)&& !props.attendValue){
+              props.setDisabledButton(true)
+            }
 
-    setLoading(false)
+            props.setCheckAttending(true)
+
+            setLoading(false)
 
   }
-  
+
   const OnLoadPopup =
                     <>
                         <CloseIcon className="close-btn" onClick={handleClose}/>
