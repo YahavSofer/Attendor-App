@@ -2,7 +2,7 @@ import React, {useRef, useState,useEffect} from 'react'
 import {Card, Form,Container, Image,InputGroup} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../../firebaseConfig'
-import { addDoc,doc,getDocs,collection, query, where,Timestamp  } from "firebase/firestore"
+import { setDoc,doc,getDocs,collection, query, where,Timestamp  } from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DateTimePicker from '@mui/lab/DateTimePicker';
@@ -12,9 +12,9 @@ import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
 import { useHistory } from 'react-router-dom'
 
-export default function CreateEvent() {
+export default function UpdateEvent(props) {
 
-
+    
     const eventTitleRef = useRef()
     const eventLocationRef = useRef()
     const descriptionRef = useRef()
@@ -23,7 +23,7 @@ export default function CreateEvent() {
     const [imageUrl, setImageURL] = useState("")
     const [tempImgUrl, setTempImgUrl] =useState(no_Img)
     const {currentUser} = useAuth()
-    const [dateValue, setValue] = useState(Date.now()) // not working
+    const [dateValue, setDateValue] = useState(Date.now())
     const [closeIconShow, setCloseIconShow] = useState(false)
     const [cost,setCost] = useState(0)
     const [MaxParti, setMaxParti] = useState("No Limit")
@@ -38,7 +38,7 @@ function keepOnFormatStr(str)  {
 
 const handleChangeDate = (newValue) => {
 
-        setValue(newValue)
+        setDateValue(newValue)
 
         };
         
@@ -111,7 +111,7 @@ async function handleCreatePathName(){
                     ref
                         .getDownloadURL()
                         .then(async (url)=>{
-                            await addDoc(collection(db, "Events"),{
+                            await setDoc(doc(db, "Events"),{
                                 userid: currentUser.uid,
                                 title: eventTitleRef.current.value,
                                 location: eventLocationRef.current.value,
@@ -126,7 +126,7 @@ async function handleCreatePathName(){
                         });
                 })}
             else{        
-                    await addDoc(collection(db, "Events"),{
+                    await setDoc(collection(db, "Events"),{
                         userid: currentUser.uid,
                         title: eventTitleRef.current.value,
                         location: eventLocationRef.current.value,
@@ -149,6 +149,22 @@ async function handleCreatePathName(){
         
     }
 
+   useEffect(()=>{
+        const currentEvent =props.location.state.event;
+
+        let timestemp = new Date(currentEvent.e_eventDate.seconds*1000)
+        let ftime =Timestamp.fromDate(timestemp).toDate()
+        console.log(ftime);
+
+       eventTitleRef.current.value = currentEvent.e_title
+       eventLocationRef.current.value=currentEvent.e_location
+       setDateValue(ftime)
+       fileRef.current.src = currentEvent.e_eventImage
+       console.log(currentEvent.e_eventImage)
+   },[])
+
+
+
     return (
         
         <>
@@ -157,7 +173,7 @@ async function handleCreatePathName(){
         <Container style={{minWidth:'350px',maxWidth:'400px'}}>
         <Card className='shadow rounded' style={{background:'#83c5be'}}>
             <Card.Body>
-                <h2 className="text-center mb-4">Create New Event</h2>
+                <h2 className="text-center mb-4">Update Event</h2>
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="eventname" >
                     <Form.Label>Event Title</Form.Label>

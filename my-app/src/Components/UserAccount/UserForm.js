@@ -10,10 +10,11 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import {  useAuth } from '../../context/AuthContext'
 import no_Img from '../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
+import { useHistory } from 'react-router-dom'
 
 export default function UserForm() {
 
-
+    const history = useHistory()
     const firstNameRef = useRef()
     const lastNameRef = useRef()
     const birthdayRef = useRef()
@@ -78,8 +79,8 @@ function OnClickCloseIcon(){
                                     birthday: ftime,
                                     gender: gender, 
                                     profileImage: url,
-                                    eventLiked: [],
-                                    eventAttending:[]
+                                    userLiked: [],
+                                    userAttended:[]
                             });
                         });
                 }
@@ -92,12 +93,12 @@ function OnClickCloseIcon(){
                 birthday: ftime,
                 gender: gender, 
                 profileImage: imageUrl,
-                eventLiked: [],
-                eventAttending:[]
+                userLiked: [],
+                userAttended:[]
 
               });
             }
-
+        history.push('/user')
 
         }catch(e){
             console.error("Error adding document: ", e);
