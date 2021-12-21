@@ -16,7 +16,6 @@ import AttendPopUp from './AttendPopUp/AttendPopup'
 import {  useAuth } from '../../../context/AuthContext'
 import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from 'react-router-dom'
-import { propTypes } from 'react-bootstrap/esm/Image';
 
 ////////// styling ////////////////////
 

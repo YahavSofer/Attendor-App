@@ -8,7 +8,7 @@ import AssistantIcon from '@mui/icons-material/Assistant';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { db } from "../../../../firebaseConfig";
-import {  doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
+import {  doc, updateDoc, arrayUnion } from "firebase/firestore"
 
 
 // import PropTypes from "prop-types";   //npm install prop-types --save

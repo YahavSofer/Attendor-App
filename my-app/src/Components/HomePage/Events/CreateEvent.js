@@ -1,8 +1,8 @@
-import React, {useRef, useState,useEffect} from 'react'
+import React, {useRef, useState} from 'react'
 import {Card, Form,Container, Image,InputGroup} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../../firebaseConfig'
-import { addDoc,doc,getDocs,collection, query, where,Timestamp  } from "firebase/firestore"
+import { addDoc,getDocs,collection, query, where,Timestamp  } from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DateTimePicker from '@mui/lab/DateTimePicker';
