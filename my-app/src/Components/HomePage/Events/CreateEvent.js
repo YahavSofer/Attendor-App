@@ -23,7 +23,7 @@ export default function CreateEvent() {
     const [imageUrl, setImageURL] = useState("")
     const [tempImgUrl, setTempImgUrl] =useState(no_Img)
     const {currentUser} = useAuth()
-    const [dateValue, setValue] = useState(Date.now()) // not working
+    const [dateValue, setValue] = useState(Date.now()) 
     const [closeIconShow, setCloseIconShow] = useState(false)
     const [cost,setCost] = useState(0)
     const [MaxParti, setMaxParti] = useState("No Limit")
@@ -128,7 +128,8 @@ async function handleCreatePathName(){
                                 eventMaxParti: MaxParti,
                                 description: keepOnFormatStr(formData.description),              
                                 userAttended: [],         
-                                userLiked:[]
+                                userLiked:[],
+                                createdTime:Timestamp.fromDate(new Date(Date.now())).toDate()
                             });
                         });
                 })}
@@ -143,7 +144,8 @@ async function handleCreatePathName(){
                         eventMaxParti: MaxParti,
                         description: keepOnFormatStr(descriptionRef.current.value),              
                         userAttended: [],         
-                        userLiked:[]
+                        userLiked:[],
+                        createdTime:Timestamp.fromDate(new Date(Date.now())).toDate()
                     });
             }
 

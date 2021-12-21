@@ -22,7 +22,7 @@ export default function Feed() {
         // console.log(timestamp);
 
         const allEvents = collection(db, "Events")
-        const q = query(allEvents,where('userid','==' ,currentUser.uid)); 
+        const q = query(allEvents,where('userid','==' ,currentUser.uid));
         const querySnapshot = await getDocs(q).then(res =>{
                 return res.docs.map(doc => Object.assign(doc.data(), {id: doc.id})
         )})
