@@ -2,7 +2,6 @@ import React from 'react'
 import { Container,Row,Col,Card} from 'react-bootstrap'
 import './Style/HomePage.css'
 import Feed from './Feed/Feed'
-import FeedFilters from './Feed/FeedFilters'
 
 
 export default function HomePage() {
@@ -10,12 +9,7 @@ export default function HomePage() {
         <>
     <div className='bodyDiv'>  
            
-        <Container className='flex-warp' fluid>
-
-            <Row>
-            <FeedFilters/>
-            </Row>
-            
+        <Container className='flex-warp' fluid>       
             <Row>
                 <Feed/>
             </Row>
