@@ -64,7 +64,10 @@ function OnClickCloseIcon(){
             
             let timestemp = new Date(dateValue)
             let ftime =Timestamp.fromDate(timestemp).toDate()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 81c871512c5a9705b4bc5690d7d14e0306ef2b9e
             const formData={
                 first: firstNameRef.current.value,
                 last: lastNameRef.current.value,         
