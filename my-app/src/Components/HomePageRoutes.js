@@ -12,6 +12,7 @@ import UserRcommendations from './HomePage/Recommendations/UserRcommendations'
 import UpdateEvent from './HomePage/Events/UpdateEvent'
 import UpcominEvents from './HomePage/FilterdEvents/UpcomingEvents'
 import LikedEvents from './HomePage/FilterdEvents/LikedEvents'
+import MyEvents from './HomePage/FilterdEvents/MyEvents'
 
 export default function HomePageRoutes(){
 
@@ -33,7 +34,8 @@ export default function HomePageRoutes(){
                             <PrivateRoute  path={`${match.url}/create-event`} component={CreateEvent} /> 
                             <PrivateRoute  path={`${match.url}/update-event`} component={UpdateEvent} /> 
                             <PrivateRoute  path={`${match.url}/liked-events`} component={LikedEvents} /> 
-                            <PrivateRoute  path={`${match.url}/upcoming-events`} component={UpcominEvents} /> 
+                            <PrivateRoute  path={`${match.url}/upcoming-events`} component={UpcominEvents} />
+                            <PrivateRoute  path={`${match.url}/my-events`} component={MyEvents} />
 
                     </Switch>
             </Container>
