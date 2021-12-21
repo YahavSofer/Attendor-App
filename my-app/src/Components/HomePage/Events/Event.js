@@ -304,7 +304,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
         
         }
 
-        title={<h4>{title}</h4>}    // event title
+        title={<b><h3 style={{color:'#1b7bd3'}}>{title}</h3></b>}    // event title
         subheader= {subheader}      // event Date&time
 
       />
@@ -320,12 +320,13 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       />
 
 
-      <CardContent>
-        <Typography component={'span'} variant="p" fontSize='18px' color="text.secondary">
+      <CardContent style={{marginBottom:'30px'}}>
 
-        {/* <ReadMore children={newText} /> */}
-        {newText}
-        </Typography>
+          <u><h5>Description</h5></u>
+          <Typography component={'span'} variant="p" fontSize='18px' color="text.secondary">
+          {/* <ReadMore children={newText} /> */}
+          {newText}
+          </Typography>
       </CardContent>
     </Card>
 
