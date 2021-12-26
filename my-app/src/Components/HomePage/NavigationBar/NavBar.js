@@ -205,9 +205,9 @@ export default function NavBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<UpdateIcon/>}><Link to='/user/upcoming-events' style={{ textDecoration: 'none', textTransform:'none', fontFamily:'arial' }}>Upcoming Events</Link></Button>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<FavoriteIcon/>}><Link to='/user/liked-events'  style={{ textDecoration: 'none', textTransform:'none' }}>Liked Events</Link></Button>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',minHeight:'1px'}} startIcon={<AddCircleIcon/>}><Link to='/user/create-event' style={{ textDecoration: 'none', textTransform:'none' }}>Create Event</Link></Button>
+          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<UpdateIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/upcoming-events' style={{ textDecoration: 'none', textTransform:'none', fontFamily:'arial' }} >Upcoming Events</Link></Button>
+          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<FavoriteIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/liked-events'  style={{ textDecoration: 'none', textTransform:'none' }}>Liked Events</Link></Button>
+          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',minHeight:'1px',marginLeft:'15px'}} startIcon={<AddCircleIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/create-event' style={{ textDecoration: 'none', textTransform:'none' }}>Create Event</Link></Button>
             <IconButton
               size="large"
               edge="end"

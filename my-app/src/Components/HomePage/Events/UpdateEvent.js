@@ -18,6 +18,7 @@ export default function UpdateEvent(props) {
     const eventTitleRef = useRef()
     const eventLocationRef = useRef()
     const descriptionRef = useRef()
+    const currentEvent = props.location.state.event
     const [loading, setLoading] = useState(false)
     const [image, setImage] = useState(null)
     const [imageUrl, setImageURL] = useState("")
@@ -43,11 +44,17 @@ const handleChangeDate = (newValue) => {
         };
         
 function handleChangePicture(e) {
-        setImage(e.target.files[0]);
-        setTempImgUrl(URL.createObjectURL(e.target.files[0]))
-        setCloseIconShow(true)
-          }
+        let t = e.target.files[0].type.split('/').pop().toLowerCase();
+        if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp" && t != "gif") {
+            alert('Please select a valid image file');
+            e.target.value = null;
 
+        }else{
+            setImage(e.target.files[0]);
+            setTempImgUrl(URL.createObjectURL(e.target.files[0]))
+            setCloseIconShow(true)
+          }
+        }
 
 function OnClickCloseIcon(){
     setCloseIconShow(false)
@@ -56,22 +63,24 @@ function OnClickCloseIcon(){
 }
 
 function HandleCost(){
-    console.log(costRef.current.value);
+    // console.log(costRef.current.value);
 
-    if (costRef.current.value === null){
-        setCost(0)
+    if (Number(costRef.current.value) > 0){
+        setCost(costRef.current.value)
+        
     }
     else{
-        setCost(costRef.current.value)
+        setCost(0)
     }
 }
 
 const HandleMaxParti = (newValue) => {
-    if (newValue.value === null){
+    // console.log(newValue);
+    if (Number(newValue) === null || Number(newValue)===0){
         setMaxParti("No Limit")
         }
     else{
-        setMaxParti(Number(newValue.value))
+        setMaxParti(Number(newValue))
         }
     };
 
@@ -97,6 +106,12 @@ async function handleCreatePathName(){
         try{
             setLoading(true)
 
+            const formData={
+                title: eventTitleRef.current.value,
+                location: eventLocationRef.current.value,
+                description: keepOnFormatStr(descriptionRef.current.value)            
+            }
+
             HandleCost()
             
             let timestemp = new Date(dateValue)
@@ -111,56 +126,79 @@ async function handleCreatePathName(){
                     ref
                         .getDownloadURL()
                         .then(async (url)=>{
-                            await setDoc(doc(db, "Events"),{
+                            await setDoc(doc(db, "Events",currentEvent.e_id),{
                                 userid: currentUser.uid,
-                                title: eventTitleRef.current.value,
-                                location: eventLocationRef.current.value,
+                                title: formData.title,
+                                location: formData.location,
                                 eventDate: ftime,
                                 eventImage: url, 
                                 eventCost: Number(cost),
                                 eventMaxParti: MaxParti,
-                                description: keepOnFormatStr(descriptionRef.current.value),
-                                userAttended: [],         
-                                userLiked:[]
+                                description: keepOnFormatStr(formData.description),
+                                userAttended: currentEvent.e_userAttended,         
+                                userLiked: currentEvent.e_userLiked,
+                                createdTime :currentEvent.e_createdTime
                             });
                         });
                 })}
             else{        
-                    await setDoc(collection(db, "Events"),{
+                    await setDoc(doc(db, "Events",currentEvent.e_id),{
                         userid: currentUser.uid,
-                        title: eventTitleRef.current.value,
-                        location: eventLocationRef.current.value,
+                        title: formData.title,
+                        location: formData.location,
                         eventDate: ftime,
                         eventImage: imageUrl, 
                         eventCost: Number(cost),
                         eventMaxParti: MaxParti,
-                        description: keepOnFormatStr(descriptionRef.current.value),              
-                        userAttended: [],         
-                        userLiked:[]
+                        description: keepOnFormatStr(formData.description),
+                        userAttended: currentEvent.e_userAttended,         
+                        userLiked: currentEvent.e_userLiked,
+                        createdTime :currentEvent.e_createdTime
                     });
             }
 
             // console.log('event added!');
-            history.push('/user')
+            const timer = setTimeout(() => {
+                history.push('/user')
+                setLoading(false)
+                  }, 2000);
         }catch(e){
             console.error("Error adding document: ", e);
+            setLoading(false)
         }
-        setLoading(false)
+        // setLoading(false)
         
     }
 
    useEffect(()=>{
         const currentEvent =props.location.state.event;
+        console.log(currentEvent);
 
         let timestemp = new Date(currentEvent.e_eventDate.seconds*1000)
         let ftime =Timestamp.fromDate(timestemp).toDate()
-        console.log(ftime);
+        // console.log(ftime);
 
        eventTitleRef.current.value = currentEvent.e_title
        eventLocationRef.current.value=currentEvent.e_location
        setDateValue(ftime)
-       fileRef.current.src = currentEvent.e_eventImage
-       console.log(currentEvent.e_eventImage)
+       
+       if(currentEvent.e_eventImage !== ''){
+            console.log("picURL: "+ currentEvent.e_eventImage)
+            setTempImgUrl(currentEvent.e_eventImage)
+            setCloseIconShow(true)
+        
+       }else{
+        setTempImgUrl(no_Img)
+       }
+
+
+
+        costRef.current.value = currentEvent.e_eventCost
+        
+        maxPartiRef.current.value = currentEvent.e_eventMaxParti
+        descriptionRef.current.value = currentEvent.e_desc
+        setCost(currentEvent.e_eventCost)
+        setMaxParti(currentEvent.e_eventMaxParti)
    },[])
 
 
@@ -171,7 +209,7 @@ async function handleCreatePathName(){
         <Container className = 'd-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}  id="noNavBar" >
         <div className='w-100'> 
         <Container style={{minWidth:'350px',maxWidth:'400px'}}>
-        <Card className='shadow rounded' style={{background:'#83c5be'}}>
+        <Card className='shadow rounded' style={{background:'#f0f2f5'}}>
             <Card.Body>
                 <h2 className="text-center mb-4">Update Event</h2>
                 <Form onSubmit = {handleSubmit}>
@@ -207,7 +245,7 @@ async function handleCreatePathName(){
 
                 <Form.Group  id="eventPicture" className="mb-3 ">
                     <Form.Label>Upload Event pricture</Form.Label>
-                    <Form.Control ref={fileRef} type="file" onChange={handleChangePicture} />
+                    <Form.Control type="file"  ref={fileRef} accept="image/*" onChange={handleChangePicture} />
                     <Container style={{  display: 'inline-block',position: 'relative'}}>
                         {closeIconShow ? <CloseIcon  style={{ cursor:'pointer', position: 'absolute',right: '70px',top: '10px',lineHeight :'0'}} onClick={OnClickCloseIcon}/> : null}
                         <Image src={tempImgUrl} alt="" fluid className="w-50 h-50 mt-3 mx-auto d-block" rounded />
@@ -220,7 +258,7 @@ async function handleCreatePathName(){
                     </Form.Label>
                     <InputGroup className="mb-2">
                         <InputGroup.Text>$</InputGroup.Text>
-                        <Form.Control id="inlineFormInputGroup" placeholder="Free" type='number' min="0" ref={costRef}/>
+                        <Form.Control id="inlineFormInputGroup" placeholder="Free" type='number' min="0" ref={costRef} onChange={HandleCost}/>
                     </InputGroup>
                     </Form.Group>
                 {/* https://react-bootstrap.github.io/components/input-group/ */}
@@ -228,7 +266,7 @@ async function handleCreatePathName(){
 
                 <Form.Group id="Maximum Participants" >
                         <Form.Label>Maximum Participants</Form.Label>
-                        <Form.Control type="number" min="1" ref={maxPartiRef} onChange={HandleMaxParti} style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}}/> 
+                        <Form.Control type="number" min="1" ref={maxPartiRef} onChange={(e)=>{HandleMaxParti(e.target.value)}} style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}}/> 
                 </Form.Group>
 
 

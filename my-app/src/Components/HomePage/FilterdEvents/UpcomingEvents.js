@@ -1,21 +1,20 @@
 import React ,{useEffect,useState} from 'react'
 import { Container } from 'react-bootstrap'
 import Event from '../Events/Event'
-import {db,storage} from '../../../firebaseConfig'
+import {db} from '../../../firebaseConfig'
 import {getDocs,collection,query,startAt,orderBy,Timestamp} from "firebase/firestore"
 import Button from '@mui/material/Button'
-import { Link } from "react-router-dom"
+import { Link,useHistory } from "react-router-dom"
 import UndoIcon from '@mui/icons-material/Undo';
 
 
 
 export default function Feed() {
     const [eventsData, setEventData] = useState([]);
-
+    const history =useHistory()
 
     useEffect(() => {
       // onload - get all events from firestore
-
       const getEvents = async () => {
         
         let timestamp = new Date(Timestamp.now().seconds*1000).setHours(24,0,0,0)

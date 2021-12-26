@@ -41,7 +41,7 @@ const LikeClickedButtonStyle ={
 
 
 
-export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMaxParti,eventCost,userid,userAttended}}) {
+export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMaxParti,eventCost,userid,userAttended,userLiked,createdTime}}) {
 
   const event={
     e_id: id,
@@ -53,8 +53,9 @@ export default function Event({event: { id,description,title,eventDate,eventImag
     e_eventMaxParti: eventMaxParti,
     e_userid: userid,
     e_eventCost: eventCost,
-    e_userAttended:userAttended
-
+    e_userAttended: userAttended,
+    e_userLiked: userLiked,
+    e_createdTime :createdTime
   }
 
   function keepOnFormatStr(str){

@@ -68,7 +68,7 @@ function HandleCost(){
 }
 
 const HandleMaxParti = (newValue) => {
-    console.log(newValue);
+    // console.log(newValue);
     if (newValue === null){
         setMaxParti("No Limit")
         }
@@ -136,13 +136,13 @@ async function handleCreatePathName(){
             else{        
                     await addDoc(collection(db, "Events"),{
                         userid: currentUser.uid,
-                        title: eventTitleRef.current.value,
-                        location: eventLocationRef.current.value,
+                        title: formData.title,
+                        location: formData.location,
                         eventDate: ftime,
                         eventImage: imageUrl, 
                         eventCost: Number(cost),
                         eventMaxParti: MaxParti,
-                        description: keepOnFormatStr(descriptionRef.current.value),              
+                        description: keepOnFormatStr(formData.description),              
                         userAttended: [],         
                         userLiked:[],
                         createdTime:Timestamp.fromDate(new Date(Date.now())).toDate()
