@@ -188,7 +188,7 @@ function OnClickCloseIcon(){
                 </Form.Group>
 
                     <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>
-                        Send Data
+                        Create Profile
                     </Button>
 
                 </Form>               
