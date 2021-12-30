@@ -72,16 +72,16 @@ export default function AttendPopUp(props){
                         <>
                           {/* <CloseIcon className="close-btn" onClick={handleClose}/> */}
                           <Typography component={'header'} textAlign={'center'} fontSize={'25px'} color="#1b76d3">
-                            <b><u>You have successfully registered for the event!</u></b><br/><br/>
+                            <b>You have successfully registered for the event!</b><br/>
                           </Typography>
                           <Typography component={'p'} textAlign={'left'} color="#1b76d3" >
-                            <div style={{textAlign:'center'}}>
+                            <div style={{ fontSize:'18px',marginLeft:'60px'}}>
                               <u><b>Event Details</b></u><br/>
                             </div>
                             </Typography>
-                            <Card style={{backgroundColor: "#white",border: `2px solid #1b76d3`,  width:"300px", display:'inline-block',marginLeft:'140px'}}>
+                            <Card style={{backgroundColor:"#white",border:`2px solid #1b76d3`, width:"450px", display:'inline-block',marginLeft:'60px'}}>
                             <Typography>
-                              <div style={{fontSize:'13px', textAlign:'left', marginLeft:'5px'}} >
+                              <div style={{fontSize:'15px', textAlign:'left', marginLeft:'5px'}} >
                                   <b>Event:</b> {props.eventTitle}<br/>
                                   <b>Date&Time:</b> {props.eventDate} {props.eventTime}<br/>
                                   <b>Location:</b> {props.eventLocation}<br/>

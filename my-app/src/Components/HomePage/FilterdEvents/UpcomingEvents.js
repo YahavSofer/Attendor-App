@@ -7,8 +7,6 @@ import Button from '@mui/material/Button'
 import { Link,useHistory } from "react-router-dom"
 import UndoIcon from '@mui/icons-material/Undo';
 
-
-
 export default function Feed() {
     const [eventsData, setEventData] = useState([]);
     const history =useHistory()

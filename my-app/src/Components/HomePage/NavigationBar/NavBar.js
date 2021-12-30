@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import {Image} from 'react-bootstrap'
@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Attendor_img from '../../../images/logo12.png'
@@ -20,6 +19,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from '@mui/material/Button';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import UpdateIcon from '@mui/icons-material/Update';
+import {db} from '../../../firebaseConfig'
+import { doc,getDoc,updateDoc ,arrayRemove,arrayUnion} from "firebase/firestore"
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -69,7 +70,8 @@ export default function NavBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const history = useHistory()
   const {currentUser , logout} = useAuth()
-
+  const [profileImage,setProfileImage] = useState()
+  const [isProfilePic,setIsProfilePic] = useState(false)
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -82,8 +84,7 @@ export default function NavBar() {
     }
   
   } 
-
-
+ 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -113,7 +114,25 @@ export default function NavBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  useEffect(() => {
+  
+    // set user profile in event profile picture. if they dont have, place icon insted
+    const getUserProfileImg = async () => {
+      const userDoc = await getDoc(doc(db,'users',currentUser.uid))
+      .then( u =>{
+                  setProfileImage(u.data().profileImage);
+      } )
+        
+    };
+    getUserProfileImg();  
+   
 
+
+    if (profileImage !== ""){
+      setIsProfilePic(true)
+
+    } 
+  }, []);
 
 
 
@@ -164,7 +183,6 @@ export default function NavBar() {
       <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
     </Menu>
   );
-
   return (
   <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
@@ -187,8 +205,9 @@ export default function NavBar() {
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
-            paddingTop='10px'
+            paddingTop='5px'
             color='white'
+            fontSize={'25px'}
           >
             Attendor
           </Typography>
@@ -196,9 +215,10 @@ export default function NavBar() {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',minHeight:'1px',right:'600px'}} startIcon={<AddCircleIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/create-event' style={{ textDecoration: 'none', textTransform:'none' }}>Create Event</Link></Button>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<UpdateIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/upcoming-events' style={{ textDecoration: 'none', textTransform:'none', fontFamily:'arial' }} >Upcoming Events</Link></Button>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'0px'}} startIcon={<FavoriteIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/liked-events'  style={{ textDecoration: 'none', textTransform:'none' }}>Liked Events</Link></Button>
+          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<UpdateIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/upcoming-events' style={{ textDecoration: 'none', textTransform:'none'}} >Upcoming Events</Link></Button>
+          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<FavoriteIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/liked-events'  style={{ textDecoration: 'none', textTransform:'none' }}>Liked Events</Link></Button>
+          <Button key="one" style={{background:'#fdfcdc',fontWeight:'bold',minHeight:'1px'}} startIcon={<AddCircleIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/create-event' style={{ textDecoration: 'none', textTransform:'none', fontSize:'18px' }}>Create Event</Link></Button>
+          
           <IconButton
               size="large"
               edge="end"
@@ -206,7 +226,7 @@ export default function NavBar() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
+              color="inherit"         
             >
               <AccountCircle />
             </IconButton>

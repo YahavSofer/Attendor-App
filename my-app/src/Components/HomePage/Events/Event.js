@@ -13,7 +13,7 @@ import { doc,getDoc,updateDoc ,arrayRemove,arrayUnion} from "firebase/firestore"
 import Button from '@mui/material/Button';
 import logoImage from'../../../images/logo11.png'
 import AttendPopUp from './AttendPopUp/AttendPopup'
-import {  useAuth } from '../../../context/AuthContext'
+import { useAuth } from '../../../context/AuthContext'
 import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from 'react-router-dom'
 

@@ -9,20 +9,20 @@ import {getDocs,collection,orderBy,query} from "firebase/firestore"
 export default function Feed() {
     const [eventsData, setEventData] = useState([]);
 
-    const getAPI= () =>{
+    // const getAPI= () =>{
 
-      const express = require('express')
-      const cors = require('cors')
-      const app = express()
+    //   const express = require('express')
+    //   const cors = require('cors')
+    //   const app = express()
        
-      const corsOptions = {
-        origin: 'https://web-app-jce.web.app',
-        optionsSuccessStatus: 200
-      }
+      // const corsOptions = {
+      //   origin: 'https://web-app-jce.web.app',
+      //   optionsSuccessStatus: 200
+      // }
 
-      app.get('https://recommendapi-amfugs0p.uc.gateway.dev/recommendations', cors(corsOptions), function (req, res, next) {
-        console.log(res.json())
-      })
+      // app.get('https://recommendapi-amfugs0p.uc.gateway.dev/recommendations', cors(corsOptions), function (req, res, next) {
+      //   console.log(res.json())
+      // })
 
       // app.use(express.static('public'))
       
@@ -35,7 +35,7 @@ export default function Feed() {
       //     console.log('alive');
       // })
 
-    }
+    // }
 
     useEffect(() => {
       // onload - get all events from firestore
@@ -59,7 +59,7 @@ export default function Feed() {
 
     return (
         <>
-    <button onClick={getAPI}>click here</button>
+    {/* <button onClick={getAPI}>click here</button> */}
     <Container>
 
     {/* this is the way to render the posts */}
