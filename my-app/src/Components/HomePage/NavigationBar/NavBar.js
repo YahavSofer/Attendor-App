@@ -19,6 +19,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from '@mui/material/Button';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import UpdateIcon from '@mui/icons-material/Update';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 import {db} from '../../../firebaseConfig'
 import { doc,getDoc,updateDoc ,arrayRemove,arrayUnion} from "firebase/firestore"
 
@@ -217,7 +218,8 @@ export default function NavBar() {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <Button key="one" style={{maxHeight:'35px',background:'#f0f2f5',fontWeight:'bold',marginRight:'5px',alignSelf:"center"}} startIcon={<UpdateIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/upcoming-events' style={{ textDecoration: 'none', textTransform:'none'}} >Upcoming Events</Link></Button>
           <Button key="one" style={{maxHeight:'35px',alignSelf:"center",background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<FavoriteIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/liked-events'  style={{ textDecoration: 'none', textTransform:'none' }}>Liked Events</Link></Button>
-          <Button key="one" style={{background:'#fdfcdc',fontWeight:'bold',minHeight:'1px'}} startIcon={<AddCircleIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/create-event' style={{ textDecoration: 'none', textTransform:'none', fontSize:'18px' }}>Create Event</Link></Button>
+          <Button key="one" style={{maxHeight:'35px',alignSelf:"center",background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<DateRangeIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/attend-events'  style={{ textDecoration: 'none', textTransform:'none' }}>Attended Events</Link></Button>
+          <Button key="one" style={{background:'#de852c',fontWeight:'bold', color:'white',minHeight:'1px'}} startIcon={<AddCircleIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/create-event' style={{ textDecoration: 'none', textTransform:'none',color:'white', fontSize:'18px' }}>Create Event</Link></Button>
           
           <IconButton
               size="large"
