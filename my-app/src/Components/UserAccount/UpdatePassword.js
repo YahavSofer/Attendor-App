@@ -60,7 +60,7 @@ export default function UpdatePassword() {
         <div className='w-100'> 
         <Card style={{background:'#f0f2f5'}}>
             <Card.Body>
-                <u><h2 className="text-center mb-4">Change Password</h2></u>
+                <h2 className="text-center mb-4">Change Password</h2>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="password">

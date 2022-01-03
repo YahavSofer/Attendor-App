@@ -33,7 +33,7 @@ export default function Feed() {
 
     return (
         <>
-    <u style={{color:'#1b76d3'}} ><h2 className="text-center mb-4" >Recommended For You!</h2></u>
+    <h2 style={{color:'#1b76d3'}} className="text-center mb-4" >Recommended For You!</h2>
     <h6 className="text-center mb-4"  style={{color:'#1b7bd3', margin:-20}}>Based on your attend we recommended the follwoing events for you</h6>
     <Button variant="contained" startIcon={<UndoIcon/>} style={{backgroundColor:'#1b76d3', position:'absolute', right:'1000px', top:'150px'}}><Link to='/user' style={{ color: '#FFF', textDecoration: 'none', fontWeight:'bold' }}>Back to Feed</Link></Button>
 

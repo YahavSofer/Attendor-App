@@ -316,7 +316,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
       <CardContent style={{marginBottom:'30px'}}>
 
-          <u><h5>Description</h5></u>
+          <h5>Description</h5>
           <Typography component={'span'} variant="p" fontSize='18px' color="text.secondary">
           {/* <ReadMore children={newText} /> */}
           {newText}
