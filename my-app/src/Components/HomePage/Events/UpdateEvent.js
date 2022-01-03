@@ -2,7 +2,7 @@ import React, {useRef, useState,useEffect} from 'react'
 import {Card, Form,Container, Image,InputGroup} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../../firebaseConfig'
-import { setDoc,doc,getDocs,collection, query, where,Timestamp  } from "firebase/firestore"
+import { setDoc,doc,getDocs,collection, query, where,Timestamp,getDownloadURL} from "firebase/firestore"
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DateTimePicker from '@mui/lab/DateTimePicker';
@@ -185,6 +185,7 @@ async function handleCreatePathName(){
        if(currentEvent.e_eventImage !== ''){
             console.log("picURL: "+ currentEvent.e_eventImage)
             setTempImgUrl(currentEvent.e_eventImage)
+            setImageURL(currentEvent.e_eventImage)
             setCloseIconShow(true)
         
        }else{
