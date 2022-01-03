@@ -15,6 +15,7 @@ import logoImage from'../../../images/logo11.png'
 import AttendPopUp from './AttendPopUp/AttendPopup'
 import { useAuth } from '../../../context/AuthContext'
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useHistory } from 'react-router-dom'
 
 ////////// styling ////////////////////
@@ -162,6 +163,13 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
     )
   }
+  const handleDelete=()=>{
+    history.push(
+      '/user/delete-event',
+      {event: event }
+
+    )
+  }
 
   // remove events IDs from the arrays in user Doc and Event Doc calls 'userAttended'
   const RemoveItemFromArray = async() =>{
@@ -275,11 +283,16 @@ export default function Event({event: { id,description,title,eventDate,eventImag
           </div>
         </>:
 
-        // show Edit button
+        // show Edit/delete button
         <>
         <div style={{marginRight:'20px',marginTop:'10px'}}>
-          <Button variant="contained" endIcon={<EditIcon/>} onClick={handleEdit}>
+          <Button variant="contained" style={{minWidth:'115px'}} endIcon={<EditIcon/>} onClick={handleEdit}>
             Edit
+          </Button>
+        </div>
+        <div style={{marginRight:'20px',marginTop:'10px', width:'20px'}}>
+          <Button variant="contained" style={{minWidth:'115px'}} color='error' endIcon={<DeleteIcon/>} onClick={handleEdit}>
+            Delete
           </Button>
         </div>
         </>
