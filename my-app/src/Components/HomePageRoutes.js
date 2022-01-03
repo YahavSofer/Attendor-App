@@ -29,7 +29,7 @@ export default function HomePageRoutes(){
                     <Switch>
                             <PrivateRoute  exact path={`${match.url}/`} component={HomePage} />
                             <PrivateRoute  exact path={`${match.url}/feed`} component={Feed} />
-                            <PrivateRoute  path={`${match.url}/user-rcommendations`} component={UserRcommendations} />
+                            <PrivateRoute  path={`${match.url}/recommendations`} component={UserRcommendations} />
                             <PrivateRoute  path={`${match.url}/update-password`} component={UpdatePassword} />
                             <PrivateRoute  path={`${match.url}/profile`} component={UserProfile} />
                             <PrivateRoute  path={`${match.url}/create-event`} component={CreateEvent} /> 

@@ -8,10 +8,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { db } from "../../../../firebaseConfig";
 import {  doc, updateDoc, arrayUnion } from "firebase/firestore";
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
-
+import { Link } from 'react-router-dom'
 
 // import PropTypes from "prop-types";   //npm install prop-types --save
 
@@ -89,7 +87,7 @@ export default function AttendPopUp(props){
                           </Typography>
                           </Card>
                           <span style={{ marginTop:'20px', display: 'flex',justifyContent:'space-evenly'}}>
-                              <Button disabled={loading} variant="contained" startIcon={<AssistantIcon />} >Get recommendations</Button>
+                              <Button disabled={loading} variant="contained" startIcon={<AssistantIcon />} ><Link to="/user/recommendations" style={{color: '#FFF', textDecoration: 'none'}}>Get recommendations</Link></Button>
                               <Button disabled={loading} variant="outlined" startIcon={<CancelIcon />} onClick={handleClose}>Close</Button>
                           </span>
                         </>

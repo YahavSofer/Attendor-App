@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef, useState,useEffect} from 'react'
 import {Card, Form,Container, Image,InputGroup} from 'react-bootstrap'
 import {Button} from '@mui/material'
 import {db,storage} from '../../../firebaseConfig'
@@ -31,6 +31,19 @@ export default function CreateEvent() {
     const costRef = useRef()
     const maxPartiRef = useRef()
     const history = useHistory()
+    const categoryDic={
+        '0': 'academic',
+        '1': 'audition',
+        '2': 'festival',
+        '3': 'music',
+        '4': 'party',
+        '5': 'rave',
+        '6': 'sports',
+        '7': 'stand-up',
+        '8': 'support group',
+        '9': 'theater',
+        '10': 'tournament'
+}
 
 function keepOnFormatStr(str)  {
         return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
@@ -56,7 +69,6 @@ function OnClickCloseIcon(){
 }
 
 function HandleCost(){
-    console.log(costRef.current.value);
 
     if (costRef.current.value > 0){
         setCost(costRef.current.value)
@@ -86,6 +98,32 @@ async function CountUserEvents(){
     return querySnapshot
 }  
 
+async function getCategoryFromAPI (){
+
+    let descData = {
+                    "events": [
+                    {
+                        "description":  descriptionRef.current.value
+                    }
+                    ]
+                }
+      
+    console.log(JSON.stringify(descData));
+    const response = await fetch("https://x21ad6xb6e.execute-api.us-east-1.amazonaws.com/beta", {
+    method: "POST",
+    headers: {'Content-Type': 'application/json'}, 
+    body: JSON.stringify(descData)
+    })
+    const resJson = await response.json()
+    console.log(resJson.body.substr(1,1));
+    let categoryIndex = resJson.body.substr(1,1)
+    console.log(categoryDic[categoryIndex]);
+    return( categoryDic[categoryIndex] )
+
+    // set category from api into category variable
+}   
+
+
 async function handleCreatePathName(){
     const eventCounter = ((await CountUserEvents()))
     const imgPath = currentUser.uid + '_' + eventCounter + '_event'
@@ -98,6 +136,8 @@ async function handleCreatePathName(){
         
         try{
             setLoading(true)
+            const tempCategory = await getCategoryFromAPI()
+            console.log(tempCategory);
             const formData={
                 title: eventTitleRef.current.value,
                 location: eventLocationRef.current.value,
@@ -129,7 +169,8 @@ async function handleCreatePathName(){
                                 description: keepOnFormatStr(formData.description),              
                                 userAttended: [],         
                                 userLiked:[],
-                                createdTime:Timestamp.fromDate(new Date(Date.now())).toDate()
+                                createdTime:Timestamp.fromDate(new Date(Date.now())).toDate(),
+                                eventCategory: tempCategory
                             });
                         });
                 })}
@@ -145,14 +186,15 @@ async function handleCreatePathName(){
                         description: keepOnFormatStr(formData.description),              
                         userAttended: [],         
                         userLiked:[],
-                        createdTime:Timestamp.fromDate(new Date(Date.now())).toDate()
+                        createdTime:Timestamp.fromDate(new Date(Date.now())).toDate(),
+                        eventCategory: tempCategory
                     });
             }
 
             // console.log('event added!');
-            alert('Your event has created successfuly!')
+            // alert('Your event has created successfuly!')
             const timer = setTimeout(() => {
-                history.push('/user/success')
+                history.push('/user/success',tempCategory)
                   }, 2000);
             // history.go(0)
         }catch(e){
