@@ -14,7 +14,7 @@ import UpcominEvents from './HomePage/FilterdEvents/UpcomingEvents'
 import LikedEvents from './HomePage/FilterdEvents/LikedEvents'
 import MyEvents from './HomePage/FilterdEvents/MyEvents'
 import EventSuccess from './HomePage/Events/EventSuccess'
-
+import AttendEvents from './HomePage/FilterdEvents/AttendEvents'
 export default function HomePageRoutes(){
 
     const match = useRouteMatch();
@@ -38,6 +38,7 @@ export default function HomePageRoutes(){
                             <PrivateRoute  path={`${match.url}/upcoming-events`} component={UpcominEvents} />
                             <PrivateRoute  path={`${match.url}/my-events`} component={MyEvents} />
                             <PrivateRoute  path={`${match.url}/success`} component={EventSuccess} />
+                            <PrivateRoute  path={`${match.url}/attend-events`} component={AttendEvents} /> 
 
                     </Switch>
             </Container>
