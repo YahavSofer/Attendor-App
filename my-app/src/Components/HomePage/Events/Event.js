@@ -243,25 +243,6 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
           </Typography>
 
-  //// read more option ////
-  // const ReadMore = ({ children }) => {
-  //   const text = children
-  //   const [isReadMore, setIsReadMore] = useState(true);
-  //   const toggleReadMore = () => {
-  //     setIsReadMore(!isReadMore);
-  //   }
-  //   return (
-  //             <p className="text" >
-
-  //               {isReadMore ? text.slice(0, 150) : text}
-  //               <span onClick={toggleReadMore} style={{color:'blue' ,textDecoration:'underline'}}>
-  //                 {isReadMore ? "...read more" : " show less"}
-  //               </span>
-  //             </p>
-  //           );
-  // };
- ///////////////////////////
-
 
   return (
   <>

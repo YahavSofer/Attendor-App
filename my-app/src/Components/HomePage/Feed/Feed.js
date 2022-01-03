@@ -5,37 +5,9 @@ import Event from '../Events/Event'
 import {db} from '../../../firebaseConfig'
 import {getDocs,collection,orderBy,query} from "firebase/firestore"
 
-
 export default function Feed() {
     const [eventsData, setEventData] = useState([]);
 
-    const getAPI= () =>{
-
-      const express = require('express')
-      const cors = require('cors')
-      const app = express()
-       
-      const corsOptions = {
-        origin: 'https://web-app-jce.web.app',
-        optionsSuccessStatus: 200
-      }
-
-      app.get('https://recommendapi-amfugs0p.uc.gateway.dev/recommendations', cors(corsOptions), function (req, res, next) {
-        console.log(res.json())
-      })
-
-      // app.use(express.static('public'))
-      
-      // app.get('https://recommendapi-amfugs0p.uc.gateway.dev/recommendations', function (req, res) {
-      //     res.header("Access-Control-Allow-Origin", "*");
-      //     console.log(res);
-      // })
-       
-      // app.listen(3000, () => {
-      //     console.log('alive');
-      // })
-
-    }
 
     useEffect(() => {
       // onload - get all events from firestore
@@ -59,7 +31,6 @@ export default function Feed() {
 
     return (
         <>
-    <button onClick={getAPI}>click here</button>
     <Container>
 
     {/* this is the way to render the posts */}
