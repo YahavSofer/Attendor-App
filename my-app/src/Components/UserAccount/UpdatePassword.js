@@ -71,11 +71,11 @@ export default function UpdatePassword() {
                         <Form.Label>Password Confirmation</Form.Label>
                         <Form.Control type='password' ref={passworConfirmationdRef} placeholder="Leave blank to keep the same"/> 
                     </Form.Group>
-                    
-                    <Button disabled={loading} type='submit' className='w-100'>
+                    <div className="w-100 text-center mt-2">
+                    <Button disabled={loading} type='submit' >
                         Update
                     </Button>
-
+                    </div>
                 </Form>               
             </Card.Body>
         </Card>
