@@ -17,6 +17,7 @@ import { useAuth } from '../../../context/AuthContext'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useHistory } from 'react-router-dom'
+import DeletePopUp from './DeletePopUp/DeletePopup'
 
 ////////// styling ////////////////////
 
@@ -80,6 +81,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   const [isImg,setIsImg] = useState(false)
   
   const [buttonPopup,setButtonPopup] = useState(false)
+  const [deletePopup,setdeletePopup] = useState(false)
   const [checkAttending,setCheckAttending] = useState(false)
   const [attendingCounter,setAttendingCounter] = useState()
 
@@ -164,11 +166,8 @@ export default function Event({event: { id,description,title,eventDate,eventImag
     )
   }
   const handleDelete=()=>{
-    history.push(
-      '/user/delete-event',
-      {event: event }
+    setdeletePopup(true)
 
-    )
   }
 
   // remove events IDs from the arrays in user Doc and Event Doc calls 'userAttended'
@@ -291,7 +290,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
           </Button>
         </div>
         <div style={{marginRight:'20px',marginTop:'10px', width:'20px'}}>
-          <Button variant="contained" style={{minWidth:'115px'}} color='error' endIcon={<DeleteIcon/>} onClick={handleEdit}>
+          <Button variant="contained" style={{minWidth:'115px'}} color='error' endIcon={<DeleteIcon/>} onClick={handleDelete}>
             Delete
           </Button>
         </div>
@@ -347,6 +346,17 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       DisabledButton ={disabledButton}
       />
 
+
+    <DeletePopUp 
+      trigger={deletePopup} 
+      setTrigger={setdeletePopup} 
+      username={userName}
+      currentUserID = {currentUser.uid}
+      eventID ={id}
+      eventTitle={title}
+      userAttended= {userAttended}
+      userLiked = {userLiked}
+      />
 
     </>
   );

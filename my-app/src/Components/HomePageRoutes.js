@@ -13,6 +13,7 @@ import UpdateEvent from './HomePage/Events/UpdateEvent'
 import UpcominEvents from './HomePage/FilterdEvents/UpcomingEvents'
 import LikedEvents from './HomePage/FilterdEvents/LikedEvents'
 import MyEvents from './HomePage/FilterdEvents/MyEvents'
+import EventSuccess from './HomePage/Events/EventSuccess'
 
 export default function HomePageRoutes(){
 
@@ -36,6 +37,7 @@ export default function HomePageRoutes(){
                             <PrivateRoute  path={`${match.url}/liked-events`} component={LikedEvents} /> 
                             <PrivateRoute  path={`${match.url}/upcoming-events`} component={UpcominEvents} />
                             <PrivateRoute  path={`${match.url}/my-events`} component={MyEvents} />
+                            <PrivateRoute  path={`${match.url}/success`} component={EventSuccess} />
 
                     </Switch>
             </Container>

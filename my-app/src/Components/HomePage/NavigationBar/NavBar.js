@@ -215,8 +215,8 @@ export default function NavBar() {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<UpdateIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/upcoming-events' style={{ textDecoration: 'none', textTransform:'none'}} >Upcoming Events</Link></Button>
-          <Button key="one" style={{background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<FavoriteIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/liked-events'  style={{ textDecoration: 'none', textTransform:'none' }}>Liked Events</Link></Button>
+          <Button key="one" style={{maxHeight:'35px',background:'#f0f2f5',fontWeight:'bold',marginRight:'5px',alignSelf:"center"}} startIcon={<UpdateIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/upcoming-events' style={{ textDecoration: 'none', textTransform:'none'}} >Upcoming Events</Link></Button>
+          <Button key="one" style={{maxHeight:'35px',alignSelf:"center",background:'#f0f2f5',fontWeight:'bold',marginRight:'5px'}} startIcon={<FavoriteIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/liked-events'  style={{ textDecoration: 'none', textTransform:'none' }}>Liked Events</Link></Button>
           <Button key="one" style={{background:'#fdfcdc',fontWeight:'bold',minHeight:'1px'}} startIcon={<AddCircleIcon/>} onClick={()=>{window.location.reload()}}><Link to='/user/create-event' style={{ textDecoration: 'none', textTransform:'none', fontSize:'18px' }}>Create Event</Link></Button>
           
           <IconButton

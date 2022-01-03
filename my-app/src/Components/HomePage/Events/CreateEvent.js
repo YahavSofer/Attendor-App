@@ -152,7 +152,7 @@ async function handleCreatePathName(){
             // console.log('event added!');
             alert('Your event has created successfuly!')
             const timer = setTimeout(() => {
-                history.push('/user')
+                history.push('/user/success')
                   }, 2000);
             // history.go(0)
         }catch(e){
