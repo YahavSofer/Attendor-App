@@ -76,7 +76,7 @@ export default function AttendPopUp(props){
                           </Typography>
                           <Typography component={'p'} textAlign={'left'} color="#1b76d3" >
                             <div style={{ fontSize:'18px',marginLeft:'60px'}}>
-                              <u><b>Event Details</b></u><br/>
+                              <b>Event Details</b><br/>
                             </div>
                             </Typography>
                             <Card style={{backgroundColor:"#white",border:`2px solid #1b76d3`, width:"450px", display:'inline-block',marginLeft:'60px'}}>
