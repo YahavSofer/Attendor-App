@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { db } from "../../../../firebaseConfig";
 import {  doc, updateDoc, arrayUnion } from "firebase/firestore";
 import Card from '@mui/material/Card';
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 // import PropTypes from "prop-types";   //npm install prop-types --save
 
@@ -17,6 +17,8 @@ import { Link } from 'react-router-dom'
 export default function AttendPopUp(props){
   // const [checkAttending,setCheckAttending] = useState(false)
   const [loading, setLoading] = useState(false)
+  const history = useHistory()
+  const temp = props.eventCategory
 
 
   const handleClose =() =>{
@@ -87,7 +89,7 @@ export default function AttendPopUp(props){
                           </Typography>
                           </Card>
                           <span style={{ marginTop:'20px', display: 'flex',justifyContent:'space-evenly'}}>
-                              <Button disabled={loading} variant="contained" startIcon={<AssistantIcon />} ><Link to="/user/recommendations" style={{color: '#FFF', textDecoration: 'none'}}>Get recommendations</Link></Button>
+                              <Button disabled={loading} variant="contained" startIcon={<AssistantIcon />} onClick={()=>{history.push('/user/recommendations',props.eventCategory)}} >Get recommendations</Button>
                               <Button disabled={loading} variant="outlined" startIcon={<CancelIcon />} onClick={handleClose}>Close</Button>
                           </span>
                         </>

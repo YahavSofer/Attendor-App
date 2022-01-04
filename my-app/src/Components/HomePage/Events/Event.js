@@ -18,6 +18,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useHistory } from 'react-router-dom'
 import DeletePopUp from './DeletePopUp/DeletePopup'
+import Chip from '@mui/material/Chip';
 
 ////////// styling ////////////////////
 
@@ -43,7 +44,7 @@ const LikeClickedButtonStyle ={
 
 
 
-export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMaxParti,eventCost,userid,userAttended,userLiked,createdTime}}) {
+export default function Event({event: { id,description,title,eventDate,eventImage,location,eventMaxParti,eventCost,userid,userAttended,userLiked,createdTime,eventCategory}}) {
 
   const event={
     e_id: id,
@@ -57,7 +58,8 @@ export default function Event({event: { id,description,title,eventDate,eventImag
     e_eventCost: eventCost,
     e_userAttended: userAttended,
     e_userLiked: userLiked,
-    e_createdTime :createdTime
+    e_createdTime :createdTime,
+    e_category : eventCategory
   }
 
   function keepOnFormatStr(str){
@@ -246,7 +248,9 @@ export default function Event({event: { id,description,title,eventDate,eventImag
         +dateTime.toLocaleTimeString('en-US'))}<br/>
         <b>Location: </b>{location}<br/>
         <b>Cost: </b>{(eventCost=='0')? 'Free': eventCost+'$'}<br/>
-        <b>Participants: </b> {(eventMaxParti==='No Limit') ? eventMaxParti: attendingCounter+'/'+eventMaxParti}
+        <b>Participants: </b> {(eventMaxParti==='No Limit') ? eventMaxParti: attendingCounter+'/'+eventMaxParti}<br/>
+        <b>Category: </b> <Chip label={eventCategory} size="small"  color="success" />
+
 
           </Typography>
 
@@ -344,6 +348,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
       eventMaxParti = {eventMaxParti}
       setDisabledButton= {setDisabledButton}
       DisabledButton ={disabledButton}
+      eventCategory = {eventCategory}
       />
 
 

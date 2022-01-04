@@ -5,11 +5,9 @@ import {useAuth} from '../../context/AuthContext'
 
 
 export default function UpdatePassword() {
-    const emailRef = useRef()
     const passwordRef = useRef()
     const passworConfirmationdRef =useRef()
-    const emailConfirmationRef = useRef()
-    const { currentUser , updateEmail, updatePassword } = useAuth()
+    const { currentUser ,  updatePassword } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -22,17 +20,11 @@ export default function UpdatePassword() {
                 return setError('Passwords do not match')
         }
 
-        if(emailRef.current.value !== emailConfirmationRef.current.value){
-            return setError('Something wrong with you email address...')
-    }
 
         const promises =[]
         setLoading(true)
         setError("")
 
-        if((emailRef.current.value === emailConfirmationRef.current.value) !==currentUser.email){
-            promises.push(updateEmail(emailRef.current.value))
-        }
 
         if(passwordRef.current.value){
             promises.push(updatePassword(passwordRef.current.value))
@@ -41,7 +33,7 @@ export default function UpdatePassword() {
         console.log(promises);
         
         Promise.all(promises).then(()=> {
-            history.push('/')
+            history.push('/user/profile')
         }).catch(()=>{
             setError('Failed to update account')
         }).finally(()=>{

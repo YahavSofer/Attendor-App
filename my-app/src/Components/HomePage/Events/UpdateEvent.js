@@ -137,7 +137,8 @@ async function handleCreatePathName(){
                                 description: keepOnFormatStr(formData.description),
                                 userAttended: currentEvent.e_userAttended,         
                                 userLiked: currentEvent.e_userLiked,
-                                createdTime :currentEvent.e_createdTime
+                                createdTime :currentEvent.e_createdTime,
+                                eventCategory: currentEvent.e_category
                             });
                         });
                 })}
@@ -153,7 +154,8 @@ async function handleCreatePathName(){
                         description: keepOnFormatStr(formData.description),
                         userAttended: currentEvent.e_userAttended,         
                         userLiked: currentEvent.e_userLiked,
-                        createdTime :currentEvent.e_createdTime
+                        createdTime :currentEvent.e_createdTime,
+                        eventCategory: currentEvent.e_category
                     });
             }
 
@@ -218,13 +220,13 @@ async function handleCreatePathName(){
                     <Form.Label>Event Title</Form.Label>
                         {/* <Form.Label>Event Title</Form.Label>     */}
                         {/* <Form.Control type="text" ref={eventTitleRef} required/>  */}
-                        <TextField  inputRef={eventTitleRef} id="eventTitle" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        <TextField  inputRef={eventTitleRef} placeholder='E.g. "The end of the world Party!"' id="eventTitle" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
                     <Form.Group id="eventlocation">
                     <Form.Label>Event Location</Form.Label>
                         {/* <Form.Label>Event Location</Form.Label> */}
                         {/* <Form.Control type="text" ref={eventLocationRef} required/>  */}
-                        <TextField  required inputRef={eventLocationRef} id="eventlocation" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px', paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        <TextField  required inputRef={eventLocationRef} id="eventlocation" placeholder='Where does your event occur?' size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px', paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
 
                 <Form.Group id="eventDate">
@@ -236,6 +238,7 @@ async function handleCreatePathName(){
                             value={dateValue}
                             onChange={handleChangeDate}
                             renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px',marginBottom: '10px'}}  />}
+                            minDateTime={new Date(Date.now())}
                         />
 
 
@@ -245,7 +248,7 @@ async function handleCreatePathName(){
                 
 
                 <Form.Group  id="eventPicture" className="mb-3 ">
-                    <Form.Label>Upload Event pricture</Form.Label>
+                    <Form.Label>Upload Event pricture <span style={{fontSize:'12px',color:'grey'}}> (Optional)</span></Form.Label>
                     <Form.Control type="file"  ref={fileRef} accept="image/*" onChange={handleChangePicture} />
                     <Container style={{  display: 'inline-block',position: 'relative'}}>
                         {closeIconShow ? <CloseIcon  style={{ cursor:'pointer', position: 'absolute',right: '70px',top: '10px',lineHeight :'0'}} onClick={OnClickCloseIcon}/> : null}
@@ -255,7 +258,7 @@ async function handleCreatePathName(){
 
                 <Form.Group id="cost" className="mb-3">
                 <Form.Label htmlFor="inlineFormInputGroup" >
-                        Event Cost
+                        Event Cost <span style={{fontSize:'12px',color:'grey'}}> (Optional)</span>
                     </Form.Label>
                     <InputGroup className="mb-2">
                         <InputGroup.Text>$</InputGroup.Text>
@@ -266,14 +269,14 @@ async function handleCreatePathName(){
 
 
                 <Form.Group id="Maximum Participants" >
-                        <Form.Label>Maximum Participants</Form.Label>
-                        <Form.Control type="number" min="1" ref={maxPartiRef} onChange={(e)=>{HandleMaxParti(e.target.value)}} style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}}/> 
+                        <Form.Label>Maximum Participants <span style={{fontSize:'12px',color:'grey'}}> (Optional)</span></Form.Label>
+                        <Form.Control type="number" placeholder='Leave empty if no limit' min="1" ref={maxPartiRef} onChange={(e)=>{HandleMaxParti(e.target.value)}} style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}}/> 
                 </Form.Group>
 
 
                 <Form.Group id="description" >
                         <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" multiline="true" as="textarea" rows={5} ref={descriptionRef} required/> 
+                        <Form.Control type="text" placeholder='Tell us more details about your event' multiline="true" as="textarea" rows={5} ref={descriptionRef} required/> 
                     </Form.Group>
 
                     <Button disabled={loading} type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>

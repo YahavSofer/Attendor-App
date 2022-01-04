@@ -8,13 +8,14 @@ import CreateEvent from './HomePage/Events/CreateEvent'
 import UpdatePassword from './UserAccount/UpdatePassword'
 import PrivateRoute from './PrivateRoute'
 import HomePage from './HomePage/HomePage'
-import UserRcommendations from './HomePage/Recommendations/UserRcommendations'
+import UserRecommendations from './HomePage/Recommendations/UserRecommendations'
 import UpdateEvent from './HomePage/Events/UpdateEvent'
 import UpcominEvents from './HomePage/FilterdEvents/UpcomingEvents'
 import LikedEvents from './HomePage/FilterdEvents/LikedEvents'
 import MyEvents from './HomePage/FilterdEvents/MyEvents'
 import EventSuccess from './HomePage/Events/EventSuccess'
 import AttendEvents from './HomePage/FilterdEvents/AttendEvents'
+
 export default function HomePageRoutes(){
 
     const match = useRouteMatch();
@@ -29,7 +30,7 @@ export default function HomePageRoutes(){
                     <Switch>
                             <PrivateRoute  exact path={`${match.url}/`} component={HomePage} />
                             <PrivateRoute  exact path={`${match.url}/feed`} component={Feed} />
-                            <PrivateRoute  path={`${match.url}/recommendations`} component={UserRcommendations} />
+                            <PrivateRoute  path={`${match.url}/recommendations`} component={UserRecommendations} />
                             <PrivateRoute  path={`${match.url}/update-password`} component={UpdatePassword} />
                             <PrivateRoute  path={`${match.url}/profile`} component={UserProfile} />
                             <PrivateRoute  path={`${match.url}/create-event`} component={CreateEvent} /> 

@@ -42,7 +42,7 @@ export default function Feed() {
         <>
     <h2 style={{color:'#1b76d3'}} className="text-center mb-4" >My Events</h2>
     <h6 className="text-center mb-4"  style={{color:'#1b76d3', margin:-20}}>Events created by you</h6>
-    <Button variant="contained" startIcon={<UndoIcon/>} style={{backgroundColor:'#1b76d3', position:'absolute', right:'1000px', top:'150px'}}><Link to='/user' style={{ color: '#FFF', textDecoration: 'none', fontWeight:'bold' }}>Back to Feed</Link></Button>
+    <Button variant="contained" startIcon={<UndoIcon/>} style={{backgroundColor:'#1b76d3', position:'absolute', right:'79%', top:'26%'}}><Link to='/user' style={{ color: '#FFF', textDecoration: 'none', fontWeight:'bold' }}>Back to Feed</Link></Button>
 
     <Container>
 
