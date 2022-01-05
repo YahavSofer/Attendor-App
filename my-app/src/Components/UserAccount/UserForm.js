@@ -124,17 +124,20 @@ function OnClickCloseIcon(){
                 <h2 className="text-center mb-4">Create Profile</h2>
                 <Form onSubmit = {handleSubmit}>
                     <Form.Group id="firstName" >
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" ref={firstNameRef} required/> 
+                        <Form.Label><b>First Name</b></Form.Label>
+                        <TextField inputRef={firstNameRef}   size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        {/* <Form.Control type="text" ref={firstNameRef} required/>  */}
                     </Form.Group>
                     <Form.Group id="lastName">
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="text" ref={lastNameRef} required/> 
+                        <Form.Label><b>Last Name</b></Form.Label>
+                        <TextField inputRef={lastNameRef}   size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px',paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
+                        {/* <Form.Control type="text" ref={lastNameRef} required/>  */}
                     </Form.Group>
 
-                    <Form.Group id="gender" >
-                        <Form.Label>Gender</Form.Label>
-                        
+                    <p></p> 
+                    <Form.Group id="gender">
+                        <Form.Label><b>Gender</b></Form.Label>
+                        <Container>
                         <fieldset value={gender} onChange={(event) => handleGenderChange(event)}>
                                 <Form.Check
                                     inline
@@ -158,10 +161,13 @@ function OnClickCloseIcon(){
                                     type="radio"
                                     id="Other"
                                 />         
-                        </fieldset>               
-                        </Form.Group>      
+                        </fieldset>  
+                        </Container>             
+                        </Form.Group>    
+
+                        <p></p> 
                 <Form.Group id="birthday">
-                <Form.Label>Birthday</Form.Label>
+                <Form.Label><b>Birthday</b></Form.Label>
                 <div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DesktopDatePicker
@@ -176,9 +182,9 @@ function OnClickCloseIcon(){
                 </LocalizationProvider>
                 </div>
                 </Form.Group>
-
+                <p></p> 
                 <Form.Group  id="profilePicture" className="mb-3 ">
-                    <Form.Label>Upload profile pricture</Form.Label>
+                    <Form.Label><b>Upload profile pricture</b></Form.Label>
                     <Form.Control ref={fileRef} type="file" onChange={handleChangePicture} />
                     <Container style={{  display: 'inline-block',position: 'relative'}}>
                         {closeIconShow ? <CloseIcon  style={{ cursor:'pointer', position: 'absolute',right: '70px',top: '10px',lineHeight :'0'}} onClick={OnClickCloseIcon}/> : null}

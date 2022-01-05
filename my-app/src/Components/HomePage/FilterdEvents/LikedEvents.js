@@ -42,7 +42,7 @@ export default function Feed() {
         <>
     <h2 style={{color:'#1b76d3'}} className="text-center mb-4" >Liked Events </h2>
     <h6 className="text-center mb-4"  style={{color:'#1b76d3', margin:-20}}>Your liked events history</h6>
-    <Button variant="contained" startIcon={<UndoIcon/>} style={{backgroundColor:'#1b76d3', position:'absolute', right:'79%', top:'26%'}}><Link to='/user' style={{ color: '#FFF', textDecoration: 'none', fontWeight:'bold' }}>Back to Feed</Link></Button>
+    <Button variant="contained" startIcon={<UndoIcon/>} style={{backgroundColor:'#1b76d3', position:'fixed', right:'79%', top:'26%'}}><Link to='/user' style={{ color: '#FFF', textDecoration: 'none', fontWeight:'bold' }}>Back to Feed</Link></Button>
 
     <Container>
 

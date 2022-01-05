@@ -11,6 +11,9 @@ import {  useAuth } from '../../../context/AuthContext'
 import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
 import { useHistory } from 'react-router-dom'
+import Tooltip from '@mui/material/Tooltip';
+import HelpIcon from '@mui/icons-material/Help';
+
 
 export default function UpdateEvent(props) {
 
@@ -230,7 +233,11 @@ async function handleCreatePathName(){
                     </Form.Group>
 
                 <Form.Group id="eventDate">
-                <Form.Label>Event Date</Form.Label>
+                <Form.Label>Event Date
+                <Tooltip title='Enter future date for your event' placement="top-end" arrow>
+                    <HelpIcon fontSize="small"/> 
+                </Tooltip>  
+                </Form.Label>
                 <div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                      <DateTimePicker

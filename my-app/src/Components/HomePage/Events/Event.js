@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useRef} from 'react'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -88,6 +88,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
   const [attendingCounter,setAttendingCounter] = useState()
 
   const [disabledButton,setDisabledButton] = useState(false)
+  const buttonRef = useRef()
   // const getCounter=()=>{
   //   setAttendingCounter({userAttended}.userAttended.length)
   // } 
@@ -95,9 +96,19 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 /////////////////////////////////////////////////////////////////
                     //start of UseEffect//
 /////////////////////////////////////////////////////////////////
+
+  useEffect(() => {
+    if(attendingCounter>=eventMaxParti && !attend){
+      setDisabledButton(true)
+    }
+    else{
+      setDisabledButton(false)
+    }
+  }, [attendingCounter])
+
   useEffect(() => {
     // onload - get all events from firestore
-  
+    
     // set user profile in event profile picture. if they dont have, place icon insted
     const getUserProfileImg = async () => {
       const userDoc = await getDoc(doc(db,'users',userid))
@@ -189,6 +200,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 // when user click on Attend Button start this function.
 //change attend state, and check if the user attend or diattend.
   const handleAttendClick=(e)=>{
+    
     setAttend(!attend)
     // console.log(e.target.innerText);
     if(e.target.innerText ==='DISATTEND'){
@@ -242,14 +254,14 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
 //// set subtitle in cardHedaer of time and location ////
   const subheader =
-          <Typography style={{fontSize: '14px'}} >
-              <b>Event Owner: </b>{userName}<br/>
-              <b>Date & Time: </b>{(dateTime.getDate()+ '-'+(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+'  ' 
-        +dateTime.toLocaleTimeString('en-US'))}<br/>
-        <b>Location: </b>{location}<br/>
-        <b>Cost: </b>{(eventCost=='0')? 'Free': eventCost+'$'}<br/>
-        <b>Participants: </b> {(eventMaxParti==='No Limit') ? eventMaxParti: attendingCounter+'/'+eventMaxParti}<br/>
-        <b>Category: </b> <Chip label={eventCategory} size="small"  color="success" />
+          <Typography style={{fontSize: '18px'}} >
+              <b style={{color:'darkslategray'}}>Event Owner: </b><span style={{color:'gray'}}>{userName}</span><br/>
+              <b style={{color:'darkslategray'}}>Date & Time: </b><span style={{color:'gray'}}>{(dateTime.getDate()+ '/'+(dateTime.getMonth()+1)+'/'+dateTime.getFullYear()+' , ' 
+        +dateTime.getHours()+':'+dateTime.getMinutes())}</span><br/>
+        <b style={{color:'darkslategray'}}>Location: </b><span style={{color:'gray'}}>{location}</span><br/>
+        <b style={{color:'darkslategray'}}>Cost: </b><span style={{color:'gray'}}>{(eventCost=='0')? 'Free': eventCost+'$'}</span><br/>
+        <b style={{color:'darkslategray'}}>Participants: </b> <span style={{color:'gray'}}>{(eventMaxParti==='No Limit') ? eventMaxParti: attendingCounter+'/'+eventMaxParti}</span><br/>
+        <b style={{color:'darkslategray'}}>Category: </b> <Chip label={eventCategory} style={{fontSize:'15px'}} size="small"  color="success" />
 
 
           </Typography>
@@ -257,11 +269,11 @@ export default function Event({event: { id,description,title,eventDate,eventImag
 
   return (
   <>
-    <Card sx={{ maxWidth: '100%',marginBottom:'16px' }} key={id}>
+    <Card sx={{background:'white', maxWidth: '100%',marginBottom:'20px' }} key={id}>
       <CardHeader
         avatar={
           isProfilePic?
-          <Avatar src={profileImage} aria-label="user-name" style={{marginTop:'-70px'}}/>   
+          <Avatar src={profileImage} aria-label="user-name" style={{marginTop:'-100px'}}/>   
           :
           <Avatar src="" aria-label="user-name"/>    
       }

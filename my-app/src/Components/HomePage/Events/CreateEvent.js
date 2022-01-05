@@ -1,6 +1,6 @@
 import React, {useRef, useState,useEffect} from 'react'
 import {Card, Form,Container, Image,InputGroup} from 'react-bootstrap'
-import {Button} from '@mui/material'
+import {Button, Icon} from '@mui/material'
 import {db,storage} from '../../../firebaseConfig'
 import { addDoc,getDocs,collection, query, where,Timestamp  } from "firebase/firestore"
 import TextField from '@mui/material/TextField'
@@ -11,6 +11,8 @@ import {  useAuth } from '../../../context/AuthContext'
 import no_Img from '../../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
 import { useHistory } from 'react-router-dom'
+import Tooltip from '@mui/material/Tooltip';
+import HelpIcon from '@mui/icons-material/Help';
 
 export default function CreateEvent() {
 
@@ -223,9 +225,15 @@ async function handleCreatePathName(){
                     <Form.Label>Event Location</Form.Label>
                         <TextField required placeholder='Where does your event occur?' inputRef={eventLocationRef} id="eventlocation" size="small"  variant="outlined" required style={{background:'white',borderRadius:'5px',marginBottom: '10px', paddingTop:'5px',width:'100%',maxHeight:'50px'}} />
                     </Form.Group>
-
+                
                 <Form.Group id="eventDate">
-                <Form.Label>Event Date</Form.Label>
+
+                <Form.Label>Event Date                  
+                    <Tooltip title='Enter future date for your event' placement="top-end" arrow>
+                    <HelpIcon fontSize="small"/> 
+                </Tooltip>  
+                </Form.Label>
+
                 <div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                      <DateTimePicker
@@ -240,8 +248,9 @@ async function handleCreatePathName(){
 
                 </LocalizationProvider>
             </div>
+            
         </Form.Group>
-                
+              
 
                 <Form.Group  id="eventPicture" className="mb-3 ">
                     <Form.Label>Upload Event pricture <span style={{fontSize:'12px',color:'grey'}}>(Optional)</span></Form.Label>
