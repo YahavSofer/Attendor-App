@@ -17,7 +17,24 @@ export default function Feed() {
         const q = query(AllEvents, orderBy("createdTime", "desc"));
         const querySnapshot = await getDocs(q)
         .then(function(qSanpshot) {
-          return qSanpshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id})
+
+          console.log(qSanpshot.docs);
+          let array = qSanpshot.docs
+          let currentIndex = array.length,  randomIndex;
+
+          while (currentIndex != 0) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+              array[randomIndex], array[currentIndex]];
+          }
+
+          return array.map(doc => Object.assign(doc.data(), {id: doc.id})
+          // return qSanpshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id})
           )})
 
         setEventData(querySnapshot);

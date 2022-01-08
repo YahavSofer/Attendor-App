@@ -11,6 +11,7 @@ import {  useAuth } from '../../context/AuthContext'
 import no_Img from '../../images/no-image-available.jpeg'
 import CloseIcon from '@mui/icons-material/Close'
 import { useHistory } from 'react-router-dom'
+import validator from 'validator'
 
 export default function UserForm() {
 
@@ -27,14 +28,26 @@ export default function UserForm() {
     const [dateValue, setValue] = useState(Date(Date.now()))
     const [closeIconShow, setCloseIconShow] = useState(false)
     const fileRef = useRef()
-    
+    const [errorMessage, setErrorMessage] = useState('')
+    const [validDate,setValidDate] = useState(true)
+
     // storage.ref('/images/web_img_using/no_picture_available.png').getDownloadURL().then(value => { setTempImgUrl(value)})
     // console.log(tempImgUrl)
 
 
 
 const handleChangeDate = (newValue) => {
-          setValue(newValue);
+
+      if (validator.isDate(newValue)) {
+        setErrorMessage('')
+        setValue(newValue);
+        setValidDate(true)
+      } else {
+        setErrorMessage('Date is not valid! check it out')
+        // setValue(newValue);
+        setValidDate(false)
+      }
+
         };
         
 function handleChangePicture(e) {
@@ -58,7 +71,11 @@ function OnClickCloseIcon(){
 }
     async function handleSubmit(e){
         e.preventDefault()
-
+        if(!validDate){
+           console.log('Date is invalid. cant create a user!');
+           birthdayRef.current.focus()
+           return
+        }
         try{
             setLoading(true)
             
@@ -167,7 +184,7 @@ function OnClickCloseIcon(){
 
                         <p></p> 
                 <Form.Group id="birthday">
-                <Form.Label><b>Birthday</b></Form.Label>
+                <Form.Label><b>Birthday</b><span style={{color:'red',fontFamily:'monospace',fontSize:"12px",marginLeft:'10px'}}>{errorMessage}</span></Form.Label>
                 <div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DesktopDatePicker

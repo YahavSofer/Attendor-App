@@ -257,7 +257,7 @@ export default function Event({event: { id,description,title,eventDate,eventImag
           <Typography style={{fontSize: '18px'}} >
               <b style={{color:'darkslategray'}}>Event Owner: </b><span style={{color:'gray'}}>{userName}</span><br/>
               <b style={{color:'darkslategray'}}>Date & Time: </b><span style={{color:'gray'}}>{(dateTime.getDate()+ '/'+(dateTime.getMonth()+1)+'/'+dateTime.getFullYear()+' , ' 
-        +dateTime.getHours()+':'+dateTime.getMinutes())}</span><br/>
+        +dateTime.getHours()+':'+((dateTime.getMinutes()<10?'0':'') + dateTime.getMinutes()))}</span><br/>
         <b style={{color:'darkslategray'}}>Location: </b><span style={{color:'gray'}}>{location}</span><br/>
         <b style={{color:'darkslategray'}}>Cost: </b><span style={{color:'gray'}}>{(eventCost=='0')? 'Free': eventCost+'$'}</span><br/>
         <b style={{color:'darkslategray'}}>Participants: </b> <span style={{color:'gray'}}>{(eventMaxParti==='No Limit') ? eventMaxParti: attendingCounter+'/'+eventMaxParti}</span><br/>

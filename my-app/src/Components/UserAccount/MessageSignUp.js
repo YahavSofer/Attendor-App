@@ -16,7 +16,7 @@ export default function MessageSignUp() {
                     <p style={{color:'#0081A7',fontSize:'18px'}}>verification email sent to your email address, Please check your email.
                     </p>
                 </Card>
-                <Button type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'><Link to='/' style={{color: '#FFF', textDecoration: 'none'}}>Log In</Link></Button>
+                <Link to='/' style={{color: '#FFF', textDecoration: 'none'}}><Button type='submit' className="w-100 mt-sm-2" variant='contained' color='primary'>Log In</Button></Link>
             </Card.Body>  
         </Card>
             </Container>

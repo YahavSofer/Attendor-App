@@ -110,16 +110,16 @@ async function getCategoryFromAPI (){
                     ]
                 }
       
-    console.log(JSON.stringify(descData));
+    console.log("The Json is: "+ JSON.stringify(descData));
     const response = await fetch("https://x21ad6xb6e.execute-api.us-east-1.amazonaws.com/beta", {
     method: "POST",
     headers: {'Content-Type': 'application/json'}, 
     body: JSON.stringify(descData)
     })
     const resJson = await response.json()
-    console.log(resJson.body.substr(1,1));
+    console.log("Category Number: "+resJson.body.substr(1,1));
     let categoryIndex = resJson.body.substr(1,1)
-    console.log(categoryDic[categoryIndex]);
+    console.log("Category Name: "+ categoryDic[categoryIndex]);
     return( categoryDic[categoryIndex] )
 
     // set category from api into category variable
@@ -239,6 +239,7 @@ async function handleCreatePathName(){
                      <DateTimePicker
 
                             required
+                            inputFormat="dd/MM/yyyy HH:mm"
                             value={dateValue}
                             onChange={handleChangeDate}
                             renderInput={(params) => <TextField {...params} style={{background:'white',borderRadius:'5px',paddingTop:'5px',marginBottom: '10px'}}  />}

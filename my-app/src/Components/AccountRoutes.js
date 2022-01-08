@@ -17,7 +17,8 @@ export default function AccountRoutes() {
         <>
         <Container>
         <div>        
-        <Route exact path={`${match.url}`} component={Login} />
+        {/* <Route exact path={`${match.url}`} component={Login} /> */}
+        <Route exact path="/" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/messagesignup" component={MessageSignUp} />
         <PrivateRoute path="/userform" component={UserForm} />
